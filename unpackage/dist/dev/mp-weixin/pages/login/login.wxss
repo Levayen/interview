@@ -1,0 +1,115 @@
+.banner {
+  width: 100%;
+  height: 285rpx;
+}
+.banner image {
+  width: 100%;
+  height: 100%;
+}
+.login_box {
+  width: 100%;
+  padding: 0 25rpx;
+  box-sizing: border-box;
+}
+.login_box .login_nav {
+  width: 100%;
+  height: 105.5rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  gap: 124rpx;
+}
+.login_box .login_nav view {
+  font-size: 31rpx;
+  height: 100%;
+  width: 100rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.login_box .login_nav view.active {
+  color: #5C6FB4;
+  border-bottom: 5rpx solid #5C6FB4;
+}
+.login_box .login_form {
+  width: 100%;
+  border-radius: 21rpx;
+  box-shadow: 0 5rpx 10rpx #cccccc;
+  background-color: #FFFFFF;
+}
+.login_box .login_form .login_form_1 > view {
+  width: 100%;
+  height: 97rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  border-bottom: 1rpx solid #E3E7F6;
+  box-sizing: border-box;
+  padding: 0 35rpx;
+  font-size: 28rpx;
+  position: relative;
+}
+.login_box .login_form .login_form_1 .code_btn {
+  position: absolute;
+  right: 35rpx;
+  width: 139rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  border-radius: 7rpx;
+  color: #5C6FB4;
+  font-size: 25rpx;
+  background-color: #EEF1FA;
+}
+.login_box .login_form .login_form_2 > view {
+  width: 100%;
+  height: 97rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  border-bottom: 1rpx solid #E3E7F6;
+  box-sizing: border-box;
+  padding: 0 35rpx;
+  font-size: 28rpx;
+  position: relative;
+}
+.login_btn {
+  position: fixed;
+  bottom: 28rpx;
+  width: 100%;
+  padding: 0 25px;
+  box-sizing: border-box;
+}
+.login_btn view {
+  width: 100%;
+  height: 83rpx;
+  line-height: 83rpx;
+  border-radius: 83rpx;
+  text-align: center;
+  background: -webkit-linear-gradient(right bottom, #5C6FB4, #758AD5);
+  background: linear-gradient(to left top, #5C6FB4, #758AD5);
+  font-size: 31rpx;
+  color: #FFFFFF;
+}
+

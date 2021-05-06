@@ -1,0 +1,49 @@
+<template>
+	<view class="content">
+		<view class="top_notice">
+			<view>
+				会员ID：15992990321
+			</view>
+			<view class="login_out">
+				安全退出
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="less">
+.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.top_notice{
+		display: flex;
+		justify-content: space-between;
+		background-color: #5C6FB4;
+		width: 100%;
+		height: 97rpx;
+		line-height: 97rpx;
+		color: #FFFFFF;
+		box-sizing: border-box;
+		padding: 0 26rpx;
+		font-size: 28rpx;
+		.login_out{
+			font-size: 25rpx;
+		}
+	}
+</style>

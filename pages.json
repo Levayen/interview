@@ -1,0 +1,94 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "英迈思面试系统"
+			}
+		}
+		,{
+		    "path" : "pages/interview/interview",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "面试",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/notice/notice",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "通知",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/join/join",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "入职",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+	    ,{
+            "path" : "pages/my/my",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "英迈思面试系统",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "default"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#5C6FB4",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/index/index",
+	        "iconPath": "static/img/home.png",
+	        "selectedIconPath": "static/img/home_hl.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/interview/interview",
+	        "iconPath": "static/img/interview.png",
+	        "selectedIconPath": "static/img/interview_hl.png",
+	        "text": "面试"
+	    }, {
+	        "pagePath": "pages/notice/notice",
+	        "iconPath": "static/img/notice.png",
+	        "selectedIconPath": "static/img/notice_hl.png",
+	        "text": "通知"
+	    }, {
+	        "pagePath": "pages/join/join",
+	        "iconPath": "static/img/join.png",
+	        "selectedIconPath": "static/img/join_hl.png",
+	        "text": "入职"
+	    }, {
+	        "pagePath": "pages/my/my",
+	        "iconPath": "static/img/my.png",
+	        "selectedIconPath": "static/img/my_hl.png",
+	        "text": "我的"
+	    }]
+	}
+}

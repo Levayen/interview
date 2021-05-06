@@ -1,0 +1,135 @@
+<template>
+	<view class="content">
+		<view class="notice_item">
+			<view class="nitice_item_1">
+				<view class="position">
+					产品经理
+				</view>
+				<view class="ordinal">
+					一面
+				</view>
+			</view>
+			<view class="notice_item_2">
+				<view>
+					<view><image src="/static/img/table_1.png" mode=""></image></view>
+					<view>应聘登记表-1</view>
+				</view>
+				<view>
+					<view><image src="/static/img/table_1.png" mode=""></image></view>
+					<view>应聘登记表-2</view>
+				</view>
+			</view>
+			<view class="notice_item_3">
+				填表时间：2021年1月23日 12:59
+			</view>
+			<view class="border_1"></view>
+			<view class="notice_item_4">
+				<view>
+					<view class="item_name">面试时间：</view>
+					<view class="item_content">2021年3月2日（周四）上午11点</view>
+				</view>
+				<view>
+					<view class="item_name">面试地点：</view>
+					<view class="item_content">深圳市宝安区宝安大道华丰国际机器人产业园 B栋4层</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="less">
+	.content{
+		box-sizing: border-box;
+		padding: 0 25rpx;
+	}
+	.notice_item{
+		width: 100%;
+		margin-top: 28rpx;
+		background-color: #FFFFFF;
+		border-radius: 7rpx;
+		box-sizing: border-box;
+		padding: 35rpx 27rpx;
+	}
+	.nitice_item_1{
+		display: flex;
+		align-items: center;
+		.position{
+			font-weight: bold;
+		}
+		.ordinal{
+			width: 90rpx;
+			height: 35rpx;
+			line-height: 35rpx;
+			text-align: center;
+			font-size: 22rpx;
+			border-radius: 3rpx;
+			background-color: #5C6FB4;
+			color: #FFFFFF;
+			margin-left: 28rpx;
+		}
+	}
+	.notice_item_2{
+		display: flex;
+		margin-top: 35rpx;
+		>view{
+			width: 257rpx;
+			height: 69rpx;
+			border-radius: 7rpx;
+			background-color: #F9F9F9;
+			margin-right: 29rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			>view{
+				font-size: 25rpx;
+				color: #333333;
+				&:first-child{
+					width: 24rpx;
+					height: 31rpx;
+					margin-right: 26rpx;
+				}
+				image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+	.notice_item_3{
+		margin-top: 25rpx;
+		font-size: 22rpx;
+		color: #777777;
+	}
+	.border_1{
+		width: 100%;
+		height: 1rpx;
+		background-color: #E5E5E5;
+		margin: 30rpx 0;
+	}
+	.notice_item_4{
+		font-size: 25rpx;
+		>view{
+			display: flex;
+		}
+		.item_content{
+			color: #777777;
+		}
+		.item_name{
+			flex-shrink: 0;
+			color: #333333;
+		}
+	}
+</style>

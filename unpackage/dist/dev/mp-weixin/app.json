@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/interview/interview",
+    "pages/notice/notice",
+    "pages/join/join",
+    "pages/my/my",
+    "pages/login/login"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "英迈思面试系统",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "default"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#5C6FB4",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/img/home.png",
+        "selectedIconPath": "static/img/home_hl.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/interview/interview",
+        "iconPath": "static/img/interview.png",
+        "selectedIconPath": "static/img/interview_hl.png",
+        "text": "面试"
+      },
+      {
+        "pagePath": "pages/notice/notice",
+        "iconPath": "static/img/notice.png",
+        "selectedIconPath": "static/img/notice_hl.png",
+        "text": "通知"
+      },
+      {
+        "pagePath": "pages/join/join",
+        "iconPath": "static/img/join.png",
+        "selectedIconPath": "static/img/join_hl.png",
+        "text": "入职"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/img/my.png",
+        "selectedIconPath": "static/img/my_hl.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
