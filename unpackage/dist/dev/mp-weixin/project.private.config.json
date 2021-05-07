@@ -27,6 +27,36 @@
         {
           "name": "pages/notice/notice",
           "pathName": "pages/notice/notice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/interview/interview",
+          "pathName": "pages/interview/interview",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/join/join",
+          "pathName": "pages/join/join",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/interviewDetails/interviewDetails",
+          "pathName": "pages/interviewDetails/interviewDetails",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/yp_form_1/yp_form_1",
+          "pathName": "pages/yp_form_1/yp_form_1",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/yp_form_2/yp_form_2",
+          "pathName": "pages/yp_form_2/yp_form_2",
           "scene": null
         }
       ]

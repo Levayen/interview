@@ -1,4 +1,4 @@
-.content {
+.content.data-v-0be17cc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -13,7 +13,7 @@
   -webkit-justify-content: center;
           justify-content: center;
 }
-.top_notice {
+.top_notice.data-v-0be17cc6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -29,7 +29,13 @@
   padding: 0 26rpx;
   font-size: 28rpx;
 }
-.top_notice .login_out {
+.top_notice .login_out.data-v-0be17cc6 {
   font-size: 25rpx;
+}
+.version.data-v-0be17cc6 {
+  position: absolute;
+  bottom: 42rpx;
+  font-size: 22rpx;
+  color: #999999;
 }
 

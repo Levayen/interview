@@ -5,7 +5,10 @@
     "pages/notice/notice",
     "pages/join/join",
     "pages/my/my",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/interviewDetails/interviewDetails",
+    "pages/yp_form_1/yp_form_1",
+    "pages/yp_form_2/yp_form_2"
   ],
   "subPackages": [],
   "window": {
@@ -53,6 +56,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap33.json"
+  "usingComponents": {}
 }

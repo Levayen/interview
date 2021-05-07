@@ -51,6 +51,33 @@
             }
             
         }
+        ,{
+            "path" : "pages/interviewDetails/interviewDetails",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/yp_form_1/yp_form_1",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "应聘登记表1",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/yp_form_2/yp_form_2",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "应聘登记表2",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

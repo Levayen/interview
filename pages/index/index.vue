@@ -4,7 +4,7 @@
 			欢迎【15992990321】参加英迈思集团面试
 		</view>
 		<view class="index_box">
-			<view class="index_box_1" @click="getFile">
+			<view class="index_box_1">
 				<view>当前有</view>
 				<view class="number_fs">23</view>
 				<view>个岗位在招聘</view>
@@ -26,18 +26,15 @@
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {  
-			getFile(){
-				console.log("A")
-				this.$api.getAuthCode({'name':'张三'})
-			}
+			
 		}
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.content {
 		display: flex;
 		flex-direction: column;

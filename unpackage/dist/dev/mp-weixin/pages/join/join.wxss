@@ -1,0 +1,30 @@
+.content.data-v-bfcf8174 {
+  padding: 28rpx 25rpx;
+}
+.join_item.data-v-bfcf8174 {
+  width: 333rpx;
+  height: 111rpx;
+  border-radius: 7rpx;
+  background-color: #5C6FB4;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.icon_1.data-v-bfcf8174 {
+  width: 41rpx;
+  height: 42rpx;
+  margin-right: 27rpx;
+}
+.icon_1 > image.data-v-bfcf8174 {
+  width: 100%;
+  height: 100%;
+}
+

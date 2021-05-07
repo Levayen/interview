@@ -73,7 +73,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.banner{
 		width: 100%;
 		height: 285rpx;
@@ -91,7 +91,6 @@
 			height: 105.5rpx;
 			display: flex;
 			justify-content: center;
-			gap:124rpx;
 			view{
 				font-size: 31rpx;
 				height: 100%;
@@ -99,6 +98,11 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				box-sizing: border-box;
+				margin-left:124rpx;
+				&:first-child{
+					margin-left:0;
+				}
 				&.active{
 					color: #5C6FB4;
 					border-bottom: 5rpx solid #5C6FB4;

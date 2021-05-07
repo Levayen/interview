@@ -1,17 +1,17 @@
-.banner {
+.banner.data-v-b237504c {
   width: 100%;
   height: 285rpx;
 }
-.banner image {
+.banner image.data-v-b237504c {
   width: 100%;
   height: 100%;
 }
-.login_box {
+.login_box.data-v-b237504c {
   width: 100%;
   padding: 0 25rpx;
   box-sizing: border-box;
 }
-.login_box .login_nav {
+.login_box .login_nav.data-v-b237504c {
   width: 100%;
   height: 105.5rpx;
   display: -webkit-box;
@@ -20,9 +20,8 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  gap: 124rpx;
 }
-.login_box .login_nav view {
+.login_box .login_nav view.data-v-b237504c {
   font-size: 31rpx;
   height: 100%;
   width: 100rpx;
@@ -35,18 +34,23 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+  box-sizing: border-box;
+  margin-left: 124rpx;
 }
-.login_box .login_nav view.active {
+.login_box .login_nav view.data-v-b237504c:first-child {
+  margin-left: 0;
+}
+.login_box .login_nav view.active.data-v-b237504c {
   color: #5C6FB4;
   border-bottom: 5rpx solid #5C6FB4;
 }
-.login_box .login_form {
+.login_box .login_form.data-v-b237504c {
   width: 100%;
   border-radius: 21rpx;
   box-shadow: 0 5rpx 10rpx #cccccc;
   background-color: #FFFFFF;
 }
-.login_box .login_form .login_form_1 > view {
+.login_box .login_form .login_form_1 > view.data-v-b237504c {
   width: 100%;
   height: 97rpx;
   display: -webkit-box;
@@ -64,7 +68,7 @@
   font-size: 28rpx;
   position: relative;
 }
-.login_box .login_form .login_form_1 .code_btn {
+.login_box .login_form .login_form_1 .code_btn.data-v-b237504c {
   position: absolute;
   right: 35rpx;
   width: 139rpx;
@@ -76,7 +80,7 @@
   font-size: 25rpx;
   background-color: #EEF1FA;
 }
-.login_box .login_form .login_form_2 > view {
+.login_box .login_form .login_form_2 > view.data-v-b237504c {
   width: 100%;
   height: 97rpx;
   display: -webkit-box;
@@ -94,14 +98,14 @@
   font-size: 28rpx;
   position: relative;
 }
-.login_btn {
+.login_btn.data-v-b237504c {
   position: fixed;
   bottom: 28rpx;
   width: 100%;
   padding: 0 25px;
   box-sizing: border-box;
 }
-.login_btn view {
+.login_btn view.data-v-b237504c {
   width: 100%;
   height: 83rpx;
   line-height: 83rpx;

@@ -8,6 +8,9 @@
 				安全退出
 			</view>
 		</view>
+		<view class="version">
+			版本号：v1.0.1
+		</view>
 	</view>
 </template>
 
@@ -24,7 +27,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .content {
 		display: flex;
 		flex-direction: column;
@@ -45,5 +48,11 @@
 		.login_out{
 			font-size: 25rpx;
 		}
+	}
+	.version{
+		position: absolute;
+		bottom: 42rpx;
+		font-size: 22rpx;
+		color: #999999;
 	}
 </style>

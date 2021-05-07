@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="notice_item">
+		<view class="notice_item" v-for="(item, index) in 3" :key="index">
 			<view class="nitice_item_1">
 				<view class="position">
 					产品经理
@@ -33,6 +33,23 @@
 					<view class="item_content">深圳市宝安区宝安大道华丰国际机器人产业园 B栋4层</view>
 				</view>
 			</view>
+			<view class="border_1"></view>
+			<view class="notice_item_4">
+				<view>
+					<view class="item_name">交通路线：</view>
+					<view class="item_content_red">深圳</view>
+				</view>
+				<view>
+					<view class="item_name">乘坐地铁：</view>
+					<view class="item_content">地铁1号线</view>
+				</view>
+				<view>
+					<view class="item_name">乘坐公交：</view>
+					<view class="item_content">
+						站台名称：华丰工业园站 <br/> 公交车次： 432，232，233，331
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -50,10 +67,11 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.content{
 		box-sizing: border-box;
 		padding: 0 25rpx;
+		padding-bottom: 30rpx;
 	}
 	.notice_item{
 		width: 100%;
@@ -62,6 +80,7 @@
 		border-radius: 7rpx;
 		box-sizing: border-box;
 		padding: 35rpx 27rpx;
+		box-shadow: 0 10rpx 10rpx rgba(92, 111, 180, 0.06);
 	}
 	.nitice_item_1{
 		display: flex;
@@ -123,13 +142,22 @@
 		font-size: 25rpx;
 		>view{
 			display: flex;
+			margin-bottom: 33rpx;
+			&:last-child{
+				margin-bottom: 0;
+			}
 		}
 		.item_content{
 			color: #777777;
 		}
+		.item_content_red{
+			color: #E91616;
+		}
 		.item_name{
 			flex-shrink: 0;
 			color: #333333;
+			margin-right: 23rpx;
 		}
 	}
+	
 </style>

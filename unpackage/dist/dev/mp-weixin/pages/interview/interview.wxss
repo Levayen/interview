@@ -1,0 +1,37 @@
+.content.data-v-93d44bec {
+  padding: 28rpx 25rpx;
+}
+.content ._ul.data-v-93d44bec {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-right: -27rpx;
+}
+.content ._li.data-v-93d44bec {
+  width: 215rpx;
+  height: 111rpx;
+  box-sizing: border-box;
+  padding: 0 39rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-content: center;
+          align-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  background-color: #F0F0F0;
+  color: #333333;
+  font-size: 28rpx;
+  border-radius: 7rpx;
+  text-align: center;
+  margin-right: 27rpx;
+  margin-bottom: 27rpx;
+}
+
