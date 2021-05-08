@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "面试",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "copyright": "/components/copyright/copyright"
+  }
+}

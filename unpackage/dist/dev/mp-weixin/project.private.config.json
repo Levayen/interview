@@ -57,6 +57,30 @@
         {
           "name": "pages/yp_form_2/yp_form_2",
           "pathName": "pages/yp_form_2/yp_form_2",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/rz_form_1/rz_form_1",
+          "pathName": "pages/rz_form_1/rz_form_1",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/rz_form_2/rz_form_2",
+          "pathName": "pages/rz_form_2/rz_form_2",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/enclosure/enclosure",
+          "pathName": "pages/enclosure/enclosure",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/interviewerIndex/interviewerIndex",
+          "pathName": "pages/interviewerIndex/interviewerIndex",
           "scene": null
         }
       ]

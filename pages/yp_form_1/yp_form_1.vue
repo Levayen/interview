@@ -118,7 +118,7 @@
 					</view>
 					<view>
 						<view> 学历层次：</view>
-						<picker mode="selector" :range="educationList" :value="eindex" :data-index="index" @change="bindEducation">
+						<picker mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
 							<view class="select_btn" v-if="item.education === ''">
 								<view>请选择</view>
 								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
@@ -240,7 +240,6 @@
 				date: '',
 				address: '',
 				nativePlace: '', //籍贯
-				eindex: '', 
 				educationList: ['中专/中技', '高中', '大专', '本科'],
 				employment:'', //应聘岗位
 				employmentList: ['产品经理', 'Java工程师', '前端工程师'],
@@ -253,6 +252,7 @@
 					education: '', //学历
 					educationType: 1, //教育形式
 					educationStatus: 1, //教育现状
+					honorList: ['']
 				}],
 				workExperience: [{
 					beginTime: '',
@@ -365,6 +365,7 @@
 					education: '', //学历
 					educationType: 1, //教育形式
 					educationStatus: 1, //教育现状
+					honorList: [],
 				})
 			},
 			//添加工作经历

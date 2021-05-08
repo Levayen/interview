@@ -27,7 +27,7 @@
 		},
 		onLoad(options) {
 			uni.setNavigationBarTitle({
-				title: `${ options.position } -面试`
+				title: `${ options.position } - 面试`
 			});
 		}
 	}
@@ -39,12 +39,14 @@
 		>view{
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-start;
 			width: 361rpx;
 			height: 111rpx;
 			font-size: 28rpx;
 			border-radius: 7rpx;
 			margin-bottom: 28rpx;
+			box-sizing: border-box;
+			padding-left: 50rpx;
 		}
 	}
 	.item_1{

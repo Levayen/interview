@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "应聘登记表1",
+  "navigationBarTitleText": "应聘登记表-1",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "city": "/components/biaofun-region/biaofun-region"

@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="join_item">
+		<view class="join_item" @click="goDetails" data-position="产品经理">
 			<view class="icon_1"><image src="/static/img/join_icon.png" mode=""></image></view>
 			<view>产品经理</view>
 		</view>
@@ -15,7 +15,13 @@
 			}
 		},
 		methods: {
-			
+			goDetails(e){
+				console.log(e.currentTarget.dataset.position)
+				let position = e.currentTarget.dataset.position
+				uni.navigateTo({
+					url:'../joinDetails/joinDetails?position=' + position
+				})
+			}
 		}
 	}
 </script>

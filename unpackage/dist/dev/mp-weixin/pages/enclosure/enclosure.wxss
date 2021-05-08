@@ -1,0 +1,92 @@
+.top.data-v-25bc50a8 {
+  width: 100%;
+  height: 97rpx;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  background-color: #5C6FB4;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.bottom_btn.data-v-25bc50a8 {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 25rpx;
+  padding-bottom: 33rpx;
+}
+.bottom_btn .tip.data-v-25bc50a8 {
+  color: #999999;
+  font-size: 25rpx;
+  margin-bottom: 63rpx;
+  margin-top: 32rpx;
+}
+.bottom_btn .sub_btn.data-v-25bc50a8 {
+  width: 100%;
+  height: 83rpx;
+  line-height: 83rpx;
+  text-align: center;
+  border-radius: 83rpx;
+  color: #FFFFFF;
+  background: -webkit-linear-gradient(right bottom, #5C6FB4, #758AD5);
+  background: linear-gradient(to left top, #5C6FB4, #758AD5);
+}
+.main.data-v-25bc50a8 {
+  box-sizing: border-box;
+  padding: 28rpx 25rpx 0 25rpx;
+}
+.main .main_item_1.data-v-25bc50a8 {
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.main .main_item.data-v-25bc50a8 {
+  background-color: #FFFFFF;
+  border-radius: 7rpx;
+}
+.main .main_item > view.data-v-25bc50a8 {
+  box-sizing: border-box;
+  padding: 42rpx;
+}
+.main .main_item .item_title.data-v-25bc50a8 {
+  color: #333333;
+  font-size: 28rpx;
+  margin-bottom: 37rpx;
+}
+.main .main_item .item_img.data-v-25bc50a8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-right: -42rpx;
+  margin-bottom: -42rpx;
+}
+.main .main_item .img_box.data-v-25bc50a8 {
+  width: 167rpx;
+  height: 167rpx;
+  border-radius: 7rpx;
+  overflow: hidden;
+  position: relative;
+  margin-right: 42rpx;
+  margin-bottom: 42rpx;
+}
+.main .main_item .img_box .del.data-v-25bc50a8 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42rpx;
+  height: 42rpx;
+}
+.main .main_item .img_box .del > image.data-v-25bc50a8 {
+  width: 100%;
+  height: 100%;
+}
+.main .main_item .img_box > image.data-v-25bc50a8 {
+  width: 100%;
+  height: 100%;
+}
+

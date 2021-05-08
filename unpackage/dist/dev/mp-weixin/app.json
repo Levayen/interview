@@ -8,7 +8,12 @@
     "pages/login/login",
     "pages/interviewDetails/interviewDetails",
     "pages/yp_form_1/yp_form_1",
-    "pages/yp_form_2/yp_form_2"
+    "pages/yp_form_2/yp_form_2",
+    "pages/joinDetails/joinDetails",
+    "pages/rz_form_1/rz_form_1",
+    "pages/rz_form_2/rz_form_2",
+    "pages/enclosure/enclosure",
+    "pages/interviewerIndex/interviewerIndex"
   ],
   "subPackages": [],
   "window": {

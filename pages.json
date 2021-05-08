@@ -64,7 +64,7 @@
             "path" : "pages/yp_form_1/yp_form_1",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "应聘登记表1",
+                "navigationBarTitleText": "应聘登记表-1",
                 "enablePullDownRefresh": false
             }
             
@@ -73,7 +73,52 @@
             "path" : "pages/yp_form_2/yp_form_2",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "应聘登记表2",
+                "navigationBarTitleText": "应聘登记表-2",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/joinDetails/joinDetails",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/rz_form_1/rz_form_1",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/rz_form_2/rz_form_2",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/enclosure/enclosure",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/interviewerIndex/interviewerIndex",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "面试",
                 "enablePullDownRefresh": false
             }
             

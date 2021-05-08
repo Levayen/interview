@@ -159,7 +159,7 @@ var _default =
 
   onLoad: function onLoad(options) {
     uni.setNavigationBarTitle({
-      title: "".concat(options.position, " -\u9762\u8BD5") });
+      title: "".concat(options.position, " - \u9762\u8BD5") });
 
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

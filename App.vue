@@ -20,4 +20,7 @@
 	.red{
 		color: #FF0000;
 	}
+	.medium{
+		font-weight: 500;
+	}
 </style>
