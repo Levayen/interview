@@ -1,3 +1,6 @@
+.content.data-v-67141206 {
+  min-height: 100vh;
+}
 .main.data-v-67141206 {
   width: 100%;
   box-sizing: border-box;
@@ -34,5 +37,15 @@
   margin-top: 28rpx;
   background-color: #5C6FB4;
   border-radius: 7rpx;
+}
+.copy.data-v-67141206 {
+  width: 100%;
+  margin-bottom: 28rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #999999;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 

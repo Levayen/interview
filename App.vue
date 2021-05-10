@@ -16,6 +16,7 @@
 	/*每个页面公共css */
 	page{
 		background-color: #F9F9F9;
+		color: #333333;
 	}
 	.red{
 		color: #FF0000;

@@ -13,7 +13,12 @@
     "pages/rz_form_1/rz_form_1",
     "pages/rz_form_2/rz_form_2",
     "pages/enclosure/enclosure",
-    "pages/interviewerIndex/interviewerIndex"
+    "pages/interviewerIndex/interviewerIndex",
+    "pages/firstInterview/firstInterview",
+    "pages/fk_form_1/fk_form_1",
+    "pages/fk_form_2/fk_form_2",
+    "pages/secondInterview/secondInterview",
+    "pages/HRinterview/HRinterview"
   ],
   "subPackages": [],
   "window": {

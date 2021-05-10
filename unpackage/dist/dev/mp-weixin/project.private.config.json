@@ -81,6 +81,36 @@
         {
           "name": "pages/interviewerIndex/interviewerIndex",
           "pathName": "pages/interviewerIndex/interviewerIndex",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/firstInterview/firstInterview",
+          "pathName": "pages/firstInterview/firstInterview",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/fk_form_1/fk_form_1",
+          "pathName": "pages/fk_form_1/fk_form_1",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/fk_form_2/fk_form_2",
+          "pathName": "pages/fk_form_2/fk_form_2",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/secondInterview/secondInterview",
+          "pathName": "pages/secondInterview/secondInterview",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/HRinterview/HRinterview",
+          "pathName": "pages/HRinterview/HRinterview",
           "scene": null
         }
       ]

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "HR面",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "interview-nav": "/components/interviewNav/interviewNav"
+  }
+}

@@ -1,10 +1,10 @@
 <template>
 	<view class="content">
 		<view class="main">
-			<view class="main_item medium">
+			<view class="main_item medium" @click="goFirstInterview">
 				一面（ <span class="red">2</span> ）
 			</view>
-			<view class="main_item medium">
+			<view class="main_item medium" @click="goSecondInterview">
 				二面（ <span class="red">2</span> ）
 			</view>
 			<view class="main_item medium">
@@ -17,25 +17,38 @@
 				HR面（ <span>2</span> ）
 			</view>
 		</view>
-		<Copyright></Copyright>
+		<view class="copy">
+			Copyright@英迈思集团 2008-2021
+		</view>
 	</view>
 </template>
 
 <script>
-	import Copyright from '@/components/copyright/copyright.vue'
 	export default {
-		components:{
-			Copyright
-		},
 		data() {
 			return {
 				
 			};
+		},
+		methods:{
+			goFirstInterview(){
+				uni.navigateTo({
+					url: '../firstInterview/firstInterview'
+				})
+			},
+			goSecondInterview(){
+				uni.navigateTo({
+					url: '../secondInterview/secondInterview'
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
+	.content{
+		min-height: 100vh;
+	}
 	.main{
 		width: 100%;
 		box-sizing: border-box;
@@ -64,5 +77,15 @@
 		margin-top: 28rpx;
 		background-color: #5C6FB4;
 		border-radius: 7rpx;
+	}
+	.copy{
+		width: 100%;
+		margin-bottom: 28rpx;
+		text-align: center;
+		font-size: 22rpx;
+		color: #999999;
+		position: absolute;
+		bottom: 0;
+		left: 0;
 	}
 </style>

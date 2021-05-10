@@ -123,6 +123,51 @@
             }
             
         }
+        ,{
+            "path" : "pages/firstInterview/firstInterview",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "一面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/fk_form_1/fk_form_1",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "面试反馈表-1",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/fk_form_2/fk_form_2",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "面试反馈表-2",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/secondInterview/secondInterview",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "二面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/HRinterview/HRinterview",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "HR面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

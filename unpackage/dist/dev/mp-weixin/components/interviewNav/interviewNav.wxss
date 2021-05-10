@@ -1,0 +1,92 @@
+.nav.data-v-6f148cc4 {
+  width: 100%;
+  height: 97rpx;
+  box-sizing: border-box;
+  background-color: #5C6FB4;
+  color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  font-size: 28rpx;
+}
+.nav > view.data-v-6f148cc4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.nav > view.data-v-6f148cc4::after {
+  content: '';
+  display: block;
+  width: 56rpx;
+  height: 3rpx;
+  background-color: #5C6FB4;
+  margin-top: 17rpx;
+}
+.nav > view.active.data-v-6f148cc4::after {
+  content: '';
+  display: block;
+  width: 56rpx;
+  height: 3rpx;
+  background-color: #FFFFFF;
+  margin-top: 17rpx;
+}
+.search.data-v-6f148cc4 {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 25rpx;
+  margin-top: 28rpx;
+}
+.search .search_box.data-v-6f148cc4 {
+  width: 100%;
+  height: 83rpx;
+  border-radius: 7rpx;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  background-color: #FFFFFF;
+}
+.search .search_box .search_input.data-v-6f148cc4 {
+  width: 100%;
+  font-size: 25rpx;
+  box-sizing: border-box;
+  padding: 0 28rpx;
+}
+.search .search_box .search_btn.data-v-6f148cc4 {
+  width: 153rpx;
+  height: 100%;
+  font-size: 28rpx;
+  background-color: #5C6FB4;
+  color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+
