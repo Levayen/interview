@@ -10,7 +10,7 @@
 						</view>
 						<view class="name">
 							<view>吴晓燕(女)</view>
-							<view class="see">
+							<view class="see" @click="openDocument">
 								<view class="icon_2"><image src="/static/img/icon_1.png" mode=""></image></view>
 								<view>查看简历</view>
 							</view>
@@ -77,7 +77,7 @@
 							<view class="first_result">
 								面试结果： <span>通过</span>
 							</view>
-						</view>
+						</view> 
 						<view class="arrange">
 							<view class="btn">HR面</view>
 							<view class="arrange_time">
@@ -87,11 +87,7 @@
 						</view>
 					</view>
 					<view class="item_bottom">
-						<view>
-							<view class="icon_1"><image src="../../static/img/back_1.png" mode=""></image></view>
-							<view>退回</view> 
-						</view>
-						<view>
+						<view @click="fkForm3">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
@@ -241,7 +237,7 @@
 		},
 		data() {
 			return {
-				status: 2
+				status: 1
 			};
 		},
 		methods:{
@@ -258,6 +254,25 @@
 				uni.navigateTo({
 					url: '../fk_form_2/fk_form_2'
 				})
+			},
+			fkForm3(){
+				uni.navigateTo({
+					url:'../fk_form_3/fk_form_3'
+				})
+			},
+			openDocument(){
+				uni.downloadFile({
+				  url: 'https://example.com/somefile.pdf',
+				  success: function (res) {
+				    var filePath = res.tempFilePath;
+				    uni.openDocument({
+				      filePath: filePath,
+				      success: function (res) {
+				        console.log('打开文档成功');
+				      }
+				    });
+				  }
+				});
 			}
 		}
 	}
@@ -279,17 +294,13 @@
 				border-top: 1rpx solid #f1f1f5;
 				display: flex;
 				>view{
-					width: 50%;
+					width: 100%;
 					box-sizing: border-box;
 					display: flex;
 					align-items: center;
 					justify-content: center;
 					font-size: 25rpx;
 					color: #5C6FB4;
-					&:first-child{
-						color: #333333;
-						border-right: 1rpx solid #f1f1f5;
-					}
 					.icon_1{
 						width: 30rpx;
 						height: 30rpx;

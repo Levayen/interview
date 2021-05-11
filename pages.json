@@ -168,6 +168,25 @@
             }
             
         }
+        ,{
+            "path" : "pages/fk_form_3/fk_form_3",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "面试反馈表-3",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/qrCode/qrCode",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

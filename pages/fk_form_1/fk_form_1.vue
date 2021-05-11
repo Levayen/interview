@@ -39,21 +39,15 @@
 					<view class="icon_2"><image src="../../static/img/to_top.png" mode=""></image></view>
 				</view>
 				<view class="question">
-					<view class="question_item" v-for="(item, index) in 2" :key="index">
+					<view class="question_item" v-for="(item, index) in majorScore" :key="index">
 						<view class="title">
-							已具备岗位专业能力（50分）
+							{{item.title}}
 						</view>
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
-								<viwe>优秀：41-50分 </viwe>
-								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
-							</view>
-							<view>
-								<viwe>优秀：41-50分 </viwe>
-								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
-							</view>
-							<view>
-								<viwe>优秀：41-50分 </viwe>
+							<view v-for="(citem, cindex) in item.options" :key="cindex"
+							:class="{'active': citem.checked === 1}"
+							@click="selectPanswer(index, cindex)"> 
+								<viwe> {{citem.txt}} </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
 						</view>
@@ -68,31 +62,25 @@
 				<view class="form_item_2">
 					<view>
 						<view> 笔试（机试）得分(分)：</view>
-						<input type="text" value="" v-model="grade" max="100" placeholder="请填写分数"/>
+						<input type="text" value="" v-model="practical_score" max="100" placeholder="请填写分数"/>
 					</view>
 				</view>
 			</view>
 			<view class="form_1">
 				<view class="form_top">
-					<view>岗位对应专业能力得分(100分，占比30%）</view>
+					<view>综合素质得分（100分，占比30%）</view>
 					<view class="icon_2"><image src="../../static/img/to_top.png" mode=""></image></view>
 				</view>
 				<view class="question">
-					<view class="question_item" v-for="(item, index) in 2" :key="index">
+					<view class="question_item" v-for="(item, index) in qualityScore" :key="index">
 						<view class="title">
-							已具备岗位专业能力（50分）
+							{{item.title}}
 						</view>
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
-								<viwe>优秀：41-50分 </viwe>
-								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
-							</view>
-							<view>
-								<viwe>优秀：41-50分 </viwe>
-								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
-							</view>
-							<view>
-								<viwe>优秀：41-50分 </viwe>
+							<view v-for="(citem, cindex) in item.options" :key="cindex"
+							:class="{'active': citem.checked === 1}"
+							@click="selectCanswer(index, cindex)">
+								<viwe>{{ citem.txt }} </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
 						</view>
@@ -101,13 +89,13 @@
 			</view>
 			<view class="grader">
 				<view>面试量化得分：</view>
-				<view class="grader_input"><input type="number" value="" v-model="grade2" max="100" placeholder="请输入"/></view>
+				<view class="grader_input"><input type="number" value="" v-model="total" max="100" placeholder="请输入"/></view>
 				<view>分</view>
 			</view>
 		</view>
 		
 		<view class="bottom_btn">
-			<view class="sub_btn">
+			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
 		</view>
@@ -119,9 +107,160 @@
 		data() {
 			return {
 				answer: 1,
-				grade1: '',
-				grade2: ''
+				practical_score: '',
+				total: '',
+				majorScore:[
+					{ 
+						id: 1,
+						title: '已具备岗位专业能力（50分）', 
+						options: [
+							{ id: 1, txt: '优秀：41-50分', checked: 0 },
+							{ id: 2, txt: '胜任：30-40', checked: 0 },
+							{ id: 3, txt: '不合适：1-29分', checked: 0 }
+						] ,
+					},
+					{
+						id: 2,
+						title: '可成长岗位专业潜力（20分）', 
+						options: [
+							{ id: 1, txt: '学习力优秀：17-20分', checked: 0 },
+							{ id: 2, txt: '学习力胜任：12-16', checked: 0 },
+							{ id: 3, txt: '学习力不合适：1-11分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 3,
+						title: '岗位对应专业工作简历（30分）', 
+						options: [
+							{ id: 1, txt: '知识面优秀：25-30分', checked: 0 },
+							{ id: 2, txt: '知识面胜任：18-24', checked: 0 },
+							{ id: 3, txt: '知识面不合适：1-17分', checked: 0 }
+						] ,  
+					}
+				],
+				p_question: {},
+				qualityScore: [
+					{
+						id: 1,
+						title: '1、仪容仪表（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 2,
+						title: '2、自我介绍（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 3,
+						title: '3、沟通（理解、演讲）能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 4,
+						title: '4、逻辑能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 5,
+						title: '5、解决问题（回答）能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 6,
+						title: '6、抗压（拿结果）能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 7,
+						title: '7、体力（身体素质）能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 8,
+						title: '8、团队协助（汇报、计划）能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 9,
+						title: '9、管理（时间管理）能力（1分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+					{
+						id: 10,
+						title: '10、创新能力（10分）', 
+						options: [
+							{ id: 1, txt: '优秀：9-10分', checked: 0 },
+							{ id: 2, txt: '胜任：6-8分', checked: 0 },
+							{ id: 3, txt: '不合适：1-5分', checked: 0 }
+						] ,  
+					},
+				],
+				c_question: {},
 			};
+		},
+		methods:{
+			selectPanswer(q, a){
+				let arr = this.majorScore[q].options
+				arr.forEach(item => {
+					item.checked = 0
+				})
+				arr[a].checked = 1
+				let key = `p_question_${this.majorScore[q].id}`
+				let value = arr[a].id
+				this.p_question[key] = value
+				console.log(this.p_question)
+			},
+			
+			selectCanswer(q, a){
+				let arr = this.qualityScore[q].options
+				arr.forEach(item => {
+					item.checked = 0
+				})
+				arr[a].checked = 1
+				let key = `c_question_${this.qualityScore[q].id}`
+				let value = arr[a].id
+				this.c_question[key] = value
+				console.log(this.c_question)
+			},
+			submit(){
+				console.log(this.practical_score)
+			}
 		}
 	}
 </script>

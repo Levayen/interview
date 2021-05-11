@@ -111,6 +111,18 @@
         {
           "name": "pages/HRinterview/HRinterview",
           "pathName": "pages/HRinterview/HRinterview",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/fk_form_3/fk_form_3",
+          "pathName": "pages/fk_form_3/fk_form_3",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/qrCode/qrCode",
+          "pathName": "pages/qrCode/qrCode",
           "scene": null
         }
       ]

@@ -19,15 +19,18 @@
 							* 1、加入我司意愿？
 						</view>
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
+							<view @click="bindAnswer(1, 1)"
+							:class="{'active': question_1 === 1}" > 
 								<viwe>强烈 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(1, 2)"
+							:class="{'active': question_1 === 2}">
 								<viwe>一般 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(1, 3)"
+							:class="{'active': question_1 === 3}">
 								<viwe>表现不太有兴趣 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
@@ -38,15 +41,18 @@
 							* 2、是否愿意为公司搬家？
 						</view>
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
+							<view @click="bindAnswer(2, 1)"
+							:class="{'active': question_2  === 1}"> 
 								<viwe>是 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(2, 2)"
+							:class="{'active': question_2  === 2}">
 								<viwe>否 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view :class="{'active': answer === 1}">
+							<view @click="bindAnswer(2, 3)"
+							:class="{'active': question_2  === 3}">
 								<view class="answer_2">
 									<viwe>距离近，不用搬家 </viwe>
 									<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
@@ -66,15 +72,18 @@
 							* 3、对突击加班的看法？
 						</view>
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
+							<view @click="bindAnswer(3, 1)"
+							:class="{'active': question_3  === 1}"> 
 								<viwe>应该的，以前有过经历 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(3, 2)"
+							:class="{'active': question_3  === 2}">
 								<viwe>没有太多加班经历，安排可以加班 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(3, 3)"
+							:class="{'active': question_3  === 3}">
 								<viwe>不太愿意 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
@@ -90,16 +99,18 @@
 				<view class="question">
 					<view class="question_item">
 						<view class="answer">
-							<view :class="{'active': answer === 1}"> 
+							<view @click="bindAnswer(4, 1)"
+							:class="{'active': status  === 1}"> 
 								<viwe>通过 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
-							<view>
+							<view @click="bindAnswer(4, 2)"
+							:class="{'active': status  === 2}">
 								<viwe>不通过 </viwe>
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
 							<view class="textarea">
-								<textarea value="" placeholder="可简要填写不通过原因" />
+								<textarea value="" v-model="reason" placeholder="可简要填写不通过原因" />
 							</view>
 						</view>
 					</view>
@@ -108,7 +119,7 @@
 		</view>
 		<view class="radio_wrap">
 			<label class="radio">
-				<radio value="" :checked="isChecked" @click="selectRadio" color="#5C6FB4"/><text> 加入重点跟踪人才库 </text>
+				<radio class="violet" value="" :checked="isChecked" @click="selectRadio" /><text> 加入重点跟踪人才库 </text>
 			</label>
 		</view>
 		<view class="bottom_btn">
@@ -123,15 +134,30 @@
 	export default {
 		data() {
 			return {
-				answer: 1,
-				grade1: '',
-				grade2: '',
-				isChecked: false
+				isChecked: false,
+				question_1: '',
+				question_2: '',
+				question_3: '',
+				key_talent: 0,
+				status: '',
+				reason: ''
 			};
 		},
 		methods:{
 			selectRadio(){
 				this.isChecked = !this.isChecked
+				this.key_talent ? 1 : 0
+			},
+			bindAnswer(q, a){
+				if(q === 1){
+					this.question_1 = a
+				}else if(q === 2){
+					this.question_2 = a
+				}else if(q === 3){
+					this.question_3 = a
+				}else if(q === 4){
+					this.status = a
+				}
 			}
 		}
 	}

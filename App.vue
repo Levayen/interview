@@ -13,6 +13,9 @@
 </script>
 
 <style>
+	/* colorUi */
+	 @import "colorui/main.css";
+	 @import "colorui/icon.css";
 	/*每个页面公共css */
 	page{
 		background-color: #F9F9F9;

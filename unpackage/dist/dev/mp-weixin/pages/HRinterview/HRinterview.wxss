@@ -17,7 +17,7 @@
   display: flex;
 }
 .main .item .item_bottom > view.data-v-2c13c914 {
-  width: 50%;
+  width: 100%;
   box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
@@ -30,10 +30,6 @@
           justify-content: center;
   font-size: 25rpx;
   color: #5C6FB4;
-}
-.main .item .item_bottom > view.data-v-2c13c914:first-child {
-  color: #333333;
-  border-right: 1rpx solid #f1f1f5;
 }
 .main .item .item_bottom > view .icon_1.data-v-2c13c914 {
   width: 30rpx;

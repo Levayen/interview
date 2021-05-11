@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "面试反馈表-3",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "grader": "/components/twoGrader"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="content data-v-c10823f4"><image src="../../static/img/qrcode_bg.jpg" mode="widthFix" class="data-v-c10823f4"></image><view class="img_box data-v-c10823f4" style="{{'top:'+(model===1?'35%':'28.5%')+';'}}"><image src="../../static/img/del.png" mode class="data-v-c10823f4"></image></view></view>

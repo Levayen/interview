@@ -18,7 +18,9 @@
     "pages/fk_form_1/fk_form_1",
     "pages/fk_form_2/fk_form_2",
     "pages/secondInterview/secondInterview",
-    "pages/HRinterview/HRinterview"
+    "pages/HRinterview/HRinterview",
+    "pages/fk_form_3/fk_form_3",
+    "pages/qrCode/qrCode"
   ],
   "subPackages": [],
   "window": {
