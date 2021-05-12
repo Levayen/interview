@@ -2009,31 +2009,37 @@ function normalizeComponent (
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
-  // 密码登录
-  passwordLogin: function passwordLogin(params) {
-    return (0, _request.default)("/platform/metadata/logon", "GET", params);
+  // 检测手机号码
+  checkPhone: function checkPhone(params) {
+    return (0, _request.default)("/api/Login/CheckPhone", "GET", params);
   },
 
-  // 短信登录
-  noteLogin: function noteLogin(params) {
-    return (0, _request.default)("/platform/metadata/login", "GET", params);
-  },
-
-  // 获取验证码：用于短信登陆、密码找回、用户注销
+  // 获取验证码
   getAuthCode: function getAuthCode(params) {
-    return (0, _request.default)("/platform/metadata/sms", "GET", params);
+    return (0, _request.default)("/api/Login/SendCode", "GET", params);
   },
 
-  // 获取注册账号验证码
-  getRegistAuthCode: function getRegistAuthCode(params) {
-    return (0, _request.default)("/platform/metadata/sms1", "GET", params);
+  // 面试者登录
+  userLogin: function userLogin(params) {
+    return (0, _request.default)("/api/Login/Login", "POST", params);
+  },
+  // 面试官登录
+  intervieweerLogin: function intervieweerLogin(params) {
+    return (0, _request.default)("/api/Login/IntervieweerLogin", "POST", params);
   },
 
+  //首页接口
+  getIndex: function getIndex(params) {
+    return (0, _request.default)("/api/Home/Statistics", "POST", params);
+  },
+  //在招岗位
+  statistics: function statistics(params) {
+    return (0, _request.default)("/api/Interview/Statistics", "GET", params);
+  },
   // 登录者信息
   getMyInfo: function getMyInfo(params) {
     return (0, _request.default)("/platform/metadata/bindinfo", "GET", params);
   },
-
   // 注册账号
   registerAccount: function registerAccount(params) {
     return (0, _request.default)("/platform/metadata/register", "GET", params);
@@ -2062,36 +2068,54 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //用于请求拦截的
 // var Fly=require("flyio/dist/npm/wx");  
 // var fly=new Fly;  
-
-var server = "https://uniapp.dcloud.io/update";
-var req = { "appid": "123", "version": "123" };
+// var server = "https://pre-sop-api.xiniu.com";  
+// var req = {"appid":"123","version":"123"};  
 // 全局请求封装
-var token = uni.getStorageSync('token');
-var baseUrl = "https://www.piop.cn/api";var _default =
+//获取token
+var token = '';
+try {
+  var value = uni.getStorageSync('token');
+  if (value) {
+    token = value;
+  } else {
+    token = "";
+  }
+} catch (e) {
+  // error
+}
+var baseUrl = "https://pre-sop-api.xiniu.com";var _default =
 
 function _default(url, method, params) {
-  uni.showLoading({
-    title: "加载中" });
-
-
   return new Promise(function (resolve, reject) {
     uni.request({
       url: baseUrl + url,
       method: method,
       header: {
-        token: token },
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + token },
 
       data: _objectSpread({},
       params),
 
       success: function success(res) {
-        resolve(res.data);
+        if (res.data.code === 200) {
+          resolve(res.data);
+        } else {
+          uni.showToast({
+            title: res.data.message,
+            icon: "none" });
+
+        }
       },
       fail: function fail(err) {
+        uni.showToast({
+          title: "请求失败",
+          icon: "none" });
+
         reject(err);
       },
       complete: function complete() {
-        uni.hideLoading();
+
       } });
 
   });
@@ -2100,7 +2124,7 @@ function _default(url, method, params) {
 
 /***/ }),
 
-/***/ 178:
+/***/ 187:
 /*!*****************************************************************!*\
   !*** D:/laihuayong/interview/static/biaofun-region/region.json ***!
   \*****************************************************************/
@@ -8198,6 +8222,44 @@ module.exports = g;
 /***/ (function(module, exports) {
 
 
+
+/***/ }),
+
+/***/ 59:
+/*!***********************************************!*\
+  !*** D:/laihuayong/interview/utils/global.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.regularPhone = regularPhone;exports.regularEmail = regularEmail;
+function regularPhone(phone) {
+  var TEL_REGEXP = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/; //支持新出的手机号，166、198、199号段
+  if (TEL_REGEXP.test(phone)) {
+    return true;
+  } else {
+    uni.showToast({
+      title: "手机号码格式不正确",
+      icon: "none" });
+
+    return false;
+  }
+}
+
+function regularEmail(email) {
+  var TEL_REGEXP = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+  if (TEL_REGEXP.test(email)) {
+    return true;
+  } else {
+    uni.showToast({
+      title: "邮箱格式不正确",
+      icon: "none" });
+
+    return false;
+  }
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

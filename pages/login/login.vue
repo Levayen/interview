@@ -17,41 +17,43 @@
 					<view>
 						<view>手机号码：</view>
 						<view>
-							<input type="number" value="" />
+							<input type="number" value="" v-model="phone" @input="inputChange"/>
 						</view>
-						<view class="code_btn">验证码</view>
+						<view v-if="showText" class="code_btn" @click="getAuthCode">验证码</view>
+						<view v-else class="code_btn">{{second}}s重新发送</view>
 					</view>
-					<view>
+					<view v-if="!isExist">
 						<view>*Email：</view>
 						<view>
-							<input type="text" value="" />
+							<input type="text" value="" v-model="email" />
 						</view>
 					</view>
 					<view>
 						<view>请输入验证码：</view>
 						<view>
-							<input type="number" value="" />
+							<input type="number" value="" v-model="code"/>
 						</view>
 					</view>
 				</view>
+				
 				<view class="login_form_2" v-else>
 					<view>
 						<view>犀牛ID：</view>
 						<view>
-							<input type="number" value="" />
+							<input type="number" value="" v-model="xiniu_id"/>
 						</view>
 					</view>
 					<view>
 						<view>密码：</view>
 						<view>
-							<input type="text" value="" />
+							<input type="password" value="" v-model="password"/>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="login_btn">
-			<view>
+			<view @click="isInterviewers === 1 ? userLogin() : intervieweerLogin()">
 				登&nbsp;录
 			</view>
 		</view>
@@ -59,13 +61,132 @@
 </template>
 
 <script>
+	import api from '../../utils/api.js'
+	import { regularPhone, regularEmail } from '../../utils/global.js'
 	export default {
 		data() {
 			return {
-				isInterviewers: 1
+				isInterviewers: 1,
+				phone: '',
+				email: '', //邮箱
+				code: '', //验证码
+				isExist: true, //手机号是否存在
+				second: 60,
+				showText: true,
+				xiniu_id: '',
+				password: '',
 			};
 		},
+		onLoad() {
+		},
 		methods:{
+			inputChange(e){
+				if(this.phone.length === 11){
+					this.checkPhone()
+				}
+			},
+			//获取验证码
+			getAuthCode(){
+				let params = {
+					phone: this.phone
+				}
+				if(!regularPhone(params.phone)){
+					return 
+				}
+				api.getAuthCode(params).then( res => {
+					this.countDown()
+				})
+			},
+			//倒计时
+			countDown(){
+			    this.showText = false
+			    var interval = setInterval(() => {
+			        let times = --this.second
+			        this.second = times<10?'0'+times:times //小于10秒补 0
+			    }, 1000)
+			    setTimeout(() => {
+			        clearInterval(interval)
+			        this.second=60
+			        this.showText = true
+			    }, 60000)
+			},   
+			//检测手机号
+			checkPhone(){
+				let params = {
+					phone: this.phone
+				}
+				api.checkPhone(params).then( res => {
+					this.isExist = res.result.isExist
+				})
+			},
+			//面试者登录
+			userLogin(){
+				let params = {}
+				if(this.isExist){
+					params = {
+						phone: this.phone,
+						code: this.code
+					}
+				}else{
+					params = {
+						phone: this.phone,
+						email: this.email,
+						code: this.code
+					}
+				}
+				if(!regularPhone(params.phone)){
+					return 
+				}
+				if( !this.isExist && !regularEmail(params.email)){
+					return 
+				}
+				if(params.code === ''){
+					uni.showToast({
+						title: "验证码不能为空",
+						icon: "none"
+					})
+					return
+				}
+				uni.showLoading({
+					title: "加载中"
+				})
+				api.userLogin(params).then( res => {
+					uni.setStorageSync("token", res.result.token)
+					uni.setStorageSync("phone", res.result.phone)
+					uni.switchTab({
+						url:'../index/index'
+					})
+					uni.hideLoading()
+				})
+			},
+			//面试官登录
+			intervieweerLogin(){
+				let params = {
+					xiniu_id: this.xiniu_id,
+					password: this.password
+				}
+				if(params.xiniu_id === ''){
+					uni.showToast({
+						title: "犀牛ID不能为空",
+						icon: "none"
+					})
+					return
+				}
+				if(params.password === ''){
+					uni.showToast({
+						title: "密码不能为空",
+						icon: "none"
+					})
+					return
+				}
+				uni.showLoading({
+					title: "加载中"
+				})
+				api.intervieweerLogin(params).then( res => {
+					console.log(res) 
+					uni.hideLoading()
+				})
+			},
 			changeIdentity(val){
 				this.isInterviewers = val
 			}
@@ -131,7 +252,8 @@
 				.code_btn{
 					position: absolute;
 					right: 35rpx;
-					width: 139rpx;
+					min-width: 139rpx;
+					padding: 0 10rpx;
 					height: 50rpx;
 					line-height: 50rpx;
 					text-align: center;

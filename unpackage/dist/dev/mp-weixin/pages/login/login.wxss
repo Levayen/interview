@@ -71,7 +71,8 @@
 .login_box .login_form .login_form_1 .code_btn.data-v-b237504c {
   position: absolute;
   right: 35rpx;
-  width: 139rpx;
+  min-width: 139rpx;
+  padding: 0 10rpx;
   height: 50rpx;
   line-height: 50rpx;
   text-align: center;

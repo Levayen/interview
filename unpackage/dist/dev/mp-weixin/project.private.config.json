@@ -123,6 +123,18 @@
         {
           "name": "pages/qrCode/qrCode",
           "pathName": "pages/qrCode/qrCode",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/joinDetails/joinDetails",
+          "pathName": "pages/joinDetails/joinDetails",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
           "scene": null
         }
       ]

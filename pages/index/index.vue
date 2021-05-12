@@ -6,12 +6,12 @@
 		<view class="index_box">
 			<view class="index_box_1">
 				<view>当前有</view>
-				<view class="number_fs">23</view>
+				<view class="number_fs">{{ positions }}</view>
 				<view>个岗位在招聘</view>
 			</view>
 			<view class="index_box_2">
 				<view>当前您有</view>
-				<view class="number_fs">2</view>
+				<view class="number_fs">{{ records }}</view>
 				<view>条面试通知</view>
 			</view>
 		</view>
@@ -19,17 +19,24 @@
 </template>
 
 <script>
+	import api from '../../utils/api.js'
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				positions: 0,
+				records: 0
 			}
 		},
 		onLoad() {
-			
+			this.getIndex()
 		},
 		methods: {  
-			
+			getIndex(){
+				api.getIndex().then(res => {
+					this.positions = res.result.positions;
+					this.records = res.result.records;
+				})
+			}
 		}
 	}
 </script>

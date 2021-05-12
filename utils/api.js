@@ -1,30 +1,36 @@
 import request from "./request.js"
 export default {
-	// 密码登录
-	passwordLogin(params) {
-		return request("/platform/metadata/logon", "GET", params)
+	// 检测手机号码
+	checkPhone(params) {
+		return request("/api/Login/CheckPhone", "GET", params)
 	},
 
-	// 短信登录
-	noteLogin(params) {
-		return request("/platform/metadata/login", "GET", params)
-	},
-
-	// 获取验证码：用于短信登陆、密码找回、用户注销
+	// 获取验证码
 	getAuthCode(params) {
-		return request("/platform/metadata/sms", "GET", params)
+		return request("/api/Login/SendCode", "GET", params)
 	},
 
-	// 获取注册账号验证码
-	getRegistAuthCode(params) {
-		return request("/platform/metadata/sms1", "GET", params)
+	// 面试者登录
+	userLogin(params) {
+		return request("/api/Login/Login", "POST", params)
+	},
+	// 面试官登录
+	intervieweerLogin(params) {
+		return request("/api/Login/IntervieweerLogin", "POST", params)
 	},
 
+	//首页接口
+	getIndex(params) {
+		return request("/api/Home/Statistics", "POST", params)
+	},
+	//在招岗位
+	statistics(params){
+		return request("/api/Interview/Statistics", "GET", params)
+	},
 	// 登录者信息
 	getMyInfo(params) {
 		return request("/platform/metadata/bindinfo", "GET", params)
 	},
-
 	// 注册账号
 	registerAccount(params) {
 		return request("/platform/metadata/register", "GET", params)

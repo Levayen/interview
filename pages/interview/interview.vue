@@ -1,25 +1,22 @@
 <template>
 	<view class="content">
 		<ul>
-			<li @click="goDetails" data-position="产品经理">产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理</li>
-			<li>产品经理产品经理</li>
+			<li v-for="(item, index) in positionList" :key="index"
+			@click="goDetails" :data-position="item.post_name">{{item.post_name}}</li>
 		</ul>
 	</view>
 </template>
 
 <script>
+	import api from '../../utils/api.js'
 	export default {
 		data() {
 			return {
-				
+				positionList: []
 			};
+		},
+		onLoad(){
+			this.getPositionList()
 		},
 		methods:{
 			goDetails(e){
@@ -27,6 +24,12 @@
 				let position = e.currentTarget.dataset.position
 				uni.navigateTo({
 					url:'../interviewDetails/interviewDetails?position=' + position
+				})
+			},
+			getPositionList(){
+				api.statistics({}).then( res => {
+					console.log(res)
+					this.positionList = res.result
 				})
 			}
 		}
@@ -45,7 +48,7 @@
 			width: 215rpx;
 			height: 111rpx;
 			box-sizing: border-box;
-			padding: 0 39rpx;
+			padding: 0 30rpx;
 			display: flex;
 			flex-direction: column;
 			align-content: center;

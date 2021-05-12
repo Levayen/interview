@@ -3609,6 +3609,11 @@ scroll-view.cu-steps .cu-item {
 .lines-gray {
 	color: #aaaaaa;
 }
+.text-violet,
+.line-violet,
+.lines-violet {
+	color: #5C6FB4;
+}
 .text-black,
 .line-black,
 .lines-black {

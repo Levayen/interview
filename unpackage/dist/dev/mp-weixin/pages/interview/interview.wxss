@@ -13,7 +13,7 @@
   width: 215rpx;
   height: 111rpx;
   box-sizing: border-box;
-  padding: 0 39rpx;
+  padding: 0 30rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

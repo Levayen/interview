@@ -130,29 +130,26 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-  },
+
+
+
+
+
+
+
+var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { positionList: [] };}, onLoad: function onLoad() {this.getPositionList();},
   methods: {
     goDetails: function goDetails(e) {
       console.log(e.currentTarget.dataset.position);
@@ -160,6 +157,12 @@ var _default =
       uni.navigateTo({
         url: '../interviewDetails/interviewDetails?position=' + position });
 
+    },
+    getPositionList: function getPositionList() {var _this = this;
+      _api.default.statistics({}).then(function (res) {
+        console.log(res);
+        _this.positionList = res.result;
+      });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
