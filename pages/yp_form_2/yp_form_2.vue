@@ -21,8 +21,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer(1, 1)" :class="{active: question_1  === 1}">在职</view>
-						<view @click="selectAnswer(0, 1)" :class="{active: question_1  === 0}">离职</view>
+						<view @click="selectAnswer1(1)" :class="{active: question_1  === 1}">在职</view>
+						<view @click="selectAnswer1(0)" :class="{active: question_1  === 0}">离职</view>
 					</view>
 					<view class="answer_text">
 						<textarea value="" maxlength="50" v-model="question_1_reason" placeholder="请简要填写离职原因" />
@@ -75,8 +75,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer(1, 6)" :class="{active: question_6  === 1}">是</view>
-						<view @click="selectAnswer(0, 6)" :class="{active: question_6  === 0}">否</view>
+						<view @click="selectAnswer6(1)" :class="{active: question_6  === 1}">是</view>
+						<view @click="selectAnswer6(0)" :class="{active: question_6  === 0}">否</view>
 					</view>
 				</view>
 			</view>
@@ -86,8 +86,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer(0, 7)" :class="{active: question_7  === 0}">无</view>
-						<view @click="selectAnswer(1, 7)" :class="{active: question_7  === 1}">有</view>
+						<view @click="selectAnswer7('0')" :class="{active: question_7  == '0'}">无</view>
+						<view @click="selectAnswer7(1)" :class="{active: question_7  == 1}">有</view>
 					</view>
 					<view class="answer_input">
 						<view>
@@ -107,10 +107,10 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer(0, 8)" :class="{active: question_8 === 0}">自有房产</view>
-						<view @click="selectAnswer(1, 8)" :class="{active: question_8 === 1}">借住亲友住房</view>
-						<view @click="selectAnswer(2, 8)" :class="{active: question_8 === 2}">自行租住</view>
-						<view @click="selectAnswer(3, 8)" :class="{active: question_8 === 3}">需要公司安排</view>
+						<view @click="selectAnswer8('0')" :class="{active: question_8 === '0'}">自有房产</view>
+						<view @click="selectAnswer8(1)" :class="{active: question_8 === 1}">借住亲友住房</view>
+						<view @click="selectAnswer8(2)" :class="{active: question_8 === 2}">自行租住</view>
+						<view @click="selectAnswer8(3)" :class="{active: question_8 === 3}">需要公司安排</view>
 					</view>
 				</view>
 			</view>
@@ -143,21 +143,25 @@
 				</view>
 				<view class="answer">
 					<view class="answer_input_2">
-						<view @click="selectAnswer(0, 10)" :class="{active: question_10 === 0}">
+						<view @click="selectAnswer10('0')" :class="{active: question_10 === '0'}">
 							<view> 招聘网站 </view>
-							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-if="question_10 === '0'" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer(1, 10)" :class="{active: question_10 === 1}">
+						<view @click="selectAnswer10(1)" :class="{active: question_10 === 1}">
 							<view> 招聘会 </view>
-							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-if="question_10 === 1" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer(2, 10)" :class="{active: question_10 === 2}">
+						<view @click="selectAnswer10(2)" :class="{active: question_10 === 2}">
 							<view> 朋友推荐 </view>
-							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-if="question_10 === 2" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer(3, 10)" :class="{active: question_10 === 3}">
+						<view @click="selectAnswer10(3)" :class="{active: question_10 === 3}">
 							<view> 其他 </view>
-							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-if="question_10 === 3" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input v-else type="text" value=""  placeholder="请填写"/>
 						</view>
 					</view>
 				</view>
@@ -227,18 +231,21 @@
 				console.log('picker发送选择改变，携带值为', e.target.value)
 			    this.date = e.target.value
 			},
-			selectAnswer(val, i){
-				if(i === 1){
-					this.question_1 = val
-				}else if( i === 6){
-					this.question_6 = val
-				}else if( i === 7){
-					this.question_7 = val
-				}else if( i === 8){
-					this.question_8 = val
-				}else if( i === 10){
-					this.question_10 = val
-				}
+			selectAnswer1(val){
+				this.question_1 = val
+			},
+			selectAnswer6(val){
+				this.question_6 = val
+			},
+			selectAnswer7(val){
+				this.question_7 = val
+			},
+			selectAnswer8(val){
+				this.question_8 = val
+			},
+			selectAnswer10(val){
+				this.question_10_text = ''
+				this.question_10 = val
 			},
 			submitRecruitmentFormTwo(){
 				let params = {
@@ -249,19 +256,18 @@
 					  "question_4": this.question_4,
 					  "question_5": this.question_5,
 					  "question_6": this.question_6,
-					  "question_7": this.question_7,
+					  "question_7": Number(this.question_7),
 					  "question_7_name": this.name,
 					  "question_7_position": this.position,
-					  "question_8": this.question_8,
+					  "question_8": Number(this.question_8) ,
 					  "question_9_time": this.date,
 					  "question_9_salary": this.question_9_salary,
-					  "question_10": this.question_10,
+					  "question_10": Number(this.question_10),
 					  "question_10_text": this.question_10_text
 				}
-				console.log(params)
-				return
 				this.$api.submitRecruitmentFormTwo(params).then( res => {
 					console.log(res)
+					this.isFinish = true;
 				})
 			},
 			getDate(type) {
@@ -281,7 +287,7 @@
 			},
 			changeIndex(n){
 				if( this.nextNum === 0 ){
-					this.isFinish = true;
+					this.submitRecruitmentFormTwo()
 					clearInterval(this.timer);
 					let m = Math.floor( this.time / 60);
 					let s = this.time % 60;

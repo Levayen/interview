@@ -2000,9 +2000,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
-/*!********************************************!*\
-  !*** D:/laihuayong/interview/utils/api.js ***!
-  \********************************************/
+/*!*******************************************************!*\
+  !*** C:/Users/Levayen/Desktop/interview/utils/api.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2068,9 +2068,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 12:
-/*!************************************************!*\
-  !*** D:/laihuayong/interview/utils/request.js ***!
-  \************************************************/
+/*!***********************************************************!*\
+  !*** C:/Users/Levayen/Desktop/interview/utils/request.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2135,10 +2135,10 @@ function _default(url, method, params, isForm) {
 
 /***/ }),
 
-/***/ 187:
-/*!*****************************************************************!*\
-  !*** D:/laihuayong/interview/static/biaofun-region/region.json ***!
-  \*****************************************************************/
+/***/ 194:
+/*!****************************************************************************!*\
+  !*** C:/Users/Levayen/Desktop/interview/static/biaofun-region/region.json ***!
+  \****************************************************************************/
 /*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, default */
 /***/ (function(module) {
 
@@ -8226,9 +8226,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!******************************************!*\
-  !*** D:/laihuayong/interview/pages.json ***!
-  \******************************************/
+/*!*****************************************************!*\
+  !*** C:/Users/Levayen/Desktop/interview/pages.json ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8237,9 +8237,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 59:
-/*!***********************************************!*\
-  !*** D:/laihuayong/interview/utils/global.js ***!
-  \***********************************************/
+/*!**********************************************************!*\
+  !*** C:/Users/Levayen/Desktop/interview/utils/global.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
