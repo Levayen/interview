@@ -136,6 +136,10 @@
   margin-right: 28rpx;
   margin-bottom: 28rpx;
 }
+.answer .radio > view.active.data-v-ad0af274 {
+  color: #5C6FB4;
+  border: 1rpx solid #5C6FB4;
+}
 .answer_text.data-v-ad0af274 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -240,6 +244,10 @@
   color: #333333;
   margin-bottom: 28rpx;
   border-radius: 7rpx;
+}
+.answer_input_2 > view.active.data-v-ad0af274 {
+  color: #5C6FB4;
+  border: 1rpx solid #5C6FB4 !important;
 }
 .answer_input_2 > view.data-v-ad0af274:last-child {
   border-bottom: none;

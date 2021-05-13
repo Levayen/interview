@@ -7,7 +7,7 @@
 			</view>
 			<view class="top_right">
 				<view class="select_btn">
-					产品经理
+					{{post_name}}
 				</view>
 			</view>
 		</view>
@@ -21,11 +21,11 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view>在职</view>
-						<view>离职</view>
+						<view @click="selectAnswer(1, 1)" :class="{active: question_1  === 1}">在职</view>
+						<view @click="selectAnswer(0, 1)" :class="{active: question_1  === 0}">离职</view>
 					</view>
 					<view class="answer_text">
-						<textarea value="" maxlength="50" placeholder="请简要填写离职原因" />
+						<textarea value="" maxlength="50" v-model="question_1_reason" placeholder="请简要填写离职原因" />
 					</view>
 				</view>
 			</view>
@@ -35,7 +35,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" placeholder="请填写回答" />
+						<textarea value="" maxlength="50" v-model="question_2" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -45,7 +45,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" placeholder="请填写回答" />
+						<textarea value="" maxlength="50" v-model="question_3" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -55,7 +55,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" placeholder="请填写回答" />
+						<textarea value="" maxlength="50" v-model="question_4" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -65,7 +65,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" placeholder="请填写回答" />
+						<textarea value="" maxlength="50" v-model="question_5" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -75,8 +75,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view>在职</view>
-						<view>离职</view>
+						<view @click="selectAnswer(1, 6)" :class="{active: question_6  === 1}">是</view>
+						<view @click="selectAnswer(0, 6)" :class="{active: question_6  === 0}">否</view>
 					</view>
 				</view>
 			</view>
@@ -86,8 +86,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view>无</view>
-						<view>有</view>
+						<view @click="selectAnswer(0, 7)" :class="{active: question_7  === 0}">无</view>
+						<view @click="selectAnswer(1, 7)" :class="{active: question_7  === 1}">有</view>
 					</view>
 					<view class="answer_input">
 						<view>
@@ -107,10 +107,10 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view>自有房产</view>
-						<view>借住亲友住房</view>
-						<view>自行租住</view>
-						<view>需要公司安排</view>
+						<view @click="selectAnswer(0, 8)" :class="{active: question_8 === 0}">自有房产</view>
+						<view @click="selectAnswer(1, 8)" :class="{active: question_8 === 1}">借住亲友住房</view>
+						<view @click="selectAnswer(2, 8)" :class="{active: question_8 === 2}">自行租住</view>
+						<view @click="selectAnswer(3, 8)" :class="{active: question_8 === 3}">需要公司安排</view>
 					</view>
 				</view>
 			</view>
@@ -132,7 +132,7 @@
 						</view>
 						<view>
 							<view>您期望薪资：</view>
-							<input type="number" value="" v-model="salary" placeholder="请填写"/>
+							<input type="number" value="" v-model="question_9_salary" placeholder="请填写"/>
 						</view>
 					</view>
 				</view>
@@ -143,21 +143,21 @@
 				</view>
 				<view class="answer">
 					<view class="answer_input_2">
-						<view>
+						<view @click="selectAnswer(0, 10)" :class="{active: question_10 === 0}">
 							<view> 招聘网站 </view>
-							<input type="text" value="" v-model="jobWebsite" placeholder="请填写"/>
+							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
 						</view>
-						<view>
+						<view @click="selectAnswer(1, 10)" :class="{active: question_10 === 1}">
 							<view> 招聘会 </view>
-							<input type="text" value="" v-model="jobFair" placeholder="请填写"/>
+							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
 						</view>
-						<view>
+						<view @click="selectAnswer(2, 10)" :class="{active: question_10 === 2}">
 							<view> 朋友推荐 </view>
-							<input type="text" value="" v-model="recommend" placeholder="请填写"/>
+							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
 						</view>
-						<view>
+						<view @click="selectAnswer(3, 10)" :class="{active: question_10 === 3}">
 							<view> 其他 </view>
-							<input type="text" value="" v-model="other" placeholder="请填写"/>
+							<input type="text" value="" v-model="question_10_text" placeholder="请填写"/>
 						</view>
 					</view>
 				</view>
@@ -181,6 +181,8 @@
 	export default {
 		data() {
 			return {
+				name:'',
+				position:'',
 				qIndex: 1,
 				preNum: 0,
 				nextNum: 9,
@@ -189,6 +191,20 @@
 				time: 0,
 				timeText: '0分0秒',
 				timer: null,
+				post_id: '',
+				post_name: '',
+				question_1: '',
+				question_1_reason:'',
+				question_2: '',
+				question_3: '',
+				question_4: '',
+				question_5: '',
+				question_6: '',
+				question_7: '',
+				question_8: '',
+				question_9_salary: '',
+				question_10: '',
+				question_10_text: '',
 			};
 		},
 		computed: {
@@ -199,7 +215,9 @@
 		           return this.getDate('end');
 		       }
 		},
-		onLoad(options) {
+		onLoad(opt) {
+			this.post_id = opt.post_id;
+			this.post_name = opt.post_name;
 			this.timer = setInterval(() => {
 				this.time += 1
 			}, 1000)
@@ -208,6 +226,43 @@
 			bindDateChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 			    this.date = e.target.value
+			},
+			selectAnswer(val, i){
+				if(i === 1){
+					this.question_1 = val
+				}else if( i === 6){
+					this.question_6 = val
+				}else if( i === 7){
+					this.question_7 = val
+				}else if( i === 8){
+					this.question_8 = val
+				}else if( i === 10){
+					this.question_10 = val
+				}
+			},
+			submitRecruitmentFormTwo(){
+				let params = {
+					  "question_1": this.question_1,
+					  "question_1_reason": this.question_1_reason,
+					  "question_2": this.question_2,
+					  "question_3": this.question_3,
+					  "question_4": this.question_4,
+					  "question_5": this.question_5,
+					  "question_6": this.question_6,
+					  "question_7": this.question_7,
+					  "question_7_name": this.name,
+					  "question_7_position": this.position,
+					  "question_8": this.question_8,
+					  "question_9_time": this.date,
+					  "question_9_salary": this.question_9_salary,
+					  "question_10": this.question_10,
+					  "question_10_text": this.question_10_text
+				}
+				console.log(params)
+				return
+				this.$api.submitRecruitmentFormTwo(params).then( res => {
+					console.log(res)
+				})
 			},
 			getDate(type) {
 			    const date = new Date();
@@ -341,6 +396,10 @@
 				font-size: 28rpx;
 				margin-right: 28rpx;
 				margin-bottom: 28rpx;
+				&.active{
+					color: #5C6FB4;
+					border: 1rpx solid #5C6FB4;
+				}
 			}
 		}
 	}
@@ -428,6 +487,10 @@
 			color: #333333;
 			margin-bottom: 28rpx;
 			border-radius: 7rpx;
+			&.active{
+				color: #5C6FB4;
+				border: 1rpx solid #5C6FB4 !important;
+			}
 			&:last-child{
 				border-bottom: none;
 			}

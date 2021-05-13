@@ -138,71 +138,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      dataSource: [
-      { id: 1,
-        name: '星期一',
-        child: [
-        {
-          id: 2,
-          name: '星期一晴天' },
-
-        {
-          id: 3,
-          name: '星期一雨天' }] },
-
-
-
-      { id: 4,
-        name: '星期二',
-        child: [
-        {
-          id: 5,
-          name: '星期二暴雨' },
-
-        {
-          id: 6,
-          name: '星期二转晴' },
-
-        {
-          id: 7,
-          name: '星期二冰雹' }] },
-
-
-
-      { id: 8,
-        name: '星期三',
-        child: [] },
-
-      { id: 9,
-        name: '星期四',
-        child: [
-        {
-          id: 10,
-          name: '星期四大太阳' }] },
-
-
-
-      { id: 11,
-        name: '星期五',
-        child: [
-        {
-          id: 12,
-          name: '星期五快了' },
-
-        {
-          id: 13,
-          name: '星期五又下雨' }] }],
-
-
-
-
-
       name: '',
-
       classifyArr: [[], []], // picker - 数据源
       classifyIndex: [0, 0], // picker - 索引
 
@@ -211,13 +153,31 @@ var _default =
   },
   mounted: function mounted(options) {
     // 获取数据源并分出一级二级分类
-    this.getAllClassify();
+    this.getProvinceList();
+    // this.getAllClassify()
   },
   methods: {
+    //省
+    getProvinceList: function getProvinceList() {var _this = this;
+      this.$api.getProvinces({}).then(function (res) {
+        var provinces = res.result;
+        // 一级分类的数据源
+        _this.$set(_this.classifyArr, 0, provinces);
+        // 第一次打开时，默认给一级分类添加它的二级分类
+        _this.getCityList(provinces[0].id);
+      });
+
+    },
+    //市
+    getCityList: function getCityList(id) {var _this2 = this;
+      this.$api.getCitys({ provinceId: id }).then(function (res) {
+        var citys = res.result;
+        _this2.$set(_this2.classifyArr, 1, citys);
+      });
+    },
     // 获取数据源并分出一级二级
     getAllClassify: function getAllClassify() {
       var dataLen = this.dataSource.length;
-
       for (var i = 0; i < dataLen; i++) {
         // 将数据源中的二级分类 push 进 childArr，作为二级分类的数据源
         this.childArr.push(this.dataSource[i].child);
@@ -242,6 +202,10 @@ var _default =
       if (this.classifyArr[1].length != 0) {
         this.name += '-' + this.classifyArr[1][this.classifyIndex[1]].name;
       }
+      this.$emit('print',
+      this.classifyArr[0][this.classifyIndex[0]].id,
+      this.classifyArr[1][this.classifyIndex[1]].id);
+
     },
 
     // 获取二级分类
@@ -254,8 +218,10 @@ var _default =
 
 
 
+
         // 在 H5 环境下 $set 会导致一级分类无法滚动， 小程序正常运行
-        this.$set(this.classifyArr, 1, this.childArr[e.detail.value]);
+        // this.$set(this.classifyArr, 1, this.childArr[e.detail.value])
+        this.getCityList(this.classifyArr[0][e.detail.value].id);
 
       }
     } } };exports.default = _default;

@@ -183,27 +183,34 @@ __webpack_require__.r(__webpack_exports__);
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      post_id: '',
+      post_name: '' };
 
   },
   methods: {
+    onLoad: function onLoad(options) {
+      uni.setNavigationBarTitle({
+        title: "".concat(options.position, " - \u9762\u8BD5") });
+
+      this.post_id = options.post_id;
+      this.post_name = options.position;
+    },
     goForm1: function goForm1() {
       uni.navigateTo({
-        url: '../yp_form_1/yp_form_1' });
+        url: "../yp_form_1/yp_form_1?post_id=".concat(this.post_id, "&post_name=").concat(this.post_name) });
+
+    },
+    goForm2: function goForm2() {
+      uni.navigateTo({
+        url: "../yp_form_2/yp_form_2?post_id=".concat(this.post_id, "&post_name=").concat(this.post_name) });
 
     },
     goPages: function goPages(url) {
       uni.switchTab({
         url: "..".concat(url) });
 
-    } },
-
-  onLoad: function onLoad(options) {
-    uni.setNavigationBarTitle({
-      title: "".concat(options.position, " - \u9762\u8BD5") });
-
-  } };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

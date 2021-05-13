@@ -11,7 +11,9 @@
                              :value="classifyIndex"
                              :range="classifyArr">
 						 <view class="select_btn" v-if="name === ''">
-						 	<view>请选择</view>
+						 	<view>省</view>
+						 	<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
+						 	<view style="margin-left: 112rpx;">市</view>
 						 	<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 						 </view>
 						  <view class="uni-input">{{name}}</view>
@@ -26,67 +28,7 @@
     export default {
         data() {
             return {
-                 dataSource: [
-                    { id: 1,
-                       name: '星期一',
-                       child: [
-                           {
-                               id: 2,
-                               name: '星期一晴天'
-                           },
-                           {
-                               id: 3,
-                               name: '星期一雨天'
-                           },
-                       ],
-                    },
-                    { id: 4,
-                       name: '星期二',
-                       child: [
-                           {
-                               id: 5,
-                               name: '星期二暴雨'
-                           },
-                           {
-                               id: 6,
-                               name: '星期二转晴'
-                           },
-                           {
-                               id: 7,
-                               name: '星期二冰雹'
-                           },
-                       ],
-                    },
-                    { id: 8,
-                       name: '星期三',
-                       child: []
-                    },
-                    { id: 9,
-                       name: '星期四',
-                       child: [
-                           {
-                               id: 10,
-                               name: '星期四大太阳'
-                           }
-                       ]
-                    },
-                    { id: 11,
-                       name: '星期五',
-                       child: [
-                           {
-                               id: 12,
-                               name: '星期五快了'
-                           },
-                          {
-                               id: 13,
-                               name: '星期五又下雨'
-                           }
-                       ]
-                    },
-                 ],
-
                 name: '',
-
                 classifyArr:[[], []], // picker - 数据源
                 classifyIndex: [0, 0], // picker - 索引
 
@@ -95,13 +37,31 @@
         },
         mounted: function(options) {
             // 获取数据源并分出一级二级分类
-            this.getAllClassify()
+			this.getProvinceList()
+            // this.getAllClassify()
         },
         methods: {
+			//省
+			getProvinceList(){
+				this.$api.getProvinces({}).then( res => {
+					let provinces = res.result
+					// 一级分类的数据源
+					this.$set(this.classifyArr, 0, provinces)
+					// 第一次打开时，默认给一级分类添加它的二级分类
+					this.getCityList(provinces[0].id)
+				})
+				
+			},
+			//市
+			getCityList(id){
+				this.$api.getCitys({provinceId: id}).then( res => {
+					let citys = res.result
+					this.$set(this.classifyArr, 1, citys)
+				})
+			},
              // 获取数据源并分出一级二级
             getAllClassify() {
                 let dataLen = this.dataSource.length;
-
                 for (let i = 0; i < dataLen; i++) {
                     // 将数据源中的二级分类 push 进 childArr，作为二级分类的数据源
                     this.childArr.push(this.dataSource[i].child)
@@ -126,6 +86,10 @@
                 if (this.classifyArr[1].length != 0) {
                     this.name += '-' + this.classifyArr[1][this.classifyIndex[1]].name
                 }
+				this.$emit('print', 
+					this.classifyArr[0][this.classifyIndex[0]].id,
+					this.classifyArr[1][this.classifyIndex[1]].id
+				)
             },
 
             // 获取二级分类
@@ -134,12 +98,14 @@
                 if (e.detail.column == 0) {
                     // #ifdef H5
                     // 在小程序中直接赋值无效  H5 可直接赋值
-                    this.classifyArr[1] =  this.childArr[e.detail.value]
+                    // this.classifyArr[1] =  this.childArr[e.detail.value]
+					this.getCityList(this.classifyArr[0][e.detail.value].id)
                     // #endif
 
                     // #ifdef MP-WEIXIN
                     // 在 H5 环境下 $set 会导致一级分类无法滚动， 小程序正常运行
-                     this.$set(this.classifyArr, 1, this.childArr[e.detail.value])
+                     // this.$set(this.classifyArr, 1, this.childArr[e.detail.value])
+					 this.getCityList(this.classifyArr[0][e.detail.value].id)
                     // #endif
                 }
             }

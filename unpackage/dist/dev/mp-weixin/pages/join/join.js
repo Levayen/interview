@@ -142,11 +142,24 @@ __webpack_require__.r(__webpack_exports__);
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      post_name: '',
+      post_id: '' };
 
   },
+  onLoad: function onLoad() {
+    this.getPosition();
+  },
   methods: {
+    getPosition: function getPosition() {var _this = this;
+      this.$api.joinIndex({}).then(function (res) {
+        console.log(res);
+        if (res.result) {
+          _this.post_name = res.result.post_name;
+          _this.post_id = res.result.post_id;
+        }
+      });
+    },
     goDetails: function goDetails(e) {
       console.log(e.currentTarget.dataset.position);
       var position = e.currentTarget.dataset.position;

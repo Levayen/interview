@@ -5,26 +5,19 @@
 // var req = {"appid":"123","version":"123"};  
 // 全局请求封装
 //获取token
-let token = ''
-try {
-	const value = uni.getStorageSync('token');
-	if (value) {
-		token = value
-	} else {
-		token = ""
-	}
-} catch (e) {
-	// error
-}
 const baseUrl = "https://pre-sop-api.xiniu.com"
-
-export default (url, method, params) => {
+const token = uni.getStorageSync('token')
+export default (url, method, params, isForm) => {
+	let type = ''
+	if(isForm){
+		type = 'application/x-www-form-urlencoded'
+	}
 	return new Promise((resolve, reject) => {
 	 	uni.request({
 			url: baseUrl + url,
 			method: method,
 			header: {
-				'content-type':'application/x-www-form-urlencoded',
+				'content-type': type,
 				'Authorization': 'Bearer ' + token
 			},
 			data: {
@@ -33,6 +26,14 @@ export default (url, method, params) => {
 			success(res) {
 				if(res.data.code === 200){
 					resolve(res.data);
+				}else if(res.data.code === 401){
+					uni.navigateTo({
+						url: '../login/login'
+					})
+					uni.showToast({
+						title: res.data.message,
+						icon: 'none'
+					})
 				}else{
 					uni.showToast({
 						title: res.data.message,

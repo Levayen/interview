@@ -198,8 +198,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 11));
-var _global = __webpack_require__(/*! ../../utils/global.js */ 59);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _global = __webpack_require__(/*! ../../utils/global.js */ 59); //
 //
 //
 //
@@ -265,10 +264,10 @@ var _default = { data: function data() {return { isInterviewers: 1, phone: '', e
       code: '', //验证码
       isExist: true, //手机号是否存在
       second: 60, showText: true, xiniu_id: '', password: '' };}, onLoad: function onLoad() {}, methods: { inputChange: function inputChange(e) {if (this.phone.length === 11) {this.checkPhone();}}, //获取验证码
-    getAuthCode: function getAuthCode() {var _this = this;var params = { phone: this.phone };if (!(0, _global.regularPhone)(params.phone)) {return;}_api.default.getAuthCode(params).then(function (res) {_this.countDown();});}, //倒计时
+    getAuthCode: function getAuthCode() {var _this = this;var params = { phone: this.phone };if (!(0, _global.regularPhone)(params.phone)) {return;}this.$api.getAuthCode(params).then(function (res) {_this.countDown();});}, //倒计时
     countDown: function countDown() {var _this2 = this;this.showText = false;var interval = setInterval(function () {var times = --_this2.second;_this2.second = times < 10 ? '0' + times : times; //小于10秒补 0
       }, 1000);setTimeout(function () {clearInterval(interval);_this2.second = 60;_this2.showText = true;}, 60000);}, //检测手机号
-    checkPhone: function checkPhone() {var _this3 = this;var params = { phone: this.phone };_api.default.checkPhone(params).then(function (res) {_this3.isExist = res.result.isExist;});}, //面试者登录
+    checkPhone: function checkPhone() {var _this3 = this;var params = { phone: this.phone };this.$api.checkPhone(params).then(function (res) {_this3.isExist = res.result.isExist;});}, //面试者登录
     userLogin: function userLogin() {var params = {};if (this.isExist) {params = { phone: this.phone, code: this.code };} else {params = { phone: this.phone, email: this.email, code: this.code };
       }
       if (!(0, _global.regularPhone)(params.phone)) {
@@ -287,13 +286,18 @@ var _default = { data: function data() {return { isInterviewers: 1, phone: '', e
       uni.showLoading({
         title: "加载中" });
 
-      _api.default.userLogin(params).then(function (res) {
-        uni.setStorageSync("token", res.result.token);
-        uni.setStorageSync("phone", res.result.phone);
-        uni.switchTab({
-          url: '../index/index' });
-
+      this.$api.userLogin(params).then(function (res) {
         uni.hideLoading();
+        uni.setStorageSync("phone", res.result.phone);
+        uni.setStorage({
+          key: 'token',
+          data: res.result.token,
+          success: function success() {
+            uni.switchTab({
+              url: '../index/index' });
+
+          } });
+
       });
     },
     //面试官登录
@@ -319,7 +323,7 @@ var _default = { data: function data() {return { isInterviewers: 1, phone: '', e
       uni.showLoading({
         title: "加载中" });
 
-      _api.default.intervieweerLogin(params).then(function (res) {
+      this.$api.intervieweerLogin(params).then(function (res) {
         console.log(res);
         uni.hideLoading();
       });

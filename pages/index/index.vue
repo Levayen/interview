@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top_notice">
-			欢迎【15992990321】参加英迈思集团面试
+			欢迎【{{phone}}】参加英迈思集团面试
 		</view>
 		<view class="index_box">
 			<view class="index_box_1">
@@ -19,20 +19,24 @@
 </template>
 
 <script>
-	import api from '../../utils/api.js'
 	export default {
 		data() {
 			return {
 				positions: 0,
-				records: 0
+				records: 0,
+				phone: ''
 			}
 		},
 		onLoad() {
+			this.phone = uni.getStorageSync('phone')
+		},
+		onShow() {
+			console.log(uni.getStorageSync('token'))
 			this.getIndex()
 		},
 		methods: {  
 			getIndex(){
-				api.getIndex().then(res => {
+				this.$api.getIndex().then(res => {
 					this.positions = res.result.positions;
 					this.records = res.result.records;
 				})

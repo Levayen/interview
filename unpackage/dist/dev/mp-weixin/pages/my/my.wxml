@@ -1,1 +1,1 @@
-<view class="content data-v-0be17cc6"><view class="top_notice data-v-0be17cc6"><view class="data-v-0be17cc6">会员ID：15992990321</view><view class="login_out data-v-0be17cc6">安全退出</view></view><view class="version data-v-0be17cc6">版本号：v1.0.1</view></view>
+<view class="content data-v-0be17cc6"><view class="top_notice data-v-0be17cc6"><view class="data-v-0be17cc6">会员ID：15992990321</view><view data-event-opts="{{[['tap',[['logOut',['$event']]]]]}}" class="login_out data-v-0be17cc6" bindtap="__e">安全退出</view></view><view class="version data-v-0be17cc6">版本号：v1.0.1</view></view>

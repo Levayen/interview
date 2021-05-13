@@ -137,28 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -178,7 +157,30 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 
 //
 //
 //
-var _default = { data: function data() {return { positions: 0, records: 0 };}, onLoad: function onLoad() {this.getIndex();}, methods: { getIndex: function getIndex() {var _this = this;_api.default.getIndex().then(function (res) {_this.positions = res.result.positions;_this.records = res.result.records;});} } };exports.default = _default;
+var _default =
+{
+  data: function data() {
+    return {
+      positions: 0,
+      records: 0,
+      phone: '' };
+
+  },
+  onLoad: function onLoad() {
+    this.phone = uni.getStorageSync('phone');
+  },
+  onShow: function onShow() {
+    console.log(uni.getStorageSync('token'));
+    this.getIndex();
+  },
+  methods: {
+    getIndex: function getIndex() {var _this = this;
+      this.$api.getIndex().then(function (res) {
+        _this.positions = res.result.positions;
+        _this.records = res.result.records;
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 19 */

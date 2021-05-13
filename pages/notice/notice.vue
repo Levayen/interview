@@ -58,11 +58,28 @@
 	export default {
 		data() {
 			return {
-				
+				params:{
+					pageSize: 10,
+					pageNumber: 1
+				},
+				noticeList: [],
+				noticeCount: 0
 			}
 		},
-		methods: {
+		onLoad() {
 			
+		},
+		onShow() {
+			this.getNotice()
+		},
+		methods: {
+			getNotice(){
+				this.$api.getNotice(this.params).then( res => {
+					console.log(res)
+					this.noticeList = res.result.data
+					this.noticeCount = res.result.count
+				})
+			}
 		}
 	}
 </script>

@@ -5,8 +5,8 @@
 				<view class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
 				<view>应聘登记表-1</view>
 			</view>
-			<view class="item_2">
-				<view class="icon_1"><image src="../../static/img/table_2.png" mode=""></view>
+			<view class="item_2" @click="goForm2">
+				<view class="icon_1"><image src="../../static/img/table_2.png" mode=""></image></view>
 				<view>应聘登记表-2</view>
 			</view>
 		</view>
@@ -52,13 +52,26 @@
 	export default {
 		data() {
 			return {
-				
+				post_id: '',
+				post_name: ''
 			}
 		},
 		methods: {
+			onLoad(options) {
+				uni.setNavigationBarTitle({
+					title: `${ options.position } - 面试`
+				});
+				this.post_id = options.post_id
+				this.post_name = options.position
+			},
 			goForm1(){
 				uni.navigateTo({
-					url:'../yp_form_1/yp_form_1'
+					url:`../yp_form_1/yp_form_1?post_id=${this.post_id}&post_name=${this.post_name}`
+				})
+			},
+			goForm2(){
+				uni.navigateTo({
+					url:`../yp_form_2/yp_form_2?post_id=${this.post_id}&post_name=${this.post_name}`
 				})
 			},
 			goPages(url){
@@ -67,11 +80,6 @@
 				})
 			}
 		},
-		onLoad(options) {
-			uni.setNavigationBarTitle({
-				title: `${ options.position } - 面试`
-			});
-		}
 	}
 </script>
 

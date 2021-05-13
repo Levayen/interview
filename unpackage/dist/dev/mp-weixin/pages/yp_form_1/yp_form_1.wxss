@@ -183,6 +183,15 @@
 .honor.data-v-4f910504 {
   padding-top: 35rpx !important;
   padding-bottom: 35rpx !important;
+  width: 100%;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
 }
 .honor .add_honor.data-v-4f910504 {
   width: 100%;
@@ -224,6 +233,26 @@
 .honor .add_honor > view > image.data-v-4f910504 {
   width: 50%;
   height: 55%;
+}
+.honor .honor_item.data-v-4f910504 {
+  width: 100%;
+  border-top: none !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-top: 28rpx;
+  margin-right: -21rpx;
+  margin-bottom: -21rpx;
+}
+.honor .honor_item > view.data-v-4f910504 {
+  padding: 27rpx 30rpx;
+  border-radius: 7rpx;
+  border: 1rpx solid #DDDDDD;
+  margin-bottom: 21rpx;
+  margin-right: 21rpx;
+  background-color: #F9F9F9;
 }
 .add_education.data-v-4f910504 {
   border-top: 1rpx solid #F1F1F9;

@@ -313,6 +313,8 @@ var _default =
 {
   data: function data() {
     return {
+      name: '',
+      position: '',
       qIndex: 1,
       preNum: 0,
       nextNum: 9,
@@ -320,7 +322,21 @@ var _default =
       isFinish: false,
       time: 0,
       timeText: '0分0秒',
-      timer: null };
+      timer: null,
+      post_id: '',
+      post_name: '',
+      question_1: '',
+      question_1_reason: '',
+      question_2: '',
+      question_3: '',
+      question_4: '',
+      question_5: '',
+      question_6: '',
+      question_7: '',
+      question_8: '',
+      question_9_salary: '',
+      question_10: '',
+      question_10_text: '' };
 
   },
   computed: {
@@ -331,7 +347,9 @@ var _default =
       return this.getDate('end');
     } },
 
-  onLoad: function onLoad(options) {var _this = this;
+  onLoad: function onLoad(opt) {var _this = this;
+    this.post_id = opt.post_id;
+    this.post_name = opt.post_name;
     this.timer = setInterval(function () {
       _this.time += 1;
     }, 1000);
@@ -340,6 +358,43 @@ var _default =
     bindDateChange: function bindDateChange(e) {
       console.log('picker发送选择改变，携带值为', e.target.value);
       this.date = e.target.value;
+    },
+    selectAnswer: function selectAnswer(val, i) {
+      if (i === 1) {
+        this.question_1 = val;
+      } else if (i === 6) {
+        this.question_6 = val;
+      } else if (i === 7) {
+        this.question_7 = val;
+      } else if (i === 8) {
+        this.question_8 = val;
+      } else if (i === 10) {
+        this.question_10 = val;
+      }
+    },
+    submitRecruitmentFormTwo: function submitRecruitmentFormTwo() {
+      var params = {
+        "question_1": this.question_1,
+        "question_1_reason": this.question_1_reason,
+        "question_2": this.question_2,
+        "question_3": this.question_3,
+        "question_4": this.question_4,
+        "question_5": this.question_5,
+        "question_6": this.question_6,
+        "question_7": this.question_7,
+        "question_7_name": this.name,
+        "question_7_position": this.position,
+        "question_8": this.question_8,
+        "question_9_time": this.date,
+        "question_9_salary": this.question_9_salary,
+        "question_10": this.question_10,
+        "question_10_text": this.question_10_text };
+
+      console.log(params);
+      return;
+      this.$api.submitRecruitmentFormTwo(params).then(function (res) {
+        console.log(res);
+      });
     },
     getDate: function getDate(type) {
       var date = new Date();

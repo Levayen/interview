@@ -4,7 +4,7 @@
 			<view>
 				会员ID：15992990321
 			</view>
-			<view class="login_out">
+			<view class="login_out" @click="logOut">
 				安全退出
 			</view>
 		</view>
@@ -22,7 +22,14 @@
 			}
 		},
 		methods: {
-			
+			logOut(){
+				this.$api.logOut({}).then( res => {
+					uni.clearStorage()
+					uni.navigateTo({
+						url: '../login/login'
+					})
+				})
+			}
 		}
 	}
 </script>

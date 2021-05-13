@@ -130,17 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-
-var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -149,17 +139,30 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../utils/api.js */ 
 //
 //
 //
-var _default = { data: function data() {return { positionList: [] };}, onLoad: function onLoad() {this.getPositionList();},
+//
+//
+//
+var _default =
+{
+  data: function data() {
+    return {
+      positionList: [] };
+
+  },
+  onLoad: function onLoad() {
+    this.getPositionList();
+  },
   methods: {
     goDetails: function goDetails(e) {
       console.log(e.currentTarget.dataset.position);
       var position = e.currentTarget.dataset.position;
+      var post_id = e.currentTarget.dataset.post_id;
       uni.navigateTo({
-        url: '../interviewDetails/interviewDetails?position=' + position });
+        url: "../interviewDetails/interviewDetails?position=".concat(position, "&post_id=").concat(post_id) });
 
     },
     getPositionList: function getPositionList() {var _this = this;
-      _api.default.statistics({}).then(function (res) {
+      this.$api.statistics({}).then(function (res) {
         console.log(res);
         _this.positionList = res.result;
       });

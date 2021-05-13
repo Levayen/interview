@@ -12,11 +12,11 @@ export default {
 
 	// 面试者登录
 	userLogin(params) {
-		return request("/api/Login/Login", "POST", params)
+		return request("/api/Login/Login", "POST", params, true)
 	},
 	// 面试官登录
 	intervieweerLogin(params) {
-		return request("/api/Login/IntervieweerLogin", "POST", params)
+		return request("/api/Login/IntervieweerLogin", "POST", params, true)
 	},
 
 	//首页接口
@@ -28,22 +28,32 @@ export default {
 		return request("/api/Interview/Statistics", "GET", params)
 	},
 	// 登录者信息
-	getMyInfo(params) {
-		return request("/platform/metadata/bindinfo", "GET", params)
+	getNotice(params){
+		return request("/api/Notice/WaitInterviewNotices", "GET", params)
 	},
-	// 注册账号
-	registerAccount(params) {
-		return request("/platform/metadata/register", "GET", params)
+	//退出登录
+	logOut(params){
+		return request("/api/My/IntervieweeLogout", "GET", params)
 	},
-
-	// 找回密码
-	retrievePassword(params) {
-		return request("/platform/metadata/back", "GET", params)
+	//入职首页
+	joinIndex(params){
+		return request("/api/Onboarding/EntryPosition", "GET", params)
 	},
-
-	// 注销账号
-	offAccount(params) {
-		return request("/platform/metadata/cancel", "GET", params)
+	//应聘登记表1
+	submitRecruitmentFormOne(params){
+		return request("/api/Interview/SubmitRecruitmentFormOne", "POST", params)
+	},
+	//应聘登记表2
+	submitRecruitmentFormTwo(params){
+		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params)
+	},
+	//获取省	
+	getProvinces(params){
+		return request("/api/Common/Provinces", "GET", params)
+	},
+	//获取市
+	getCitys(params){
+		return request("/api/Common/Citys", "GET", params)
 	},
 	
 }

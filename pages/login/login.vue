@@ -61,7 +61,6 @@
 </template>
 
 <script>
-	import api from '../../utils/api.js'
 	import { regularPhone, regularEmail } from '../../utils/global.js'
 	export default {
 		data() {
@@ -93,7 +92,7 @@
 				if(!regularPhone(params.phone)){
 					return 
 				}
-				api.getAuthCode(params).then( res => {
+				this.$api.getAuthCode(params).then( res => {
 					this.countDown()
 				})
 			},
@@ -115,7 +114,7 @@
 				let params = {
 					phone: this.phone
 				}
-				api.checkPhone(params).then( res => {
+				this.$api.checkPhone(params).then( res => {
 					this.isExist = res.result.isExist
 				})
 			},
@@ -150,13 +149,18 @@
 				uni.showLoading({
 					title: "加载中"
 				})
-				api.userLogin(params).then( res => {
-					uni.setStorageSync("token", res.result.token)
-					uni.setStorageSync("phone", res.result.phone)
-					uni.switchTab({
-						url:'../index/index'
-					})
+				this.$api.userLogin(params).then( res => {
 					uni.hideLoading()
+					uni.setStorageSync("phone", res.result.phone)
+					uni.setStorage({
+					    key: 'token',
+					    data:  res.result.token,
+					    success: function () {
+							uni.switchTab({
+								url:'../index/index'
+							})
+					    }
+					});
 				})
 			},
 			//面试官登录
@@ -182,7 +186,7 @@
 				uni.showLoading({
 					title: "加载中"
 				})
-				api.intervieweerLogin(params).then( res => {
+				this.$api.intervieweerLogin(params).then( res => {
 					console.log(res) 
 					uni.hideLoading()
 				})

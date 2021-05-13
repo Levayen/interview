@@ -2,13 +2,15 @@
 	<view class="content">
 		<ul>
 			<li v-for="(item, index) in positionList" :key="index"
-			@click="goDetails" :data-position="item.post_name">{{item.post_name}}</li>
+			@click="goDetails" 
+			:data-position="item.post_name"
+			:data-post_id="item.post_id"
+			>{{item.post_name}}</li>
 		</ul>
 	</view>
 </template>
 
 <script>
-	import api from '../../utils/api.js'
 	export default {
 		data() {
 			return {
@@ -22,12 +24,13 @@
 			goDetails(e){
 				console.log(e.currentTarget.dataset.position)
 				let position = e.currentTarget.dataset.position
+				let post_id = e.currentTarget.dataset.post_id
 				uni.navigateTo({
-					url:'../interviewDetails/interviewDetails?position=' + position
+					url:`../interviewDetails/interviewDetails?position=${position}&post_id=${post_id}`
 				})
 			},
 			getPositionList(){
-				api.statistics({}).then( res => {
+				this.$api.statistics({}).then( res => {
 					console.log(res)
 					this.positionList = res.result
 				})

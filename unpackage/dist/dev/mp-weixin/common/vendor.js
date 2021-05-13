@@ -2021,11 +2021,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   // 面试者登录
   userLogin: function userLogin(params) {
-    return (0, _request.default)("/api/Login/Login", "POST", params);
+    return (0, _request.default)("/api/Login/Login", "POST", params, true);
   },
   // 面试官登录
   intervieweerLogin: function intervieweerLogin(params) {
-    return (0, _request.default)("/api/Login/IntervieweerLogin", "POST", params);
+    return (0, _request.default)("/api/Login/IntervieweerLogin", "POST", params, true);
   },
 
   //首页接口
@@ -2037,22 +2037,32 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     return (0, _request.default)("/api/Interview/Statistics", "GET", params);
   },
   // 登录者信息
-  getMyInfo: function getMyInfo(params) {
-    return (0, _request.default)("/platform/metadata/bindinfo", "GET", params);
+  getNotice: function getNotice(params) {
+    return (0, _request.default)("/api/Notice/WaitInterviewNotices", "GET", params);
   },
-  // 注册账号
-  registerAccount: function registerAccount(params) {
-    return (0, _request.default)("/platform/metadata/register", "GET", params);
+  //退出登录
+  logOut: function logOut(params) {
+    return (0, _request.default)("/api/My/IntervieweeLogout", "GET", params);
   },
-
-  // 找回密码
-  retrievePassword: function retrievePassword(params) {
-    return (0, _request.default)("/platform/metadata/back", "GET", params);
+  //入职首页
+  joinIndex: function joinIndex(params) {
+    return (0, _request.default)("/api/Onboarding/EntryPosition", "GET", params);
   },
-
-  // 注销账号
-  offAccount: function offAccount(params) {
-    return (0, _request.default)("/platform/metadata/cancel", "GET", params);
+  //应聘登记表1
+  submitRecruitmentFormOne: function submitRecruitmentFormOne(params) {
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormOne", "POST", params);
+  },
+  //应聘登记表2
+  submitRecruitmentFormTwo: function submitRecruitmentFormTwo(params) {
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormTwo", "POST", params);
+  },
+  //获取省	
+  getProvinces: function getProvinces(params) {
+    return (0, _request.default)("/api/Common/Provinces", "GET", params);
+  },
+  //获取市
+  getCitys: function getCitys(params) {
+    return (0, _request.default)("/api/Common/Citys", "GET", params);
   } };exports.default = _default;
 
 /***/ }),
@@ -2072,26 +2082,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 // var req = {"appid":"123","version":"123"};  
 // 全局请求封装
 //获取token
-var token = '';
-try {
-  var value = uni.getStorageSync('token');
-  if (value) {
-    token = value;
-  } else {
-    token = "";
+var baseUrl = "https://pre-sop-api.xiniu.com";
+var token = uni.getStorageSync('token');var _default =
+function _default(url, method, params, isForm) {
+  var type = '';
+  if (isForm) {
+    type = 'application/x-www-form-urlencoded';
   }
-} catch (e) {
-  // error
-}
-var baseUrl = "https://pre-sop-api.xiniu.com";var _default =
-
-function _default(url, method, params) {
   return new Promise(function (resolve, reject) {
     uni.request({
       url: baseUrl + url,
       method: method,
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': type,
         'Authorization': 'Bearer ' + token },
 
       data: _objectSpread({},
@@ -2100,6 +2103,14 @@ function _default(url, method, params) {
       success: function success(res) {
         if (res.data.code === 200) {
           resolve(res.data);
+        } else if (res.data.code === 401) {
+          uni.navigateTo({
+            url: '../login/login' });
+
+          uni.showToast({
+            title: res.data.message,
+            icon: 'none' });
+
         } else {
           uni.showToast({
             title: res.data.message,

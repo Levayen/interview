@@ -6,13 +6,12 @@
 				<view>应聘登记表-1</view>
 			</view>
 			<view class="top_right">
-				<picker mode="selector" :range="employmentList" value="" @change="bindPosition">
+				<picker mode="selector" :range="employmentList" range-key="post_name" @change="bindPosition">
 					<view class="select_btn_1">
-						 <view class="uni-input">{{employment || '产品经理'}}</view>
+						 <view class="uni-input">{{ post_name }}</view>
 						<view class="icon_2"><image src="/static/img/to_right.png" mode=""></view>
 					</view>
 				</picker>
-				
 			</view>
 		</view>
 		<view class="form_content">
@@ -24,8 +23,8 @@
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 性别：</view>
 					<view class="check_box">
-						<view :class="{ 'active': sex === 1 }" @click="selectSex(1)">男</view>
-						<view :class="{ 'active': sex === 2 }" @click="selectSex(2)">女</view>
+						<view :class="{ 'active': sex === 0 }" @click="selectSex(0)">男</view>
+						<view :class="{ 'active': sex === 1 }" @click="selectSex(1)">女</view>
 					</view>
 				</view>
 				<view>
@@ -41,9 +40,9 @@
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 婚姻：</view>
 					<view class="check_box">
+						<view :class="{ 'active': marriage === 0 }" @click="selectMarriage(0)">未婚</view>
 						<view :class="{ 'active': marriage === 1 }" @click="selectMarriage(1)">已婚</view>
-						<view :class="{ 'active': marriage === 2 }" @click="selectMarriage(2)">未婚</view>
-						<view :class="{ 'active': marriage === 3 }" @click="selectMarriage(3)">离异</view>
+						<view :class="{ 'active': marriage === 2 }" @click="selectMarriage(2)">离异</view>
 					</view>
 				</view>
 				<view>
@@ -52,13 +51,13 @@
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 籍贯：</view>
-					<city grade="2" @change="getNativePlace"></city>
+					<Grader @print="getId"></Grader>
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 户口：</view>
 					<view class="check_box">
-						<view :class="{ 'active': hukou === 1 }" @click="selectHukou(1)">农村</view>
-						<view :class="{ 'active': hukou === 2 }" @click="selectHukou(2)">城镇</view>
+						<view :class="{ 'active': hukou === 0 }" @click="selectHukou(0)">农村</view>
+						<view :class="{ 'active': hukou === 1 }" @click="selectHukou(1)">城镇</view>
 					</view>
 				</view>
 				<view>
@@ -91,30 +90,30 @@
 					<view>
 						<view> 时间段：</view>
 						<view class="date_2">
-							<picker mode="date" :value="item.beginTime" :start="startDate" :end="endDate" :data-index="index" @change="bindBeginTime">
-								<view class="select_btn" v-if="item.beginTime === ''">
+							<picker mode="date" :value="item.start_time" :start="startDate" :end="endDate" :data-index="index" @change="bindBeginTime">
+								<view class="select_btn" v-if="item.start_time === ''">
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item.beginTime}}</view>
+							     <view class="uni-input">{{item.start_time}}</view>
 							</picker>
 							<span>至</span>
-							<picker mode="date" :value="item.endTime" :start="startDate" :end="endDate" :data-index="index" @change="bindEndTime">
-								<view class="select_btn" v-if="item.endTime === ''">
+							<picker mode="date" :value="item.end_time" :start="startDate" :end="endDate" :data-index="index" @change="bindEndTime">
+								<view class="select_btn" v-if="item.end_time === ''">
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item.endTime}}</view>
+							     <view class="uni-input">{{item.end_time}}</view>
 							</picker>
 						</view>
 					</view>
 					<view>
 						<view> 学校名称：</view>
-						<input type="text" value="" v-model="item.schoolName" placeholder="请填写"/>
+						<input type="text" value="" v-model="item.school_name" placeholder="请填写"/>
 					</view>
 					<view>
 						<view> 专业：</view>
-						<input type="text" value="" v-model="item.major" placeholder="请填写"/>
+						<input type="text" value="" v-model="item.profession" placeholder="请填写"/>
 					</view>
 					<view>
 						<view> 学历层次：</view>
@@ -129,24 +128,29 @@
 					<view>
 						<view><span style="margin-right: 10rpx;">*</span> 教育形式：</view>
 						<view class="check_box">
-							<view :class="{ 'active': item.educationType === 1 }" @click="selectET(1, index)">统招</view>
-							<view :class="{ 'active': item.educationType === 2 }" @click="selectET(2, index)">在职自考</view>
-							<view :class="{ 'active': item.educationType === 3 }" @click="selectET(3, index)">脱产进修</view>
+							<view :class="{ 'active': item.educational_form === 0 }" @click="selectET(0, index)">统招</view>
+							<view :class="{ 'active': item.educational_form === 1 }" @click="selectET(1, index)">在职自考</view>
+							<view :class="{ 'active': item.educational_form === 2 }" @click="selectET(2, index)">脱产进修</view>
 						</view>
 					</view>
 					<view class="form_itme_1">
 						<view><span style="margin-right: 10rpx;">*</span> 教育现状：</view>
 						<view class="check_box wrap">
-							<view :class="{ 'active': item.educationStatus === 1 }" @click="selectES(1, index)">毕业</view>
-							<view :class="{ 'active': item.educationStatus === 2 }" @click="selectES(2, index)">结业</view>
-							<view :class="{ 'active': item.educationStatus === 3 }" @click="selectES(3, index)">肄业</view>
-							<view :class="{ 'active': item.educationStatus === 4 }" @click="selectES(4, index)">在读</view>
+							<view :class="{ 'active': item.education_status === 0 }" @click="selectES(0, index)">毕业</view>
+							<view :class="{ 'active': item.education_status === 1 }" @click="selectES(1, index)">结业</view>
+							<view :class="{ 'active': item.education_status === 2 }" @click="selectES(2, index)">肄业</view>
+							<view :class="{ 'active': item.education_status === 3 }" @click="selectES(3, index)">在读</view>
 						</view>
 					</view>
 					<view class="honor">
 						<view class="add_honor">
-							<input type="text" value="" placeholder="获奖荣誉"/>
-							<view><image src="/static/img/add.png" mode=""></image></view>
+							<input type="text" value="" v-model="awards" placeholder="获奖荣誉"/>
+							<view @click="addAwards(index)"><image src="/static/img/add.png" mode=""></image></view>
+						</view>
+						<view class="honor_item">
+							<view v-for="(citem, cindex) in item.awards" :key="index">
+								{{citem}}
+							</view>
 						</view>
 					</view>
 				</view>
@@ -166,26 +170,26 @@
 					<view>
 						<view> 时间段：</view>
 						<view class="date_2">
-							<picker mode="date" :value="item1.beginTime" :start="startDate" :end="endDate" :data-index="index1" @change="bindBeginTime1">
-								<view class="select_btn" v-if="item1.beginTime === ''">
+							<picker mode="date" :value="item1.start_time" :start="startDate" :end="endDate" :data-index="index1" @change="bindBeginTime1">
+								<view class="select_btn" v-if="item1.start_time === ''">
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item1.beginTime}}</view>
+							     <view class="uni-input">{{item1.start_time}}</view>
 							</picker>
 							<span>至</span>
-							<picker mode="date" :value="item1.endTime" :start="startDate" :end="endDate" :data-index="index1" @change="bindEndTime1">
-								<view class="select_btn" v-if="item1.endTime === ''">
+							<picker mode="date" :value="item1.end_time" :start="startDate" :end="endDate" :data-index="index1" @change="bindEndTime1">
+								<view class="select_btn" v-if="item1.end_time === ''">
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item1.endTime}}</view>
+							     <view class="uni-input">{{item1.end_time}}</view>
 							</picker>
 						</view>
 					</view>
 					<view>
 						<view> 公司名称：</view>
-						<input type="text" value="" v-model="item1.corporateName" placeholder="请填写"/>
+						<input type="text" value="" v-model="item1.company_name" placeholder="请填写"/>
 					</view>
 					<view>
 						<view> 职位：</view>
@@ -201,7 +205,7 @@
 					</view>
 					<view>
 						<view> 证明人电话：</view>
-						<input type="text" value="" v-model="item1.witnessPhone" placeholder="请填写"/>
+						<input type="text" value="" v-model="item1.phone" placeholder="请填写"/>
 					</view>
 				</view>
 				<view class="add_education">
@@ -213,7 +217,7 @@
 			</view>
 		</view>
 		<view class="bottom_btn">
-			<view class="sub_btn">
+			<view class="sub_btn" @click="submitRecruitmentFormOne">
 				提 &nbsp; 交
 			</view>
 		</view>
@@ -221,16 +225,20 @@
 </template>
 
 <script>
-	import city from '@/components/biaofun-region/biaofun-region.vue'
+	import Grader from '@/components/twoGrader.vue'
+	import city from '@/components/biaofun-region/biaofun-region.vue';
 	export default {
 		components:{
-			city
+			city, Grader
 		},
 		data() {
 			return {
-				sex: 1,
-				marriage: 1, //婚姻状况
-				hukou: 1,
+				awards:'', //荣誉
+				post_id:'', //岗位id
+				post_name: '',
+				sex: 0,
+				marriage: 0, //婚姻状况
+				hukou: 0,
 				name: '',
 				nation: '', //民族
 				IDnumber: '', //身份证号码
@@ -239,29 +247,29 @@
 				contactsPhone: '', //联系人手机
 				date: '',
 				address: '',
-				nativePlace: '', //籍贯
+				province_id: '', //籍贯
+				city_id: '', //籍贯
 				educationList: ['中专/中技', '高中', '大专', '本科'],
 				employment:'', //应聘岗位
-				employmentList: ['产品经理', 'Java工程师', '前端工程师'],
-				
+				employmentList: [],
 				EdExperience:[{
-					beginTime: '',
-					endTime: '',
-					schoolName: '', 
-					major: '', //专业
-					education: '', //学历
-					educationType: 1, //教育形式
-					educationStatus: 1, //教育现状
-					honorList: ['']
+					"start_time": '',
+					"end_time": '',
+					"school_name": '',
+					"profession": '', //专业
+					"education": '',//学历
+					"educational_form": 0,//教育形式
+					"education_status": 0,//教育现状
+					"awards": [] //标签
 				}],
 				workExperience: [{
-					beginTime: '',
-					endTime: '',
-					corporateName: '', //公司名称
-					position: '', //职位
-					salary: '', //薪资
-					witness: '', //证明人
-					witnessPhone: '' //证明人电话
+					"start_time": '',
+					"end_time": '',
+					"company_name": '', //公司名称
+					"position": '', //职位
+					"salary": '', //薪资
+					"witness": '', //证明人
+					"phone": '' //证明人电话
 				}]
 			};
 		},
@@ -273,7 +281,22 @@
 		            return this.getDate('end');
 		        }
 		    },
+			onLoad(opt) {
+				this.post_id = opt.post_id;
+				this.post_name = opt.post_name;
+				this.getPositionList()
+			},
 		methods:{
+			getPositionList(){
+				this.$api.statistics({}).then( res => {
+					console.log(res)
+					this.employmentList = res.result
+				})
+			},
+			getId(id1, id2){
+				this.province_id = id1;
+				this.city_id = id2
+			},
 			selectSex(val){
 				this.sex = val
 			},
@@ -284,17 +307,20 @@
 				this.hukou = val
 			},
 			selectET(val, i){
-				this.EdExperience[i].educationType = val
+				this.EdExperience[i].educational_form = val
 			},
 			selectES(val, i){
-				this.EdExperience[i].educationStatus = val
+				this.EdExperience[i].education_status = val
+			},
+			addAwards(i){
+				this.EdExperience[i].awards.push(this.awards)
+				this.awards = ''
 			},
 			getAddress(data){
 				this.address = ''
 				data.forEach(item =>{
 					this.address += item.name
 				})
-				console.log('picker发送选择改变，携带值为', this.address)
 			},
 			getNativePlace(data){
 				this.nativePlace = ''
@@ -306,7 +332,8 @@
 			bindPosition: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				let pIndex = e.target.value
-				this.employment = this.employmentList[pIndex]
+				this.post_name = this.employmentList[pIndex].post_name;
+				this.post_id = this.employmentList[pIndex].post_id;
 			},
 			bindDateChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
@@ -320,25 +347,25 @@
 				this.EdExperience[i].education = this.educationList[eIndex]
 			},
 			bindBeginTime: function(e) {
-				console.log('picker发送选择改变，携带值为', e)
+				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
-			    this.EdExperience[i].beginTime = e.target.value
+			    this.EdExperience[i].start_time = e.target.value
 			},
 			bindEndTime: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
-			    this.EdExperience[i].endTime = e.target.value
+			    this.EdExperience[i].end_time = e.target.value
 			},
 			//工作经历
 			bindBeginTime1: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
-			    this.workExperience[i].beginTime = e.target.value
+			    this.workExperience[i].start_time = e.target.value
 			},
 			bindEndTime1: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
-			    this.workExperience[i].endTime = e.target.value
+			    this.workExperience[i].end_time = e.target.value
 			},
 			getDate(type) {
 			    const date = new Date();
@@ -358,28 +385,72 @@
 			//添加教育经历
 			addEdExperience(){
 				this.EdExperience.push({
-					beginTime: '',
-					endTime: '',
-					schoolName: '', 
-					major: '', //专业
-					education: '', //学历
-					educationType: 1, //教育形式
-					educationStatus: 1, //教育现状
-					honorList: [],
+					"start_time": '',
+					"end_time": '',
+					"school_name": '',
+					"profession": '', //专业
+					"education": '',//学历
+					"educational_form": 0,//教育形式
+					"education_status": 0,//教育现状
+					"awards": [] //标签
 				})
 			},
 			//添加工作经历
 			addWorkExperience(){
 				this.workExperience.push({
-					beginTime: '',
-					endTime: '',
-					corporateName: '', //公司名称
-					position: '', //职位
-					salary: '', //薪资
-					witness: '', //证明人
-					witnessPhone: '' //证明人电话
+					"start_time": '',
+					"end_time": '',
+					"company_name": '', //公司名称
+					"position": '', //职位
+					"salary": '', //薪资
+					"witness": '', //证明人
+					"phone": '' //证明人电话
 				})
-			}
+			},
+			submitRecruitmentFormOne(){
+				let params = {
+				  "post_id": this.post_id,
+				  "realname": this.name,
+				  "sex": this.sex,
+				  "brithday": this.date,
+				  "marital_status": this.marriage,
+				  "nationality": this.nation,
+				  "province_id": this.province_id,
+				  "city_id": this.city_id,
+				  "hukou": this.hukou,
+				  "id_card": this.IDnumber,
+				  "political_status": this.politically,
+				  "current_address": this.address,
+				  "emergency_contact": this.contacts,
+				  "emergency_phone": this.contactsPhone,
+				  "education_background": this.EdExperience,
+				  "work_experience": this.workExperience,
+				}
+				let a = {
+					brithday: "2021-05-13"
+					,city_id: 110100
+					,current_address: "北京市北京市东城区"
+					,education_background: [{"start_time":"2021-05-13","end_time":"2021-05-14","school_name":"111","profession":"222","education":"中专/中技","educational_form":0,"education_status":0,"awards":["222"]}]
+					,emergency_contact: "无"
+					,emergency_phone: "15992990321"
+					,hukou: 0
+					,id_card: "440223199612031616"
+					,marital_status: 0
+					,nationality: "汉"
+					,political_status: "无"
+					,post_id: 1
+					,province_id: 110000
+					,realname: "赖华勇"
+					,sex: 0
+					,work_experience: [{"start_time":"2021-05-13","end_time":"2021-05-16","company_name":"2323","position":"32323","salary":"121","witness":"112","phone":"111"}]
+				}
+				
+				this.$api.submitRecruitmentFormOne(params).then( res => {
+					uni.navigateTo({
+						url: `../yp_form_2/yp_form_2?post_id=${this.post_id}`
+					})
+				})
+			},
 		}
 	}
 </script>
@@ -529,6 +600,10 @@
 	.honor{
 		padding-top: 35rpx !important;
 		padding-bottom: 35rpx !important;
+		width: 100%;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
 		.add_honor{
 			width: 100%;
 			height: 83rpx;
@@ -556,6 +631,23 @@
 					width: 50%;
 					height: 55%;
 				}
+			}
+		}
+		.honor_item{
+			width: 100%;
+			border-top: none !important;
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 28rpx;
+			margin-right: -21rpx;
+			margin-bottom: -21rpx;
+			>view{
+				padding: 27rpx 30rpx;
+				border-radius: 7rpx;
+				border: 1rpx solid #DDDDDD;
+				margin-bottom: 21rpx;
+				margin-right: 21rpx;
+				background-color: #F9F9F9;
 			}
 		}
 	}
@@ -624,4 +716,5 @@
 			background: linear-gradient(to left top, #5C6FB4, #758AD5);
 		}
 	}
+
 </style>

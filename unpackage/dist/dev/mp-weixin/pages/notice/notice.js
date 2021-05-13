@@ -189,11 +189,29 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      params: {
+        pageSize: 10,
+        pageNumber: 1 },
 
+      noticeList: [],
+      noticeCount: 0 };
 
   },
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad() {
+
+  },
+  onShow: function onShow() {
+    this.getNotice();
+  },
+  methods: {
+    getNotice: function getNotice() {var _this = this;
+      this.$api.getNotice(this.params).then(function (res) {
+        console.log(res);
+        _this.noticeList = res.result.data;
+        _this.noticeCount = res.result.count;
+      });
+    } } };exports.default = _default;
 
 /***/ }),
 

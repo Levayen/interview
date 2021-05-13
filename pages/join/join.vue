@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
-		<view class="join_item" @click="goDetails" data-position="产品经理">
+		<view v-if="post_name" class="join_item" @click="goDetails" :data-position="post_name">
 			<view class="icon_1"><image src="/static/img/join_icon.png" mode=""></image></view>
-			<view>产品经理</view>
+			<view>{{post_name}}</view>
 		</view>
 	</view>
 </template>
@@ -11,10 +11,23 @@
 	export default {
 		data() {
 			return {
-				
+				post_name: '',
+				post_id: '',
 			}
 		},
+		onLoad(){
+			this.getPosition()
+		},
 		methods: {
+			getPosition(){
+				this.$api.joinIndex({}).then( res => {
+					console.log(res)
+					if(res.result){
+						this.post_name = res.result.post_name;
+						this.post_id = res.result.post_id;
+					}
+				})
+			},
 			goDetails(e){
 				console.log(e.currentTarget.dataset.position)
 				let position = e.currentTarget.dataset.position

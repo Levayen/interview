@@ -2,6 +2,7 @@
   "navigationBarTitleText": "应聘登记表-1",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "city": "/components/biaofun-region/biaofun-region"
+    "city": "/components/biaofun-region/biaofun-region",
+    "grader": "/components/twoGrader"
   }
 }
