@@ -1,22 +1,22 @@
 <template>
 	<view class="content">
-		<InterviewNav @changeTab="changeStatus"></InterviewNav>
+		<InterviewNav :statistics="statistics" @changeTab="changeStatus"></InterviewNav>
 		<view class="main">
-			<view v-for="(item, index) in 2" :key="index" v-if="status === 1">
+			<view v-for="(item, index) in dataList" :key="index" v-if="paramsList.status === 0">
 				<view class="item">
 					<view class="item_top">
 						<view class="title">
-							产品经理
+							{{ item.post_name }}
 						</view>
 						<view class="name">
-							<view>吴晓燕(女)</view>
-							<view class="see" @click="openDocument">
+							<view>{{ item.realname}}({{ item.sex }})</view>
+							<view class="see" @click="openDocument(item.resume_file_url)">
 								<view class="icon_2"><image src="/static/img/icon_1.png" mode=""></image></view>
 								<view>查看简历</view>
 							</view>
 						</view>
 						<view class="department">
-							用人部门：英迈思-嗨美丽事业部-软件中心-开发部
+							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
 							<view>
@@ -29,14 +29,14 @@
 							</view>
 						</view>
 						<view class="time">
-							填表时间：2021年1月23日 12:59
+							填表时间：{{ item.write_time }}
 						</view>
-						
 					</view>
-					<view class="item_middle">
-						<view>
+					<view class="item_middle" v-for="(citem, cindex) in item.records" :key="cindex">
+						<view v-if="cindex != (item.records.length - 1)">
+						<!-- <view> -->
 							<view class="middle_1">
-								<view class="first_btn">一面</view>
+								<view class="first_btn">{{ citem.current_interview_text }}</view>
 								<view class="form_2">
 									<view>
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
@@ -49,130 +49,124 @@
 								</view>
 							</view>
 							<view class="first_time">
-								面试安排时间： <span>2021年3月2日（周四）上午11点</span>
+								面试安排时间： <span>{{ citem.interview_time }}</span>
 							</view>
 							<view class="first_result">
-								面试结果： <span>通过</span>
+								面试结果： 
+								<span v-if="citem.status === 1" class="passed">通过</span>
+								<span v-if="citem.status === 2" class="not_pass">未通过</span>
 							</view>
 						</view>
-					</view>
-					<view class="item_middle">
-						<view>
-							<view class="middle_1">
-								<view class="first_btn">二面</view>
-								<view class="form_2">
-									<view>
-										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
-										<view>面试反馈表-1</view>
-									</view>
-									<view>
-										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
-										<view>面试反馈表-2</view>
-									</view>
-								</view>
-							</view>
-							<view class="first_time">
-								面试安排时间： <span>2021年3月2日（周四）上午11点</span>
-							</view>
-							<view class="first_result">
-								面试结果： <span>通过</span>
-							</view>
-						</view> 
-						<view class="arrange">
-							<view class="btn">HR面</view>
+						<view v-else class="arrange">
+						<!-- <view class="arrange"> -->
+							<view class="btn">{{ citem.current_interview_text }}</view>
 							<view class="arrange_time">
 								<view>面试安排时间：</view>
-								<view>2021年3月2日（周四）上午11点</view>
+								<view>{{ citem.interview_time }}</view>
 							</view>
 						</view>
 					</view>
-					<view class="item_bottom">
-						<view @click="fkForm3">
+					<view class="item_bottom" v-if="statistics.interview_round === 0">
+						<view @click="fkForm3(item.recordId)">
+							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
+							<view>填写面试反馈表</view>
+						</view>
+					</view>
+					<view class="item_bottom" v-else>
+						<view @click="goBack(item.recordId, index)">
+							<view class="icon_1"><image src="../../static/img/back_1.png" mode=""></image></view>
+							<view>退回</view> 
+						</view>
+						<view @click="fkForm(item.recordId)">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view v-for="(item, index) in 2" :key="index" v-if="status === 2">
+			<view v-for="(item, index) in dataList" :key="index" v-if="paramsList.status === 1">
 				<view class="item">
 					<view class="item_top">
 						<view class="title">
-							产品经理
+							{{ item.post_name }}
 						</view>
 						<view class="name">
-							<view>吴晓燕(女)</view>
-							<view class="see">
+							<view>{{ item.realname}}({{ item.sex }})</view>
+							<view class="see" @click="openDocument(item.resume_file_url)">
 								<view class="icon_2"><image src="/static/img/icon_1.png" mode=""></image></view>
 								<view>查看简历</view>
 							</view>
 						</view>
 						<view class="department">
-							用人部门：英迈思-嗨美丽事业部-软件中心-开发部
+							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
 							<view>
-								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+								<view v-if="item.one === 1" class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
 							<view>
-								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+								<view v-if="item.two === 1" class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
 						</view>
 						<view class="time">
-							填表时间：2021年1月23日 12:59
+							填表时间：{{ item.write_time }}
 						</view>
 					</view>
-					<view class="item_middle" v-for="(item, index) in 2" :key="index">
+					<view class="item_middle" v-for="(citem, cindex) in item.records" :key="cindex">
 						<view>
 							<view class="arrange_2">
-								<view class="btn">一面</view>
+								<view class="btn">{{ citem.current_interview_text }}</view>
 								<view class="arrange_time">
 									<view>面试安排时间：</view>
-									<view>2021年3月2日（周四）上午11点</view>
+									<view>{{ citem.interview_time }}</view>
 								</view>
 							</view>
-							<view class="interviewer" v-for="(item, index) in 2" :key="index">
+							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
 								<view class="result_1">
-									<view>面试官1：陈学丹</view>
-									<view>面试得分：98</view>
+									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
+									<view>面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
-									<view @click="fkForm">
+									<view v-if="sitem.one != 0">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-1</view>
 									</view>
-									<view @click="fkForm2">
+									<view v-if="sitem.two != 0">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-2</view>
+									</view>
+									<view  v-if="sitem.three != 0">
+										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+										<view>面试反馈表-3</view>
 									</view>
 								</view>
 							</view>
 						</view>
 						<view class="result_2">
-							<view>综合得分：<span>97</span></view>
-							<view v-show="status === 2">面试结果：<span>通过</span></view>
-							<view v-show="status === 3">面试结果：<span>未通过</span> <span> (技术能力达不到)</span> </view>
+							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="paramsList.status === 2">面试结果：<span>通过</span></view>
+							<view v-show="paramsList.status === 3">面试结果：<span>未通过</span><span>(技术能力达不到)</span></view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view v-for="(item, index) in 2" :key="index" v-if="status === 3">
+			<view v-for="(item, index) in dataList" :key="index" v-if="paramsList.status === 2">
 				<view class="item">
 					<view class="item_top">
 						<view class="title">
-							产品经理
+							{{ item.post_name }}
 						</view>
 						<view class="name">
-							<view>吴晓燕(女)</view>
-							<view class="see">
+							<view>{{ item.realname}}({{ item.sex }})</view>
+							<view class="see" @click="openDocument(item.resume_file_url)">
 								<view class="icon_2"><image src="/static/img/icon_1.png" mode=""></image></view>
 								<view>查看简历</view>
 							</view>
 						</view>
 						<view class="department">
-							用人部门：英迈思-嗨美丽事业部-软件中心-开发部
+							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
 							<view>
@@ -185,39 +179,43 @@
 							</view>
 						</view>
 						<view class="time">
-							填表时间：2021年1月23日 12:59
+							填表时间：{{ item.write_time }}
 						</view>
 					</view>
-					<view class="item_middle" v-for="(item, index) in 2" :key="index">
+					<view class="item_middle" v-for="(citem, cindex) in item.records" :key="cindex">
 						<view>
 							<view class="arrange_2">
-								<view class="btn">一面</view>
+								<view class="btn">{{ citem.current_interview_text }}</view>
 								<view class="arrange_time">
 									<view>面试安排时间：</view>
-									<view>2021年3月2日（周四）上午11点</view>
+									<view>{{ citem.interview_time }}</view>
 								</view>
 							</view>
-							<view class="interviewer" v-for="(item, index) in 2" :key="index">
+							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
 								<view class="result_1">
-									<view>面试官1：陈学丹</view>
-									<view>面试得分：98</view>
+									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
+									<view>面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
-									<view @click="fkForm">
+									<view v-if="sitem.one != 0">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-1</view>
 									</view>
-									<view @click="fkForm2">
+									<view v-if="sitem.two != 0">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-2</view>
+									</view>
+									<view  v-if="sitem.three != 0">
+										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+										<view>面试反馈表-3</view>
 									</view>
 								</view>
 							</view>
 						</view>
 						<view class="result_2">
-							<view>综合得分：<span>97</span></view>
-							<view v-show="status === 2">面试结果：<span>通过</span></view>
-							<view v-show="status === 3">面试结果：<span>未通过</span> <span> (技术能力达不到)</span> </view>
+							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="paramsList.status === 2">面试结果：<span>通过</span></view>
+							<view v-show="paramsList.status === 3">面试结果：<span>未通过</span><span>(技术能力达不到)</span></view>
 						</view>
 					</view>
 				</view>
@@ -237,32 +235,61 @@
 		},
 		data() {
 			return {
-				status: 1
+				dataList: [],
+				statistics: {
+					wait: 0,
+					passed: 0,
+					notPass: 0
+				},
+				paramsList: {
+					status: 0,
+					interview_round : 1,
+					pageSize : 10,
+					pageNumber : 1,
+				}
 			};
 		},
+		onLoad(opt) {
+			this.paramsList.interview_round = opt.round
+			this.getInterviewList()
+		},
 		methods:{
+			//退回
+			goBack(id, index){
+				this.$api.goBack({recordId: id}).then( res => {
+					console.log(res)
+					this.dataList.splice(index, 1)
+				})
+			},
+			getInterviewList(){
+				this.$api.interviewList(this.paramsList).then( res => {
+					console.log(res)
+					this.dataList = res.result.data
+					this.statistics = res.result.statistics
+				})
+			},
 			changeStatus(val){
-				this.status = val
-				console.log(this.status)
+				this.paramsList.status = val
+				this.getInterviewList()
 			},
-			fkForm(){
+			fkForm(id){
 				uni.navigateTo({
-					url: '../fk_form_1/fk_form_1'
+					url: `../fk_form_1/fk_form_1?recordId=${id}`
 				})
 			},
-			fkForm2(){
+			fkForm2(id){
 				uni.navigateTo({
-					url: '../fk_form_2/fk_form_2'
+					url: `../fk_form_2/fk_form_2?recordId=${id}`
 				})
 			},
-			fkForm3(){
+			fkForm3(id){
 				uni.navigateTo({
-					url:'../fk_form_3/fk_form_3'
+					url: `../fk_form_3/fk_form_3?recordId=${id}`
 				})
 			},
-			openDocument(){
+			openDocument(url){
 				uni.downloadFile({
-				  url: 'https://example.com/somefile.pdf',
+				  url: url,
 				  success: function (res) {
 				    var filePath = res.tempFilePath;
 				    uni.openDocument({
@@ -301,6 +328,10 @@
 					justify-content: center;
 					font-size: 25rpx;
 					color: #5C6FB4;
+					&:nth-child(2){
+						color: #333333;
+						border-left: 1rpx solid #f1f1f5;
+					}
 					.icon_1{
 						width: 30rpx;
 						height: 30rpx;
@@ -348,7 +379,7 @@
 		}
 	}
 	.arrange{
-		margin-top: 35rpx;
+		// margin-top: 35rpx;
 		width: 100%;
 		min-height: 132rpx;
 		background-color: #EEF0F7;
@@ -432,6 +463,15 @@
 			display: flex;
 			align-items: center;
 			justify-content: flex-start;
+		}
+	}
+	.item_middle_1{
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0 28rpx;
+		.arrange{
+			margin-top: 0 !important;
+			margin-bottom: 35rpx;
 		}
 	}
 	.item_middle{
@@ -530,8 +570,15 @@
 			color: #777777;
 			margin-top: 21rpx;
 			span{
-				color: #4CC360;
-				margin-left: 60rpx;
+				&.passed{
+					color: #4CC360;
+					margin-left: 60rpx;
+				}
+				&.not_pass{
+					color: #FF0000;
+					margin-left: 60rpx;
+				}
+				
 			}
 		}
 		.first_btn{

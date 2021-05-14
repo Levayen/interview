@@ -1,9 +1,9 @@
 <template>
 	<view class="content">
 		<view class="nav">
-			<view @click="changeStatus(1)" :class="{ 'active': status === 1 }">待面试(0)</view>
-			<view @click="changeStatus(2)" :class="{ 'active': status === 2 }">通过(0)</view>
-			<view @click="changeStatus(3)" :class="{ 'active': status === 3 }">未通过(0)</view>
+			<view @click="changeStatus(0)" :class="{ 'active': status === 0 }">待面试({{ statistics.wait }})</view>
+			<view @click="changeStatus(1)" :class="{ 'active': status === 1 }">通过({{ statistics.passed }})</view>
+			<view @click="changeStatus(2)" :class="{ 'active': status === 2 }">未通过({{ statistics.notPass }})</view>
 		</view>
 		<view class="search">
 			<view class="search_box">
@@ -18,12 +18,19 @@
 	export default {
 		data() {
 			return {
-				status: 1
+				status: 0
 			};
 		},
-		props:[
-			
-		],
+		props:{
+			statistics:{
+				type: Object,
+				default:{
+					wait: 0,
+					passed: 0,
+					notPass: 0
+				}
+			}
+		},
 		methods:{
 			changeStatus(val){
 				this.status = val

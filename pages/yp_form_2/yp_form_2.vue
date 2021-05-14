@@ -22,7 +22,7 @@
 				<view class="answer">
 					<view class="radio">
 						<view @click="selectAnswer1(1)" :class="{active: question_1  === 1}">在职</view>
-						<view @click="selectAnswer1(0)" :class="{active: question_1  === 0}">离职</view>
+						<view @click="selectAnswer1('0')" :class="{active: question_1  == '0'}">离职</view>
 					</view>
 					<view class="answer_text">
 						<textarea value="" maxlength="50" v-model="question_1_reason" placeholder="请简要填写离职原因" />
@@ -76,7 +76,7 @@
 				<view class="answer">
 					<view class="radio">
 						<view @click="selectAnswer6(1)" :class="{active: question_6  === 1}">是</view>
-						<view @click="selectAnswer6(0)" :class="{active: question_6  === 0}">否</view>
+						<view @click="selectAnswer6('0')" :class="{active: question_6  == '0'}">否</view>
 					</view>
 				</view>
 			</view>
@@ -249,13 +249,13 @@
 			},
 			submitRecruitmentFormTwo(){
 				let params = {
-					  "question_1": this.question_1,
+					  "question_1": Number(this.question_1),
 					  "question_1_reason": this.question_1_reason,
 					  "question_2": this.question_2,
 					  "question_3": this.question_3,
 					  "question_4": this.question_4,
 					  "question_5": this.question_5,
-					  "question_6": this.question_6,
+					  "question_6": Number(this.question_6),
 					  "question_7": Number(this.question_7),
 					  "question_7_name": this.name,
 					  "question_7_position": this.position,

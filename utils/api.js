@@ -45,7 +45,7 @@ export default {
 	},
 	//应聘登记表2
 	submitRecruitmentFormTwo(params){
-		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params)
+		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, true)
 	},
 	//获取省	
 	getProvinces(params){
@@ -55,5 +55,46 @@ export default {
 	getCitys(params){
 		return request("/api/Common/Citys", "GET", params)
 	},
+	// 面试者-入职-入职登记信息填写情况
+	entryFormInfo(params){
+		return request("/api​/Onboarding​/EntryFormInfo", "GET", params)
+	},
+	// 面试官-面试-待面试信息统计
+	waitInterview(params){
+		return request("/api/Interview/WaitInterviewStatistics", "GET", params)
+	},
+	// 面试官-面试列表
+	interviewList(params){
+		return request("/api/Interview/InterviewList", "GET", params)
+	},
+	//退回
+	goBack(params){
+		return request("/api/Interview/RebackInterview", "POST", params, true)
+	},
+	//面试反馈表-1
+	feedbackOne(params){
+		return request("/api​/Interview​/SubmitRecruitmentFeedbackOne", "POST", params, true)
+	},
+	//面试反馈表-2
+	feedbackTwo(params){
+		return request("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, true)
+	},
+	//面试反馈表-2
+	feedbackThree(params){
+		return request("​/api​/Interview​/SubmitRecruitmentFeedbackThree", "POST", params, true)
+	},
+	//岗位类别
+	postTypes(params){
+		return request("/api/Common/PostTypes", "GET", params)
+	},
+	//入职岗位
+	positionList(params){
+		return request("/api/Common/Posts", "GET", params)
+	},
+	//职级
+	positionRanks(params){
+		return request("​/api​/Common​/Ranks", "GET", params)
+	},
 	
+
 }

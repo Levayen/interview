@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/interview/interview",
     "pages/notice/notice",
     "pages/join/join",
     "pages/my/my",
-    "pages/login/login",
     "pages/interviewDetails/interviewDetails",
     "pages/yp_form_1/yp_form_1",
     "pages/yp_form_2/yp_form_2",
@@ -20,7 +20,8 @@
     "pages/secondInterview/secondInterview",
     "pages/HRinterview/HRinterview",
     "pages/fk_form_3/fk_form_3",
-    "pages/qrCode/qrCode"
+    "pages/qrCode/qrCode",
+    "pages/previewFiles/previewFiles"
   ],
   "subPackages": [],
   "window": {
@@ -68,6 +69,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap93.json"
+  "usingComponents": {}
 }

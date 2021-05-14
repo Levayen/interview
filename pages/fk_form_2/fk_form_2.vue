@@ -134,6 +134,7 @@
 	export default {
 		data() {
 			return {
+				record_id: '',
 				isChecked: false,
 				question_1: '',
 				question_2: '',
@@ -142,6 +143,9 @@
 				status: '',
 				reason: ''
 			};
+		},
+		onLoad(opt) {
+			this.record_id = opt.record_id
 		},
 		methods:{
 			selectRadio(){
@@ -158,6 +162,20 @@
 				}else if(q === 4){
 					this.status = a
 				}
+			},
+			submit(){
+				let params = {
+					record_id: this.record_id,
+					key_talent: this.key_talent,
+					question_1: this.question_1,
+					question_2: this.question_2,
+					question_3: this.question_3,
+					status: this.status,
+					reason: this.reason
+				}
+				this.$api.feedbackTwo(params).then( res => {
+					console.log(res)
+				})
 			}
 		}
 	}

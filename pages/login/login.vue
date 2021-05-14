@@ -189,6 +189,15 @@
 				this.$api.intervieweerLogin(params).then( res => {
 					console.log(res) 
 					uni.hideLoading()
+					uni.setStorage({
+					    key: 'token',
+					    data:  res.result.token,
+					    success: function () {
+							uni.navigateTo({
+								url:'../interviewerIndex/interviewerIndex'
+							})
+					    }
+					});
 				})
 			},
 			changeIdentity(val){

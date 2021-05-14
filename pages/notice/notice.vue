@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="notice_item" v-for="(item, index) in 3" :key="index">
+		<view class="notice_item" v-for="(item, index) in noticeList" :key="index">
 			<view class="nitice_item_1">
 				<view class="position">
 					产品经理

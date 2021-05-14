@@ -130,8 +130,22 @@
 				</view>
 				<view class="form_item">
 					<view>
+						<view> 岗位类别 </view>
+						<picker mode="selector" 
+						:range="postTypeList" 
+						:data-index="index" 
+						range-key="post_type_name"
+						@change="bindPostType">
+							<view class="select_btn" v-if="postType === ''">
+								<view>请选择</view>
+								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
+							</view>
+						     <view class="uni-input">{{postType}}</view>
+						</picker>
+					</view>
+					<view>
 						<view> 入职职位 </view>
-						<picker mode="selector" :range="positionList" :data-index="index" @change="bindPosition">
+						<picker mode="selector" range-key="post_name" :range="positionList" :data-index="index" @change="bindPosition">
 							<view class="select_btn" v-if="position === ''">
 								<view>请选择</view>
 								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
@@ -266,13 +280,14 @@
 		},
 		data() {
 			return {
+				record_id:'',
 				CustomBar: this.CustomBar,
 				modalName: false,
 				answer: 1,
 				grade1: '',
 				grade2: '',
-				position: '',
-				positionList: ['产品经理', 'Java程序员', '网页设计师'],
+				position: '', //岗位
+				positionList: [], //岗位列表
 				grader: '',
 				graderList: [],
 				date:'',
@@ -289,6 +304,10 @@
 				turn_positive_salary: '', //转正薪资
 				probation_month : '', //试用期时长
 				contract_month : '', //签订合同时长
+				postType: '', //岗位类别
+				postTypeList: [], //岗位类别列表
+				post_type_id: '', //岗位类别id
+				post_id: '', //岗位id
 			};
 		},
 		computed: {
@@ -298,6 +317,9 @@
 		       endDate() {
 		           return this.getDate('end');
 		       }
+		   },
+		   onLoad(opt) {
+				this.postTypes()
 		   },
 		methods:{
 			selectRadio(){
@@ -315,6 +337,21 @@
 					this.status = a
 				}
 			},
+			submit(){
+				let params = {
+					record_id: this.record_id,
+					key_talent: this.key_talent,
+					question_1: this.question_1,
+					question_2: this.question_2,
+					question_3: this.question_3,
+					status: this.status,
+					reason: this.reason
+				}
+				this.$api.feedbackThree(params).then( res => {
+					console.log(res)
+					
+				})
+			},
 			//抽屉
 			showModal(e) {
 				this.modalName = true
@@ -325,10 +362,39 @@
 			selectRadio(){
 				this.isChecked = !this.isChecked
 			},
+			
+			//获取岗位类别
+			postTypes(){
+				this.$api.postTypes().then( res => {
+					console.log(res)
+					this.postTypeList = res.result
+				})
+			},
+			//入职岗位
+			getPositionList(){
+				this.$api.positionList({posttypeId: this.post_type_id}).then( res => {
+					console.log(res)
+					this.positionList = res.result
+				})
+			},
+			positionRanks(){
+				this.$api.positionRanks({posttypeId: this.post_type_id}).then( res => {
+					console.log(res)
+				})
+			},
+			bindPostType(e){
+				console.log('picker发送选择改变，携带值为', e.target.value)
+				let eIndex = e.target.value
+				this.postType = this.postTypeList[eIndex].post_type_name
+				this.post_type_id = this.postTypeList[eIndex].post_type_id
+				this.getPositionList()
+				this.positionRanks()
+			},
 			bindPosition(e){
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				let eIndex = e.target.value
-				this.position = this.positionList[eIndex]
+				this.position = this.positionList[eIndex].post_name
+				this.post_id = this.positionList[eIndex].post_id
 			},
 			bindGrader(e){
 				console.log('picker发送选择改变，携带值为', e.target.value)

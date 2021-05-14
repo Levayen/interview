@@ -2,19 +2,19 @@
 	<view class="content">
 		<view class="main">
 			<view class="main_item medium" @click="goFirstInterview">
-				一面（ <span class="red">2</span> ）
+				一面（ <span class="red">{{ count.one }}</span> ）
 			</view>
 			<view class="main_item medium" @click="goSecondInterview">
-				二面（ <span class="red">2</span> ）
+				二面（ <span class="red">{{ count.two }}</span> ）
 			</view>
 			<view class="main_item medium">
-				三面（ <span class="red">2</span> ）
+				三面（ <span class="red">{{ count.three}}</span> ）
 			</view>
 			<view class="main_item medium">
-				四面（ <span class="red">2</span> ）
+				四面（ <span class="red">{{ count.four }}</span> ）
 			</view>
 			<view class="main_last_item medium">
-				HR面（ <span>2</span> ）
+				HR面（ <span>{{ count.hr }}</span> ）
 			</view>
 		</view>
 		<view class="copy">
@@ -27,18 +27,33 @@
 	export default {
 		data() {
 			return {
-				
+				count: {
+					one: 0,
+					two: 0,
+					three: 0,
+					four: 0,
+					hr: 0
+				}
 			};
+		},
+		onLoad() {
+			this.getCount()
 		},
 		methods:{
 			goFirstInterview(){
 				uni.navigateTo({
-					url: '../firstInterview/firstInterview'
+					url: `../HRinterview/HRinterview?round=1`
 				})
 			},
 			goSecondInterview(){
 				uni.navigateTo({
 					url: '../secondInterview/secondInterview'
+				})
+			},
+			getCount(){
+				this.$api.waitInterview({}).then( res => {
+					console.log(res)
+					this.count = res.result
 				})
 			}
 		}

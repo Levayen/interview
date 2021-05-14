@@ -118,11 +118,11 @@
 					<view>
 						<view> 学历层次：</view>
 						<picker mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
-							<view class="select_btn" v-if="item.education === ''">
+							<view class="select_btn" v-if="item.education == 0">
 								<view>请选择</view>
 								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 							</view>
-						     <view class="uni-input">{{item.education}}</view>
+						     <view class="uni-input">{{educationList[item.education - 1]}}</view>
 						</picker>
 					</view>
 					<view>
@@ -249,7 +249,7 @@
 				address: '',
 				province_id: '', //籍贯
 				city_id: '', //籍贯
-				educationList: ['中专/中技', '高中', '大专', '本科'],
+				educationList: ['大专', '本科', '硕士', '博士', '其他'],
 				employment:'', //应聘岗位
 				employmentList: [],
 				EdExperience:[{
@@ -341,10 +341,10 @@
 			},
 			//教育经历
 			bindEducation: function(e){
-				console.log('picker发送选择改变，携带值为', e.target.value)
+				console.log('picker发送选择改变，携带值为',  Number(e.target.value))
 				let eIndex = e.target.value
 				let i = e.currentTarget.dataset.index
-				this.EdExperience[i].education = this.educationList[eIndex]
+				this.EdExperience[i].education = Number(eIndex) + 1
 			},
 			bindBeginTime: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
@@ -389,7 +389,7 @@
 					"end_time": '',
 					"school_name": '',
 					"profession": '', //专业
-					"education": '',//学历
+					"education": 0,//学历
 					"educational_form": 0,//教育形式
 					"education_status": 0,//教育现状
 					"awards": [] //标签
@@ -412,7 +412,7 @@
 				  "post_id": this.post_id,
 				  "realname": this.name,
 				  "sex": this.sex,
-				  "brithday": this.date,
+				  "birthday": this.date,
 				  "marital_status": this.marriage,
 				  "nationality": this.nation,
 				  "province_id": this.province_id,
@@ -427,7 +427,7 @@
 				  "work_experience": this.workExperience,
 				}
 				let a = {
-					brithday: "2021-05-13"
+					birthday: "2021-05-13"
 					,city_id: 110100
 					,current_address: "北京市北京市东城区"
 					,education_background: [{"start_time":"2021-05-13","end_time":"2021-05-14","school_name":"111","profession":"222","education":"中专/中技","educational_form":0,"education_status":0,"awards":["222"]}]
@@ -447,7 +447,7 @@
 				
 				this.$api.submitRecruitmentFormOne(params).then( res => {
 					uni.navigateTo({
-						url: `../yp_form_2/yp_form_2?post_id=${this.post_id}`
+						url: `../yp_form_2/yp_form_2?post_id=${this.post_id}&post_name=${this.post_name}`
 					})
 				})
 			},

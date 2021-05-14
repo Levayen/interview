@@ -4,11 +4,13 @@
 // var server = "https://pre-sop-api.xiniu.com";  
 // var req = {"appid":"123","version":"123"};  
 // 全局请求封装
-//获取token
 const baseUrl = "https://pre-sop-api.xiniu.com"
-const token = uni.getStorageSync('token')
+
 export default (url, method, params, isForm) => {
+	//获取token
+	const token = uni.getStorageSync('token')
 	let type = ''
+	//判断是否以表单形式提交
 	if(isForm){
 		type = 'application/x-www-form-urlencoded'
 	}

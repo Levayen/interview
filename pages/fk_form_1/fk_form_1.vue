@@ -62,7 +62,7 @@
 				<view class="form_item_2">
 					<view>
 						<view> 笔试（机试）得分(分)：</view>
-						<input type="text" value="" v-model="practical_score" max="100" placeholder="请填写分数"/>
+						<input type="text" value="" v-model="practical_score" min="0" max="100" placeholder="请填写分数"/>
 					</view>
 				</view>
 			</view>
@@ -89,7 +89,7 @@
 			</view>
 			<view class="grader">
 				<view>面试量化得分：</view>
-				<view class="grader_input"><input type="number" value="" v-model="total" max="100" placeholder="请输入"/></view>
+				<view class="grader_input"><input type="number" value="" v-model="total" min="0" max="100" placeholder="请输入"/></view>
 				<view>分</view>
 			</view>
 		</view>
@@ -138,7 +138,7 @@
 						] ,  
 					}
 				],
-				p_question: {},
+				
 				qualityScore: [
 					{
 						id: 1,
@@ -231,8 +231,13 @@
 						] ,  
 					},
 				],
+				p_question: {},
 				c_question: {},
+				record_id:''
 			};
+		},
+		onLoad(opt) {
+			this.record_id = opt.recordId
 		},
 		methods:{
 			selectPanswer(q, a){
@@ -259,7 +264,16 @@
 				console.log(this.c_question)
 			},
 			submit(){
-				console.log(this.practical_score)
+				let params = {
+					record_id: this.record_id,
+					practical_score: this.practical_score,
+					total: this.practical_score,
+					...this.p_question,
+					...this.c_question
+				}
+				this.$api.feedbackOne(params).then( res => {
+					console.log(res)
+				})
 			}
 		}
 	}

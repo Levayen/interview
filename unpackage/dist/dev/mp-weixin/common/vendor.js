@@ -2000,14 +2000,14 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
-/*!*******************************************************!*\
-  !*** C:/Users/Levayen/Desktop/interview/utils/api.js ***!
-  \*******************************************************/
+/*!********************************************!*\
+  !*** D:/laihuayong/interview/utils/api.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 228));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
   // 检测手机号码
   checkPhone: function checkPhone(params) {
@@ -2054,7 +2054,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   //应聘登记表2
   submitRecruitmentFormTwo: function submitRecruitmentFormTwo(params) {
-    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormTwo", "POST", params);
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, true);
   },
   //获取省	
   getProvinces: function getProvinces(params) {
@@ -2063,82 +2063,54 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   //获取市
   getCitys: function getCitys(params) {
     return (0, _request.default)("/api/Common/Citys", "GET", params);
+  },
+  // 面试者-入职-入职登记信息填写情况
+  entryFormInfo: function entryFormInfo(params) {
+    return (0, _request.default)("/api​/Onboarding​/EntryFormInfo", "GET", params);
+  },
+  // 面试官-面试-待面试信息统计
+  waitInterview: function waitInterview(params) {
+    return (0, _request.default)("/api/Interview/WaitInterviewStatistics", "GET", params);
+  },
+  // 面试官-面试列表
+  interviewList: function interviewList(params) {
+    return (0, _request.default)("/api/Interview/InterviewList", "GET", params);
+  },
+  //退回
+  goBack: function goBack(params) {
+    return (0, _request.default)("/api/Interview/RebackInterview", "POST", params, true);
+  },
+  //面试反馈表-1
+  feedbackOne: function feedbackOne(params) {
+    return (0, _request.default)("/api​/Interview​/SubmitRecruitmentFeedbackOne", "POST", params, true);
+  },
+  //面试反馈表-2
+  feedbackTwo: function feedbackTwo(params) {
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, true);
+  },
+  //面试反馈表-2
+  feedbackThree: function feedbackThree(params) {
+    return (0, _request.default)("​/api​/Interview​/SubmitRecruitmentFeedbackThree", "POST", params, true);
+  },
+  //岗位类别
+  postTypes: function postTypes(params) {
+    return (0, _request.default)("/api/Common/PostTypes", "GET", params);
+  },
+  //入职岗位
+  positionList: function positionList(params) {
+    return (0, _request.default)("/api/Common/Posts", "GET", params);
+  },
+  //职级
+  positionRanks: function positionRanks(params) {
+    return (0, _request.default)("​/api​/Common​/Ranks", "GET", params);
   } };exports.default = _default;
 
 /***/ }),
 
-/***/ 12:
-/*!***********************************************************!*\
-  !*** C:/Users/Levayen/Desktop/interview/utils/request.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //用于请求拦截的
-// var Fly=require("flyio/dist/npm/wx");  
-// var fly=new Fly;  
-// var server = "https://pre-sop-api.xiniu.com";  
-// var req = {"appid":"123","version":"123"};  
-// 全局请求封装
-//获取token
-var baseUrl = "https://pre-sop-api.xiniu.com";
-var token = uni.getStorageSync('token');var _default =
-function _default(url, method, params, isForm) {
-  var type = '';
-  if (isForm) {
-    type = 'application/x-www-form-urlencoded';
-  }
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: baseUrl + url,
-      method: method,
-      header: {
-        'content-type': type,
-        'Authorization': 'Bearer ' + token },
-
-      data: _objectSpread({},
-      params),
-
-      success: function success(res) {
-        if (res.data.code === 200) {
-          resolve(res.data);
-        } else if (res.data.code === 401) {
-          uni.navigateTo({
-            url: '../login/login' });
-
-          uni.showToast({
-            title: res.data.message,
-            icon: 'none' });
-
-        } else {
-          uni.showToast({
-            title: res.data.message,
-            icon: "none" });
-
-        }
-      },
-      fail: function fail(err) {
-        uni.showToast({
-          title: "请求失败",
-          icon: "none" });
-
-        reject(err);
-      },
-      complete: function complete() {
-
-      } });
-
-  });
-};exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
 /***/ 194:
-/*!****************************************************************************!*\
-  !*** C:/Users/Levayen/Desktop/interview/static/biaofun-region/region.json ***!
-  \****************************************************************************/
+/*!*****************************************************************!*\
+  !*** D:/laihuayong/interview/static/biaofun-region/region.json ***!
+  \*****************************************************************/
 /*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, default */
 /***/ (function(module) {
 
@@ -8194,6 +8166,76 @@ internalMixin(Vue);
 
 /***/ }),
 
+/***/ 228:
+/*!************************************************!*\
+  !*** D:/laihuayong/interview/utils/request.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //用于请求拦截的
+// var Fly=require("flyio/dist/npm/wx");  
+// var fly=new Fly;  
+// var server = "https://pre-sop-api.xiniu.com";  
+// var req = {"appid":"123","version":"123"};  
+// 全局请求封装
+var baseUrl = "https://pre-sop-api.xiniu.com";var _default =
+
+function _default(url, method, params, isForm) {
+  //获取token
+  var token = uni.getStorageSync('token');
+  var type = '';
+  //判断是否以表单形式提交
+  if (isForm) {
+    type = 'application/x-www-form-urlencoded';
+  }
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: baseUrl + url,
+      method: method,
+      header: {
+        'content-type': type,
+        'Authorization': 'Bearer ' + token },
+
+      data: _objectSpread({},
+      params),
+
+      success: function success(res) {
+        if (res.data.code === 200) {
+          resolve(res.data);
+        } else if (res.data.code === 401) {
+          uni.navigateTo({
+            url: '../login/login' });
+
+          uni.showToast({
+            title: res.data.message,
+            icon: 'none' });
+
+        } else {
+          uni.showToast({
+            title: res.data.message,
+            icon: "none" });
+
+        }
+      },
+      fail: function fail(err) {
+        uni.showToast({
+          title: "请求失败",
+          icon: "none" });
+
+        reject(err);
+      },
+      complete: function complete() {
+
+      } });
+
+  });
+};exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -8226,9 +8268,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!*****************************************************!*\
-  !*** C:/Users/Levayen/Desktop/interview/pages.json ***!
-  \*****************************************************/
+/*!******************************************!*\
+  !*** D:/laihuayong/interview/pages.json ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8237,9 +8279,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 59:
-/*!**********************************************************!*\
-  !*** C:/Users/Levayen/Desktop/interview/utils/global.js ***!
-  \**********************************************************/
+/*!***********************************************!*\
+  !*** D:/laihuayong/interview/utils/global.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

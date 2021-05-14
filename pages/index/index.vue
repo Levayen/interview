@@ -31,7 +31,6 @@
 			this.phone = uni.getStorageSync('phone')
 		},
 		onShow() {
-			console.log(uni.getStorageSync('token'))
 			this.getIndex()
 		},
 		methods: {  
