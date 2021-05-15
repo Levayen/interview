@@ -377,6 +377,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
 {
   components: {
     Grader: Grader },
@@ -415,9 +424,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       rank_id: '', //职级id
       rank_name: '', //职级名称
       departmentsList: [],
-      child: 0,
-      child1: 0,
-      child2: 0 };
+      childIndex1: null,
+      childIndex2: null,
+      childIndex3: null,
+      childIndex4: null,
+      children1: [],
+      children2: [],
+      children3: [],
+      children4: [] };
 
   },
   computed: {
@@ -463,9 +477,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
       });
     },
-    //选择部门
-    getChild: function getChild(id, index) {
-
+    //选择部门1
+    getChildren1: function getChildren1(index) {
+      this.children1 = this.departmentsList[index].children;
+      this.childIndex1 = index;
+    },
+    getChildren2: function getChildren2(index) {
+      this.children2 = this.children1[index].children;
+      this.childIndex2 = index;
+    },
+    getChildren3: function getChildren3(index) {
+      this.children3 = this.children2[index].children;
+      this.childIndex3 = index;
+    },
+    getChildren4: function getChildren4(index) {
+      this.childIndex4 = index;
     },
     //抽屉
     showModal: function showModal(e) {

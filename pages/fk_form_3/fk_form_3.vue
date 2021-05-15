@@ -214,22 +214,31 @@
 						<view class="drawer_item">
 							<view class="item_title">请选择</view>
 							<view class="items" v-for="(item, index) in departmentsList" :key="item.department_id">
-								<view class="items_1 active" 
-								@click="getChild(item.department_id, index)">{{ item.department_name }}</view>
-								<view class="drawer_item child">
-									<view class="item_title">请选择</view>
-									<view class="items" v-for="(item1, index1) in item.children[child]" :key="item1.department_id">
-										<view class="items_1 active" 
-										@click="getChild(item1.department_id)">{{ item1.department_name }}</view>
-										<view class="drawer_item child">
-											<view class="item_title">请选择</view>
-											<view class="items" v-for="(item2, index2) in item1.children[child1]" :key="item2.department_id">
-												<view class="items_1 active"
-												>{{ item2.department_name }}</view>
-											</view>
-										</view>
-									</view>
-								</view>
+								<view class="items_1" :class="{active: index === childIndex1}" 
+								@click="getChildren1(index)">{{ item.department_name }}</view>
+							</view>
+						</view>
+						<view class="drawer_item child" v-if="children1.length > 0">
+							<view class="item_title">请选择</view>
+							<view class="items" v-for="(item1, index1) in children1" :key="item1.department_id">
+								<view class="items_1" :class="{active: index1 === childIndex2}"
+								@click="getChildren2(index1)">{{ item1.department_name }}</view>
+							</view>
+						</view>
+						<view class="drawer_item child" v-if="children2.length > 0">
+							<view class="item_title">请选择</view>
+							<view class="items" v-for="(item2, index2) in children2" :key="item2.department_id">
+								<view class="items_1" :class="{active: index2 === childIndex3}"
+								@click="getChildren3(index2)"
+								>{{ item2.department_name }}</view>
+							</view>
+						</view>
+						<view class="drawer_item child" v-if="children3.length > 0">
+							<view class="item_title">请选择</view>
+							<view class="items" v-for="(item3, index3) in children3" :key="item3.department_id">
+								<view class="items_1" :class="{active: index3 === childIndex4}"
+								@click="getChildren4(index3)"
+								>{{ item3.department_name }}</view>
 							</view>
 						</view>
 						<view class="drawer_btn">
@@ -283,9 +292,14 @@
 				rank_id: '', //职级id
 				rank_name: '', //职级名称
 				departmentsList: [],
-				child: 0,
-				child1: 0,
-				child2: 0,
+				childIndex1: null,
+				childIndex2: null,
+				childIndex3: null,
+				childIndex4: null,
+				children1: [],
+				children2: [],
+				children3: [],
+				children4: [],
 			};
 		},
 		computed: {
@@ -331,9 +345,21 @@
 					
 				})
 			},
-			//选择部门
-			getChild(id, index){
-				
+			//选择部门1
+			getChildren1(index){
+				this.children1 = this.departmentsList[index].children
+				this.childIndex1 = index
+			},
+			getChildren2(index){
+				this.children2 = this.children1[index].children
+				this.childIndex2 = index
+			},
+			getChildren3(index){
+				this.children3 = this.children2[index].children
+				this.childIndex3 = index
+			},
+			getChildren4(index){
+				this.childIndex4 = index
 			},
 			//抽屉
 			showModal(e) {
