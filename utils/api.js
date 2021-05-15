@@ -93,7 +93,11 @@ export default {
 	},
 	//职级
 	positionRanks(params){
-		return request("​/api​/Common​/Ranks", "GET", params)
+		return request("/api/Common/Ranks", "GET", params)
+	},
+	//部门
+	departments(params){
+		return request("/api/Common/Departments", "GET", params)
 	},
 	
 

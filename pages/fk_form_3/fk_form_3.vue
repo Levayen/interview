@@ -155,7 +155,13 @@
 					</view>
 					<view>
 						<view> 职级 </view>
-						<Grader></Grader>
+						<picker mode="selector" range-key="rank_name" :range="rankList" :data-index="index" @change="bindGrader">
+							<view class="select_btn" v-if="rank_name === ''">
+								<view>请选择</view>
+								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
+							</view>
+						     <view class="uni-input">{{rank_name}}</view>
+						</picker>
 					</view>
 					<view>
 						<view> 入职部门 </view>
@@ -207,58 +213,23 @@
 					<view class="drawer_box">
 						<view class="drawer_item">
 							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">英迈思</view>
-								<view>犀牛云</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">嗨美丽事业部</view>
-								<view>嗨美丽事业部1</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">软件中心</view>
-								<view>软件中心1</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">销售部</view>
-								<view>技术部</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">软件中心</view>
-								<view>软件中心1</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">销售部</view>
-								<view>技术部</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">软件中心</view>
-								<view>软件中心1</view>
-							</view>
-						</view>
-						<view class="drawer_item">
-							<view class="item_title">请选择</view>
-							<view class="items">
-								<view class="active">销售部</view>
-								<view>技术部</view>
+							<view class="items" v-for="(item, index) in departmentsList" :key="item.department_id">
+								<view class="items_1 active" 
+								@click="getChild(item.department_id, index)">{{ item.department_name }}</view>
+								<view class="drawer_item child">
+									<view class="item_title">请选择</view>
+									<view class="items" v-for="(item1, index1) in item.children[child]" :key="item1.department_id">
+										<view class="items_1 active" 
+										@click="getChild(item1.department_id)">{{ item1.department_name }}</view>
+										<view class="drawer_item child">
+											<view class="item_title">请选择</view>
+											<view class="items" v-for="(item2, index2) in item1.children[child1]" :key="item2.department_id">
+												<view class="items_1 active"
+												>{{ item2.department_name }}</view>
+											</view>
+										</view>
+									</view>
+								</view>
 							</view>
 						</view>
 						<view class="drawer_btn">
@@ -282,7 +253,7 @@
 			return {
 				record_id:'',
 				CustomBar: this.CustomBar,
-				modalName: false,
+				modalName: true,
 				answer: 1,
 				grade1: '',
 				grade2: '',
@@ -308,6 +279,13 @@
 				postTypeList: [], //岗位类别列表
 				post_type_id: '', //岗位类别id
 				post_id: '', //岗位id
+				rankList: [], //职级列表
+				rank_id: '', //职级id
+				rank_name: '', //职级名称
+				departmentsList: [],
+				child: 0,
+				child1: 0,
+				child2: 0,
 			};
 		},
 		computed: {
@@ -320,6 +298,7 @@
 		   },
 		   onLoad(opt) {
 				this.postTypes()
+				this.departments()
 		   },
 		methods:{
 			selectRadio(){
@@ -352,6 +331,10 @@
 					
 				})
 			},
+			//选择部门
+			getChild(id, index){
+				
+			},
 			//抽屉
 			showModal(e) {
 				this.modalName = true
@@ -377,9 +360,18 @@
 					this.positionList = res.result
 				})
 			},
+			//职级
 			positionRanks(){
 				this.$api.positionRanks({posttypeId: this.post_type_id}).then( res => {
 					console.log(res)
+					this.rankList = res.result
+				})
+			},
+			//部门
+			departments(){
+				this.$api.departments().then( res => {
+					console.log(res)
+					this.departmentsList = res.result
 				})
 			},
 			bindPostType(e){
@@ -387,6 +379,10 @@
 				let eIndex = e.target.value
 				this.postType = this.postTypeList[eIndex].post_type_name
 				this.post_type_id = this.postTypeList[eIndex].post_type_id
+				this.position = ''
+				this.post_id = ''
+				this.rank_id = ''
+				this.rank_name = ''
 				this.getPositionList()
 				this.positionRanks()
 			},
@@ -398,6 +394,9 @@
 			},
 			bindGrader(e){
 				console.log('picker发送选择改变，携带值为', e.target.value)
+				let eIndex = e.target.value
+				this.rank_id = this.rankList[eIndex].rank_id
+				this.rank_name = this.rankList[eIndex].rank_name
 			},
 			bindDateChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
@@ -731,17 +730,21 @@
 	}
 	.drawer_item{
 		margin-top: 69rpx;
+		display: flex;
+		flex-wrap: wrap;
 	}
 	.item_title{
 		font-size: 25rpx;
 		color: #999999;
 		margin-bottom: 30rpx;
+		width: 100%;
 	}
 	.items{
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		flex-wrap: wrap;
-		>view{
+		flex-direction: column;
+		>.items_1{
 			min-width: 194rpx;
 			box-sizing: border-box;
 			padding: 0 60rpx;
@@ -758,6 +761,33 @@
 				border: 1rpx solid #5C6FB4;
 				color: #5C6FB4;
 				background-color: #EEF0F7;
+			}
+		}
+		>.child{
+			margin-top: 28rpx;
+			>.items{
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				>.items_1{
+					min-width: 194rpx;
+					box-sizing: border-box;
+					padding: 0 60rpx;
+					height: 63rpx;
+					line-height: 63rpx;
+					border-radius: 7rpx;
+					margin-right: 35rpx;
+					margin-bottom: 21rpx;
+					font-size: 25rpx;
+					text-align: center;
+					background-color: #F6F6F6;
+					color: #333333;
+					&.active{
+						border: 1rpx solid #5C6FB4;
+						color: #5C6FB4;
+						background-color: #EEF0F7;
+					}
+				}
 			}
 		}
 	}

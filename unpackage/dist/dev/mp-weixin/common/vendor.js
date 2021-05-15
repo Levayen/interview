@@ -2102,7 +2102,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   //职级
   positionRanks: function positionRanks(params) {
-    return (0, _request.default)("​/api​/Common​/Ranks", "GET", params);
+    return (0, _request.default)("/api/Common/Ranks", "GET", params);
+  },
+  //部门
+  departments: function departments(params) {
+    return (0, _request.default)("/api/Common/Departments", "GET", params);
   } };exports.default = _default;
 
 /***/ }),

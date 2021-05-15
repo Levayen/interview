@@ -377,35 +377,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
   components: {
     Grader: Grader },
@@ -414,7 +385,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     return {
       record_id: '',
       CustomBar: this.CustomBar,
-      modalName: false,
+      modalName: true,
       answer: 1,
       grade1: '',
       grade2: '',
@@ -439,8 +410,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       postType: '', //岗位类别
       postTypeList: [], //岗位类别列表
       post_type_id: '', //岗位类别id
-      post_id: '' //岗位id
-    };
+      post_id: '', //岗位id
+      rankList: [], //职级列表
+      rank_id: '', //职级id
+      rank_name: '', //职级名称
+      departmentsList: [],
+      child: 0,
+      child1: 0,
+      child2: 0 };
+
   },
   computed: {
     startDate: function startDate() {
@@ -452,6 +430,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   onLoad: function onLoad(opt) {
     this.postTypes();
+    this.departments();
   },
   methods: (_methods = {
     selectRadio: function selectRadio() {
@@ -484,6 +463,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
       });
     },
+    //选择部门
+    getChild: function getChild(id, index) {
+
+    },
     //抽屉
     showModal: function showModal(e) {
       this.modalName = true;
@@ -509,9 +492,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       _this2.positionList = res.result;
     });
   }), _defineProperty(_methods, "positionRanks", function positionRanks()
-  {
+
+  {var _this3 = this;
     this.$api.positionRanks({ posttypeId: this.post_type_id }).then(function (res) {
       console.log(res);
+      _this3.rankList = res.result;
+    });
+  }), _defineProperty(_methods, "departments", function departments()
+
+  {var _this4 = this;
+    this.$api.departments().then(function (res) {
+      console.log(res);
+      _this4.departmentsList = res.result;
     });
   }), _defineProperty(_methods, "bindPostType", function bindPostType(
   e) {
@@ -519,6 +511,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     var eIndex = e.target.value;
     this.postType = this.postTypeList[eIndex].post_type_name;
     this.post_type_id = this.postTypeList[eIndex].post_type_id;
+    this.position = '';
+    this.post_id = '';
+    this.rank_id = '';
+    this.rank_name = '';
     this.getPositionList();
     this.positionRanks();
   }), _defineProperty(_methods, "bindPosition", function bindPosition(
@@ -530,6 +526,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   }), _defineProperty(_methods, "bindGrader", function bindGrader(
   e) {
     console.log('picker发送选择改变，携带值为', e.target.value);
+    var eIndex = e.target.value;
+    this.rank_id = this.rankList[eIndex].rank_id;
+    this.rank_name = this.rankList[eIndex].rank_name;
   }), _defineProperty(_methods, "bindDateChange",
   function bindDateChange(e) {
     console.log('picker发送选择改变，携带值为', e.target.value);
