@@ -193,7 +193,7 @@
 					    key: 'token',
 					    data:  res.result.token,
 					    success: function () {
-							uni.navigateTo({
+							uni.reLaunch({
 								url:'../interviewerIndex/interviewerIndex'
 							})
 					    }

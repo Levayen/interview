@@ -172,9 +172,9 @@ var _default =
     this.getCount();
   },
   methods: {
-    goFirstInterview: function goFirstInterview() {
+    goFirstInterview: function goFirstInterview(round) {
       uni.navigateTo({
-        url: "../HRinterview/HRinterview?round=1" });
+        url: "../HRinterview/HRinterview?round=".concat(round) });
 
     },
     goSecondInterview: function goSecondInterview() {

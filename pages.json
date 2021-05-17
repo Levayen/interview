@@ -164,7 +164,7 @@
             "path" : "pages/HRinterview/HRinterview",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "HR面",
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

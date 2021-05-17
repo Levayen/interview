@@ -47,6 +47,11 @@ export default {
 	submitRecruitmentFormTwo(params){
 		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, true)
 	},
+	//面试者基本信息
+	getUserInfo(params){
+		return request("/api/Interview/IntervieweeBasicInfo", "GET", params)
+	},
+	
 	//获取省	
 	getProvinces(params){
 		return request("/api/Common/Provinces", "GET", params)
@@ -73,15 +78,15 @@ export default {
 	},
 	//面试反馈表-1
 	feedbackOne(params){
-		return request("/api​/Interview​/SubmitRecruitmentFeedbackOne", "POST", params, true)
+		return request("/api/Interview/SubmitRecruitmentFeedbackOne", "POST", params, true)
 	},
 	//面试反馈表-2
 	feedbackTwo(params){
 		return request("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, true)
 	},
-	//面试反馈表-2
+	//面试反馈表-3
 	feedbackThree(params){
-		return request("​/api​/Interview​/SubmitRecruitmentFeedbackThree", "POST", params, true)
+		return request("​/api/Interview/SubmitRecruitmentFeedbackThree", "POST", params, true)
 	},
 	//岗位类别
 	postTypes(params){
@@ -99,6 +104,32 @@ export default {
 	departments(params){
 		return request("/api/Common/Departments", "GET", params)
 	},
-	
-
+	//面试者-入职-入职登记信息填写情况
+	entryFormInfo(params){
+		return request("/api/Onboarding/EntryFormInfo", "GET", params)
+	},
+	//提交入职登记表1
+	rzFormOne(params){
+		return request("/api/Onboarding/SubmitRecruitmentFormOne", "POST", params)
+	},
+	//提交入职登记表2
+	rzFormTwo(params){
+		return request("/api/Onboarding/SubmitRecruitmentEntrantTwo", "POST", params, true)
+	},
+	//入职登记表详情1
+	ntrantOneInfo(params){
+		return request("/api/Onboarding/EntrantOneInfo", "GET", params)
+	},
+	//入职登记表详情2
+	entrantTwoInfo(params){
+		return request("​/api​/Onboarding​/EntrantTwoInfo", "GET", params)
+	},
+	// 面试者-入职-提交入职登记附件表详情
+	subFileDetail(params){
+		return request("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, true)
+	},
+	// 面试者-入职-入职登记附件表详情 
+	rzFileDetail(params){
+		return request("​/api/Onboarding/IntervieweeCertificateInfo", "GET", params)
+	}
 }

@@ -9,10 +9,10 @@
 				<view class="goods_checked">
 					<ul>
 						<li v-for="(item, index) in allGoods" :key="index" 
-						:class="{'active': goodsList.indexOf(item.id)!=-1}"
-						@click="selectGoods(item.id)">
+						:class="{'active': goodsList.indexOf(index)!=-1}"
+						@click="selectGoods(index)">
 							<view>
-								<radio :checked="goodsList.indexOf(item.id)!=-1"/>
+								<radio :checked="goodsList.indexOf(index)!=-1"/>
 							</view>
 							<view>{{ item.name }}</view>
 						</li>
@@ -43,8 +43,11 @@
 						<input type="text" value="" v-model="IDnumber" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 性别：</view>
-						<input type="text" value="" v-model="sex" placeholder="请填写"/>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 性别：</view>
+						<view class="check_box">
+							<view :class="{ 'active': sex === 0 }" @click="selectSex(0)">男</view>
+							<view :class="{ 'active': sex === 1 }" @click="selectSex(1)">女</view>
+						</view>
 					</view>
 					<view>
 						<view> 民族：</view>
@@ -108,7 +111,7 @@
 			</label>
 		</view>
 		<view class="bottom_btn">
-			<view class="sub_btn">
+			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
 		</view>
@@ -120,8 +123,9 @@
 		data() {
 			return {
 				phone: '',
-				sex: 1,
+				sex: 0,
 				marriage: 1, //婚姻状况
+				marital_status:'',
 				spouse: '', //配偶姓名
 				spouseID: '', //配偶身份证号码
 				hukou: 1,
@@ -137,25 +141,31 @@
 				censusList: ['01深户', '02非深户城镇', '03非深户农村'],
 				isChecked: false,
 				allGoods: [
-					{id: 1, name: 'PC电脑'},
-					{id: 2, name: 'PC电脑'},
-					{id: 3, name: 'PC电脑'},
-					{id: 4, name: 'PC电脑'},
-					{id: 5, name: 'PC电脑'},
-					{id: 6, name: 'PC电脑'},
-					{id: 7, name: 'PC电脑'},
-					{id: 8, name: 'PC电脑'},
-					{id: 9, name: 'PC电脑'},
-					{id: 10, name: 'PC电脑'},
-					{id: 11, name: 'PC电脑'},
-					{id: 12, name: 'PC电脑'},
+					{id: 1, name: 'PC电脑', params: 'pc', value: 0},
+					{id: 2, name: '笔记本电脑', params: 'laptop', value: 0},
+					{id: 3, name: '办公手机', params: 'mobile', value: 0},
+					{id: 4, name: '平板电脑', params: 'pad', value: 0},
+					{id: 5, name: 'U盾', params: 'u_key', value: 0},
+					{id: 6, name: '工牌', params: 'gadge', value: 0},
+					{id: 7, name: '计算器', params: 'calculator', value: 0},
+					{id: 8, name: '文件夹', params: 'folder', value: 0},
+					{id: 9, name: '员工手册', params: 'employee_handbook', value: 0},
+					{id: 10, name: '干部手册', params: 'cadre_handbook', value: 0},
+					{id: 11, name: 'POS机', params: 'pos', value: 0},
+					{id: 12, name: '工装', params: 'tooling', value: 0},
 				], //所有物品
-				goodsList:[], //选中的物品
+				goodsList: [], //选中的物品
+				goodsParams: {}
 			};
 		},
 		methods:{
 			selectMarriage(val){
 				this.marriage = val
+				if(val == 1){
+					this.marital_status = '02未婚'	
+				}else{
+					this.marital_status = '01已婚'
+				}
 			},
 			bindPosition: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
@@ -164,9 +174,9 @@
 			},
 			//学位
 			bindEducation: function(e){
-				console.log('picker发送选择改变，携带值为', e.target.value)
 				let eIndex = e.target.value
 				this.education = this.educationList[eIndex]
+				console.log('picker发送选择改变，携带值为', this.education)
 			},
 			bindTitle: function(e){
 				console.log('picker发送选择改变，携带值为', e.target.value)
@@ -178,18 +188,94 @@
 				let eIndex = e.target.value
 				this.census = this.censusList[eIndex]
 			},
+			selectSex(val){
+				this.sex = val
+			},
 			selectRadio(){
 				this.isChecked = !this.isChecked
+				if(this.isChecked){
+					this.authenticity = 1
+				}else{
+					this.authenticity = 0
+				}
 			},
 			selectGoods(index) {
 				var that = this;
 				if (that.goodsList.indexOf(index) == -1) {
 					 //打印下标
 					that.goodsList.push(index); //选中添加到数组里
+					that.allGoods[index].value = 1
 				} else {
 					that.goodsList.splice(that.goodsList.indexOf(index), 1); //取消
+					that.allGoods[index].value = 0
 				}
+				
 			},
+			submit(){
+				this.allGoods.forEach(item => {
+					let key = item.params
+					let value = item.value
+					this.goodsParams[key] = value
+				})
+				let params = {
+					...this.goodsParams,
+					social_security_number: this.account_1,
+					provident_fund_account: this.account_2,
+					realname : this.name,
+					phone : this.phone,
+					sex: this.sex,
+					nationality : this.nation,
+					id_card : this.IDnumber,
+					highest_degree : this.education,
+					job_title : this.title,
+					household_registration : this.census,
+					marital_status : this.marital_status,
+					spouse_name: this.spouse,
+					spouse_id_number: this.spouseID,
+					authenticity : this.authenticity ,
+				}
+				let a = {
+					pc: 0,
+					laptop: 1,
+					mobile: 0,
+					pad: 0,
+					u_key: 0,
+					gadge: 0,
+					calculator: 0,
+					folder: 0,
+					employee_handbook: 0,
+					cadre_handbook: 0,
+					pos: 0,
+					tooling: 0,
+					social_security_number: 698745123,
+					provident_fund_account: 123698547,
+					realname: '赖华勇',
+					phone: 15999299032,
+					sex: 0,
+					nationality: "汉",
+					id_card: 440223199612031616,
+					highest_degree: '111',
+					job_title: '111',
+					household_registration: '111',
+					marital_status:'02未婚' ,
+					spouse_name: '',
+					spouse_id_number: '',
+					authenticity: 1,
+				}
+				if(params.authenticity == 0){
+					uni.showToast({
+						title:'请勾选承诺书',
+						icon:'none'
+					})
+					return
+				}
+				this.$api.rzFormTwo(a).then( res => {
+					console.log(res)
+					uni.navigateBack({
+						delta: 2
+					})
+				})
+			}
 		}
 	}
 </script>

@@ -66,8 +66,8 @@
 							</view>
 						</view>
 					</view>
-					<view class="item_bottom" v-if="statistics.interview_round === 0">
-						<view @click="fkForm3(item.recordId)">
+					<view class="item_bottom" v-if="paramsList.interview_round == 0 ">
+						<view @click="fkForm3(item.recordId, item)">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
@@ -77,7 +77,7 @@
 							<view class="icon_1"><image src="../../static/img/back_1.png" mode=""></image></view>
 							<view>退回</view> 
 						</view>
-						<view @click="fkForm(item.recordId)">
+						<view @click="fkForm(item.recordId, item.intervieweeId)">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
@@ -146,8 +146,8 @@
 						</view>
 						<view class="result_2">
 							<view>综合得分：<span>{{ citem.score }}</span></view>
-							<view v-show="paramsList.status === 2">面试结果：<span>通过</span></view>
-							<view v-show="paramsList.status === 3">面试结果：<span>未通过</span><span>(技术能力达不到)</span></view>
+							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
+							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
 						</view>
 					</view>
 				</view>
@@ -214,8 +214,8 @@
 						</view>
 						<view class="result_2">
 							<view>综合得分：<span>{{ citem.score }}</span></view>
-							<view v-show="paramsList.status === 2">面试结果：<span>通过</span></view>
-							<view v-show="paramsList.status === 3">面试结果：<span>未通过</span><span>(技术能力达不到)</span></view>
+							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
+							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
 						</view>
 					</view>
 				</view>
@@ -246,11 +246,30 @@
 					interview_round : 1,
 					pageSize : 10,
 					pageNumber : 1,
-				}
+				},
+				pageTitle:''
 			};
 		},
 		onLoad(opt) {
+			//0：HR面、1：一面、2：二面、3：三面、4：四面
 			this.paramsList.interview_round = opt.round
+			console.log(opt)
+			if(opt.round === "0"){
+				this.pageTitle = 'HR面'
+			}else if(opt.round === "1"){
+				this.pageTitle = '一面'
+			}else if(opt.round === "2"){
+				this.pageTitle = '二面'
+			}else if(opt.round === "3"){
+				this.pageTitle = '三面'
+			}else if(opt.round === "4"){
+				this.pageTitle = '四面'
+			}
+			uni.setNavigationBarTitle({
+				title: this.pageTitle
+			});
+		},
+		onShow() {
 			this.getInterviewList()
 		},
 		methods:{
@@ -266,15 +285,16 @@
 					console.log(res)
 					this.dataList = res.result.data
 					this.statistics = res.result.statistics
+
 				})
 			},
 			changeStatus(val){
 				this.paramsList.status = val
 				this.getInterviewList()
 			},
-			fkForm(id){
+			fkForm(id, userId, item){
 				uni.navigateTo({
-					url: `../fk_form_1/fk_form_1?recordId=${id}`
+					url: `../fk_form_1/fk_form_1?recordId=${id}&intervieweeId=${userId}`
 				})
 			},
 			fkForm2(id){
@@ -282,9 +302,21 @@
 					url: `../fk_form_2/fk_form_2?recordId=${id}`
 				})
 			},
-			fkForm3(id){
+			fkForm3(id, item){
+				console.log(id)
+				let scoreTotal = 0
+				let interviewer = 0
+				let average = 0
+				item.records.forEach( t => {
+					interviewer += t.details.length
+					t.details.forEach( d => {
+						scoreTotal += d.score
+					})
+				})
+				average = Math.round(scoreTotal/interviewer)
+				console.log(average)
 				uni.navigateTo({
-					url: `../fk_form_3/fk_form_3?recordId=${id}`
+					url: `../fk_form_3/fk_form_3?recordId=${id}&average=${average}`
 				})
 			},
 			openDocument(url){

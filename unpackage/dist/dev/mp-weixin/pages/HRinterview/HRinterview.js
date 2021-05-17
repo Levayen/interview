@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var InterviewNav = function InterviewNav() {__webpack_require__.e(/*! require.ensure | components/interviewNav/interviewNav */ "components/interviewNav/interviewNav").then((function () {return resolve(__webpack_require__(/*! @/components/interviewNav/interviewNav.vue */ 197));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var InterviewNav = function InterviewNav() {__webpack_require__.e(/*! require.ensure | components/interviewNav/interviewNav */ "components/interviewNav/interviewNav").then((function () {return resolve(__webpack_require__(/*! @/components/interviewNav/interviewNav.vue */ 203));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -377,12 +377,31 @@ __webpack_require__.r(__webpack_exports__);
         status: 0,
         interview_round: 1,
         pageSize: 10,
-        pageNumber: 1 } };
+        pageNumber: 1 },
 
+      pageTitle: '' };
 
   },
   onLoad: function onLoad(opt) {
+    //0：HR面、1：一面、2：二面、3：三面、4：四面
     this.paramsList.interview_round = opt.round;
+    console.log(opt);
+    if (opt.round === "0") {
+      this.pageTitle = 'HR面';
+    } else if (opt.round === "1") {
+      this.pageTitle = '一面';
+    } else if (opt.round === "2") {
+      this.pageTitle = '二面';
+    } else if (opt.round === "3") {
+      this.pageTitle = '三面';
+    } else if (opt.round === "4") {
+      this.pageTitle = '四面';
+    }
+    uni.setNavigationBarTitle({
+      title: this.pageTitle });
+
+  },
+  onShow: function onShow() {
     this.getInterviewList();
   },
   methods: {
@@ -398,15 +417,16 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
         _this2.dataList = res.result.data;
         _this2.statistics = res.result.statistics;
+
       });
     },
     changeStatus: function changeStatus(val) {
       this.paramsList.status = val;
       this.getInterviewList();
     },
-    fkForm: function fkForm(id) {
+    fkForm: function fkForm(id, userId, item) {
       uni.navigateTo({
-        url: "../fk_form_1/fk_form_1?recordId=".concat(id) });
+        url: "../fk_form_1/fk_form_1?recordId=".concat(id, "&intervieweeId=").concat(userId) });
 
     },
     fkForm2: function fkForm2(id) {
@@ -414,9 +434,21 @@ __webpack_require__.r(__webpack_exports__);
         url: "../fk_form_2/fk_form_2?recordId=".concat(id) });
 
     },
-    fkForm3: function fkForm3(id) {
+    fkForm3: function fkForm3(id, item) {
+      console.log(id);
+      var scoreTotal = 0;
+      var interviewer = 0;
+      var average = 0;
+      item.records.forEach(function (t) {
+        interviewer += t.details.length;
+        t.details.forEach(function (d) {
+          scoreTotal += d.score;
+        });
+      });
+      average = Math.round(scoreTotal / interviewer);
+      console.log(average);
       uni.navigateTo({
-        url: "../fk_form_3/fk_form_3?recordId=".concat(id) });
+        url: "../fk_form_3/fk_form_3?recordId=".concat(id, "&average=").concat(average) });
 
     },
     openDocument: function openDocument(url) {

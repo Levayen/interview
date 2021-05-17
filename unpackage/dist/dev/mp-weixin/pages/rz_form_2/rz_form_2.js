@@ -100,8 +100,8 @@ var render = function() {
   var l0 = _vm.__map(_vm.allGoods, function(item, index) {
     var $orig = _vm.__get_orig(item)
 
-    var g0 = _vm.goodsList.indexOf(item.id)
-    var g1 = _vm.goodsList.indexOf(item.id)
+    var g0 = _vm.goodsList.indexOf(index)
+    var g1 = _vm.goodsList.indexOf(index)
     return {
       $orig: $orig,
       g0: g0,
@@ -150,7 +150,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+//
+//
+//
 //
 //
 //
@@ -272,8 +275,9 @@ var _default =
   data: function data() {
     return {
       phone: '',
-      sex: 1,
+      sex: 0,
       marriage: 1, //婚姻状况
+      marital_status: '',
       spouse: '', //配偶姓名
       spouseID: '', //配偶身份证号码
       hukou: 1,
@@ -289,25 +293,31 @@ var _default =
       censusList: ['01深户', '02非深户城镇', '03非深户农村'],
       isChecked: false,
       allGoods: [
-      { id: 1, name: 'PC电脑' },
-      { id: 2, name: 'PC电脑' },
-      { id: 3, name: 'PC电脑' },
-      { id: 4, name: 'PC电脑' },
-      { id: 5, name: 'PC电脑' },
-      { id: 6, name: 'PC电脑' },
-      { id: 7, name: 'PC电脑' },
-      { id: 8, name: 'PC电脑' },
-      { id: 9, name: 'PC电脑' },
-      { id: 10, name: 'PC电脑' },
-      { id: 11, name: 'PC电脑' },
-      { id: 12, name: 'PC电脑' }],
+      { id: 1, name: 'PC电脑', params: 'pc', value: 0 },
+      { id: 2, name: '笔记本电脑', params: 'laptop', value: 0 },
+      { id: 3, name: '办公手机', params: 'mobile', value: 0 },
+      { id: 4, name: '平板电脑', params: 'pad', value: 0 },
+      { id: 5, name: 'U盾', params: 'u_key', value: 0 },
+      { id: 6, name: '工牌', params: 'gadge', value: 0 },
+      { id: 7, name: '计算器', params: 'calculator', value: 0 },
+      { id: 8, name: '文件夹', params: 'folder', value: 0 },
+      { id: 9, name: '员工手册', params: 'employee_handbook', value: 0 },
+      { id: 10, name: '干部手册', params: 'cadre_handbook', value: 0 },
+      { id: 11, name: 'POS机', params: 'pos', value: 0 },
+      { id: 12, name: '工装', params: 'tooling', value: 0 }],
       //所有物品
-      goodsList: [] //选中的物品
-    };
+      goodsList: [], //选中的物品
+      goodsParams: {} };
+
   },
   methods: {
     selectMarriage: function selectMarriage(val) {
       this.marriage = val;
+      if (val == 1) {
+        this.marital_status = '02未婚';
+      } else {
+        this.marital_status = '01已婚';
+      }
     },
     bindPosition: function bindPosition(e) {
       console.log('picker发送选择改变，携带值为', e.target.value);
@@ -316,9 +326,9 @@ var _default =
     },
     //学位
     bindEducation: function bindEducation(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var eIndex = e.target.value;
       this.education = this.educationList[eIndex];
+      console.log('picker发送选择改变，携带值为', this.education);
     },
     bindTitle: function bindTitle(e) {
       console.log('picker发送选择改变，携带值为', e.target.value);
@@ -330,18 +340,95 @@ var _default =
       var eIndex = e.target.value;
       this.census = this.censusList[eIndex];
     },
+    selectSex: function selectSex(val) {
+      this.sex = val;
+    },
     selectRadio: function selectRadio() {
       this.isChecked = !this.isChecked;
+      if (this.isChecked) {
+        this.authenticity = 1;
+      } else {
+        this.authenticity = 0;
+      }
     },
     selectGoods: function selectGoods(index) {
       var that = this;
       if (that.goodsList.indexOf(index) == -1) {
         //打印下标
         that.goodsList.push(index); //选中添加到数组里
+        that.allGoods[index].value = 1;
       } else {
         that.goodsList.splice(that.goodsList.indexOf(index), 1); //取消
+        that.allGoods[index].value = 0;
       }
+
+    },
+    submit: function submit() {var _this = this;
+      this.allGoods.forEach(function (item) {
+        var key = item.params;
+        var value = item.value;
+        _this.goodsParams[key] = value;
+      });
+      var params = _objectSpread(_objectSpread({},
+      this.goodsParams), {}, {
+        social_security_number: this.account_1,
+        provident_fund_account: this.account_2,
+        realname: this.name,
+        phone: this.phone,
+        sex: this.sex,
+        nationality: this.nation,
+        id_card: this.IDnumber,
+        highest_degree: this.education,
+        job_title: this.title,
+        household_registration: this.census,
+        marital_status: this.marital_status,
+        spouse_name: this.spouse,
+        spouse_id_number: this.spouseID,
+        authenticity: this.authenticity });
+
+      var a = {
+        pc: 0,
+        laptop: 1,
+        mobile: 0,
+        pad: 0,
+        u_key: 0,
+        gadge: 0,
+        calculator: 0,
+        folder: 0,
+        employee_handbook: 0,
+        cadre_handbook: 0,
+        pos: 0,
+        tooling: 0,
+        social_security_number: 698745123,
+        provident_fund_account: 123698547,
+        realname: '赖华勇',
+        phone: 15999299032,
+        sex: 0,
+        nationality: "汉",
+        id_card: 440223199612031616,
+        highest_degree: '111',
+        job_title: '111',
+        household_registration: '111',
+        marital_status: '02未婚',
+        spouse_name: '',
+        spouse_id_number: '',
+        authenticity: 1 };
+
+      if (params.authenticity == 0) {
+        uni.showToast({
+          title: '请勾选承诺书',
+          icon: 'none' });
+
+        return;
+      }
+      this.$api.rzFormTwo(a).then(function (res) {
+        console.log(res);
+        uni.navigateBack({
+          delta: 2 });
+
+      });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

@@ -1,19 +1,19 @@
 <template>
 	<view class="content">
 		<view class="main">
-			<view class="main_item medium" @click="goFirstInterview">
+			<view class="main_item medium" @click="goFirstInterview(1)">
 				一面（ <span class="red">{{ count.one }}</span> ）
 			</view>
-			<view class="main_item medium" @click="goSecondInterview">
+			<view class="main_item medium" @click="goFirstInterview(2)">
 				二面（ <span class="red">{{ count.two }}</span> ）
 			</view>
-			<view class="main_item medium">
+			<view class="main_item medium" @click="goFirstInterview(3)">
 				三面（ <span class="red">{{ count.three}}</span> ）
 			</view>
-			<view class="main_item medium">
+			<view class="main_item medium" @click="goFirstInterview(4)">
 				四面（ <span class="red">{{ count.four }}</span> ）
 			</view>
-			<view class="main_last_item medium">
+			<view class="main_last_item medium" @click="goFirstInterview(0)">
 				HR面（ <span>{{ count.hr }}</span> ）
 			</view>
 		</view>
@@ -40,9 +40,9 @@
 			this.getCount()
 		},
 		methods:{
-			goFirstInterview(){
+			goFirstInterview(round){
 				uni.navigateTo({
-					url: `../HRinterview/HRinterview?round=1`
+					url: `../HRinterview/HRinterview?round=${round}`
 				})
 			},
 			goSecondInterview(){

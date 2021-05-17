@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
 //
 //
@@ -365,11 +365,15 @@ var _default =
 
       p_question: {},
       c_question: {},
-      record_id: '' };
+      record_id: '',
+      user_id: '',
+      user_info: null };
 
   },
   onLoad: function onLoad(opt) {
     this.record_id = opt.recordId;
+    this.user_id = opt.intervieweeId;
+    this.getUserInfo();
   },
   methods: {
     selectPanswer: function selectPanswer(q, a) {
@@ -395,7 +399,22 @@ var _default =
       this.c_question[key] = value;
       console.log(this.c_question);
     },
-    submit: function submit() {
+    getUserInfo: function getUserInfo() {var _this = this;
+      this.$api.getUserInfo({ intervieweeId: this.user_id }).then(function (res) {
+        console.log(res);
+        var obj = res.result;
+        if (obj.marital_status === 0) {
+          _this.$set(obj, 'marital', '未婚');
+        } else if (obj.marital_status === 1) {
+          _this.$set(obj, 'marital', '已婚');
+        } else if (obj.marital_status === 2) {
+          _this.$set(obj, 'marital', '离异');
+        }
+        obj.birthday = obj.birthday.split(' ')[0];
+        _this.user_info = res.result;
+      });
+    },
+    submit: function submit() {var _this2 = this;
       var params = _objectSpread(_objectSpread({
         record_id: this.record_id,
         practical_score: this.practical_score,
@@ -405,8 +424,12 @@ var _default =
 
       this.$api.feedbackOne(params).then(function (res) {
         console.log(res);
+        uni.navigateTo({
+          url: "../fk_form_2/fk_form_2?total=".concat(_this2.total, "&record_id=").concat(_this2.record_id) });
+
       });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

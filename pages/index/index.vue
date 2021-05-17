@@ -4,12 +4,12 @@
 			欢迎【{{phone}}】参加英迈思集团面试
 		</view>
 		<view class="index_box">
-			<view class="index_box_1">
+			<view class="index_box_1" @click="goInterview">
 				<view>当前有</view>
 				<view class="number_fs">{{ positions }}</view>
 				<view>个岗位在招聘</view>
 			</view>
-			<view class="index_box_2">
+			<view class="index_box_2" @click="goNotice">
 				<view>当前您有</view>
 				<view class="number_fs">{{ records }}</view>
 				<view>条面试通知</view>
@@ -39,7 +39,17 @@
 					this.positions = res.result.positions;
 					this.records = res.result.records;
 				})
-			}
+			},
+			goInterview(){
+				uni.switchTab({
+					url:'../interview/interview'
+				})
+			},
+			goNotice(){
+				uni.switchTab({
+					url:'../notice/notice'
+				})
+			},
 		}
 	}
 </script>

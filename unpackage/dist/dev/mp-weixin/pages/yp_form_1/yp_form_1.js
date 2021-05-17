@@ -130,7 +130,44 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Grader = function Grader() {__webpack_require__.e(/*! require.ensure | components/twoGrader */ "components/twoGrader").then((function () {return resolve(__webpack_require__(/*! @/components/twoGrader.vue */ 182));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var city = function city() {Promise.all(/*! require.ensure | components/biaofun-region/biaofun-region */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/biaofun-region/biaofun-region")]).then((function () {return resolve(__webpack_require__(/*! @/components/biaofun-region/biaofun-region.vue */ 189));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Grader = function Grader() {__webpack_require__.e(/*! require.ensure | components/twoGrader */ "components/twoGrader").then((function () {return resolve(__webpack_require__(/*! @/components/twoGrader.vue */ 188));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var city = function city() {Promise.all(/*! require.ensure | components/biaofun-region/biaofun-region */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/biaofun-region/biaofun-region")]).then((function () {return resolve(__webpack_require__(/*! @/components/biaofun-region/biaofun-region.vue */ 195));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -361,7 +398,8 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   components: {
-    city: city, Grader: Grader },
+    city: city,
+    Grader: Grader },
 
   data: function data() {
     return {
@@ -403,6 +441,7 @@ __webpack_require__.r(__webpack_exports__);
         "witness": '', //证明人
         "phone": '' //证明人电话
       }] };
+
 
   },
   computed: {
@@ -539,6 +578,7 @@ __webpack_require__.r(__webpack_exports__);
         "phone": '' //证明人电话
       });
     },
+
     submitRecruitmentFormOne: function submitRecruitmentFormOne() {var _this4 = this;
       var params = {
         "post_id": this.post_id,
@@ -562,7 +602,16 @@ __webpack_require__.r(__webpack_exports__);
         birthday: "2021-05-13",
         city_id: 110100,
         current_address: "北京市北京市东城区",
-        education_background: [{ "start_time": "2021-05-13", "end_time": "2021-05-14", "school_name": "111", "profession": "222", "education": "中专/中技", "educational_form": 0, "education_status": 0, "awards": ["222"] }],
+        education_background: [{
+          "start_time": "2021-05-13",
+          "end_time": "2021-05-14",
+          "school_name": "111",
+          "profession": "222",
+          "education": "中专/中技",
+          "educational_form": 0,
+          "education_status": 0,
+          "awards": ["222"] }],
+
         emergency_contact: "无",
         emergency_phone: "15992990321",
         hukou: 0,
@@ -574,7 +623,15 @@ __webpack_require__.r(__webpack_exports__);
         province_id: 110000,
         realname: "赖华勇",
         sex: 0,
-        work_experience: [{ "start_time": "2021-05-13", "end_time": "2021-05-16", "company_name": "2323", "position": "32323", "salary": "121", "witness": "112", "phone": "111" }] };
+        work_experience: [{
+          "start_time": "2021-05-13",
+          "end_time": "2021-05-16",
+          "company_name": "2323",
+          "position": "32323",
+          "salary": "121",
+          "witness": "112",
+          "phone": "111" }] };
+
 
 
       this.$api.submitRecruitmentFormOne(params).then(function (res) {

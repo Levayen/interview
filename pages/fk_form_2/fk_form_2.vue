@@ -9,7 +9,7 @@
 					面试量化得分：
 				</view>
 				<view>
-					<span class="grader_num">89</span>  <span>分</span>
+					<span class="grader_num">{{ total }}</span>  <span>分</span>
 				</view>
 			</view>
 			<view>
@@ -123,7 +123,7 @@
 			</label>
 		</view>
 		<view class="bottom_btn">
-			<view class="sub_btn">
+			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
 		</view>
@@ -134,6 +134,7 @@
 	export default {
 		data() {
 			return {
+				total:'',
 				record_id: '',
 				isChecked: false,
 				question_1: '',
@@ -146,6 +147,7 @@
 		},
 		onLoad(opt) {
 			this.record_id = opt.record_id
+			this.total = opt.total
 		},
 		methods:{
 			selectRadio(){
@@ -175,6 +177,9 @@
 				}
 				this.$api.feedbackTwo(params).then( res => {
 					console.log(res)
+					uni.navigateBack({
+						delta: 2
+					})
 				})
 			}
 		}

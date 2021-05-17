@@ -9,27 +9,27 @@
 				<view class="form_item">
 					<view>
 						<view> 姓名：</view>
-						<view> 张三 </view>
+						<view> {{ user_info.realname }} </view>
 					</view>
 					<view>
 						<view> 性别：</view>
-						<view> 女 </view>
+						<view> {{ user_info.sex ? '女':'男' }} </view>
 					</view>
 					<view>
 						<view> 出生日期：</view>
-						<view> 2020-5-05-10 </view>
+						<view> {{ user_info.birthday }} </view>
 					</view>
 					<view>
 						<view> 婚姻：</view>
-						<view> 已婚 </view>
+						<view> {{ user_info.marital }} </view>
 					</view>
 					<view>
 						<view> 户口：</view>
-						<view> 城镇 </view>
+						<view> {{ user_info.hukou ? '城镇':'农村' }} </view>
 					</view>
 					<view>
 						<view> 现住址：</view>
-						<view> 深圳市宝安区 </view>
+						<view> {{ user_info.current_address }} </view>
 					</view>
 				</view>
 			</view>
@@ -233,11 +233,15 @@
 				],
 				p_question: {},
 				c_question: {},
-				record_id:''
+				record_id:'',
+				user_id: '',
+				user_info: null
 			};
 		},
 		onLoad(opt) {
 			this.record_id = opt.recordId
+			this.user_id = opt.intervieweeId
+			this.getUserInfo()
 		},
 		methods:{
 			selectPanswer(q, a){
@@ -263,6 +267,21 @@
 				this.c_question[key] = value
 				console.log(this.c_question)
 			},
+			getUserInfo(){
+				this.$api.getUserInfo({intervieweeId: this.user_id}).then(res => {
+					console.log(res)
+					let obj = res.result
+					if(obj.marital_status === 0){
+						this.$set(obj, 'marital', '未婚') 
+					}else if(obj.marital_status === 1){
+						this.$set(obj, 'marital', '已婚') 
+					}else if(obj.marital_status === 2){
+						this.$set(obj, 'marital', '离异') 
+					}
+					obj.birthday = obj.birthday.split(' ')[0]
+					this.user_info = res.result
+				})
+			},
 			submit(){
 				let params = {
 					record_id: this.record_id,
@@ -273,6 +292,9 @@
 				}
 				this.$api.feedbackOne(params).then( res => {
 					console.log(res)
+					uni.navigateTo({
+						url:`../fk_form_2/fk_form_2?total=${this.total}&record_id=${this.record_id}`
+					})
 				})
 			}
 		}

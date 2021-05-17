@@ -6,10 +6,10 @@
 		<view class="form_content">
 			<view class="grader_top">
 				<view>
-					面试量化得分：
+					面试量化平均得分：
 				</view>
 				<view>
-					<span class="grader_num">89</span>  <span>分</span>
+					<span class="grader_num">{{average}}</span>  <span>分</span>
 				</view>
 			</view>
 			<view>
@@ -170,7 +170,7 @@
 								<view>请选择</view>
 								<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 							</view>
-							<view class="uni-input">{{department}}</view>
+							<view class="uni-input" @click="showModal">{{department}}</view>
 						</view>
 					</view>
 					<view>
@@ -203,7 +203,7 @@
 			</view>
 		</view>
 		<view class="bottom_btn">
-			<view class="sub_btn">
+			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
 		</view>
@@ -242,8 +242,8 @@
 							</view>
 						</view>
 						<view class="drawer_btn">
-							<view>重置</view>
-							<view>确定</view>
+							<view @click="resetDepartment">重置</view>
+							<view @click="determine">确定</view>
 						</view>
 					</view>
 				</view>
@@ -260,9 +260,9 @@
 		},
 		data() {
 			return {
-				record_id:'',
+				record_id: '',
 				CustomBar: this.CustomBar,
-				modalName: true,
+				modalName: false,
 				answer: 1,
 				grade1: '',
 				grade2: '',
@@ -300,6 +300,9 @@
 				children2: [],
 				children3: [],
 				children4: [],
+				department_id:'',  //入职部门id
+				department_name:'',  //入职部门name
+				average: 0, //平均分
 			};
 		},
 		computed: {
@@ -311,6 +314,9 @@
 		       }
 		   },
 		   onLoad(opt) {
+			    this.record_id = opt.recordId
+			    this.average = opt.average
+				console.log(this.record_id)
 				this.postTypes()
 				this.departments()
 		   },
@@ -338,28 +344,74 @@
 					question_2: this.question_2,
 					question_3: this.question_3,
 					status: this.status,
-					reason: this.reason
+					reason: this.reason,
+					o_post_id : this.post_id,
+					o_post_type_id : this.post_type_id,
+					o_rank_id : this.rank_id,
+					o_department_id : this.department_id,
+					entry_time : this.entry_time,
+					probation_salary : this.probation_salary,
+					turn_positive_salary : this.turn_positive_salary,
+					probation_month : this.probation_month,
+					contract_month : this.contract_month ,
 				}
 				this.$api.feedbackThree(params).then( res => {
 					console.log(res)
-					
+					uni.navigateBack()
 				})
 			},
 			//选择部门1
 			getChildren1(index){
-				this.children1 = this.departmentsList[index].children
+				if(this.departmentsList[index].children){
+					this.children1 = this.departmentsList[index].children
+				}else{
+					this.children1 = ''
+				}
 				this.childIndex1 = index
+				this.department_id = this.departmentsList[index].department_id
+				this.department_name = this.departmentsList[index].department_name
 			},
 			getChildren2(index){
-				this.children2 = this.children1[index].children
+				if(this.children1[index].children){
+					this.children2 = this.children1[index].children
+				}else{
+					this.children2 = ''
+				}
 				this.childIndex2 = index
+				this.department_id = this.children1[index].department_id
+				this.department_name = this.children1[index].department_name
 			},
 			getChildren3(index){
-				this.children3 = this.children2[index].children
+				if(this.children2[index].children){
+					this.children3 = this.children2[index].children
+				}else{
+					this.children3 = ''
+				}
 				this.childIndex3 = index
+				this.department_id = this.children2[index].department_id
+				this.department_name = this.children2[index].department_name
 			},
 			getChildren4(index){
 				this.childIndex4 = index
+				this.department_id = this.children3[index].department_id
+				this.department_name = this.children3[index].department_name
+			},
+			//重置部门信息
+			resetDepartment(){
+				this.department_id  = ''
+				this.department_name = ''
+				this.children1 = ''
+				this.children2 = ''
+				this.children3 = ''
+				this.childIndex1 = null
+				this.childIndex2 = null
+				this.childIndex3 = null
+				this.childIndex4 = null
+			},
+			//确定部门信息
+			determine(){
+				this.department = this.department_name
+				this.hideModal()
 			},
 			//抽屉
 			showModal(e) {

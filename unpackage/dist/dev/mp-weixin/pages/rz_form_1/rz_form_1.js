@@ -159,7 +159,19 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var city = function city() {Promise.all(/*! require.ensure | components/biaofun-region/biaofun-region */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/biaofun-region/biaofun-region")]).then((function () {return resolve(__webpack_require__(/*! @/components/biaofun-region/biaofun-region.vue */ 189));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _methods;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var Grader = function Grader() {__webpack_require__.e(/*! require.ensure | components/twoGrader */ "components/twoGrader").then((function () {return resolve(__webpack_require__(/*! @/components/twoGrader.vue */ 188));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var city = function city() {Promise.all(/*! require.ensure | components/biaofun-region/biaofun-region */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/biaofun-region/biaofun-region")]).then((function () {return resolve(__webpack_require__(/*! @/components/biaofun-region/biaofun-region.vue */ 195));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -406,13 +418,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   components: {
-    city: city },
+    city: city, Grader: Grader },
 
   data: function data() {
     return {
-      sex: 1,
-      marriage: 1, //婚姻状况
-      hukou: 1,
+      awards: '', //荣誉
+      post_id: '', //岗位id
+      post_name: '',
+      sex: 0,
+      marriage: 0, //婚姻状况
+      hukou: 0,
       name: '',
       nation: '', //民族
       IDnumber: '', //身份证号码
@@ -421,38 +436,38 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       contactsPhone: '', //联系人手机
       date: '',
       address: '',
-      nativePlace: '', //籍贯
-      educationList: ['中专/中技', '高中', '大专', '本科'],
+      province_id: '', //籍贯
+      city_id: '', //籍贯
+      educationList: ['大专', '本科', '硕士', '博士', '其他'],
       employment: '', //应聘岗位
-      employmentList: ['产品经理', 'Java工程师', '前端工程师'],
-
+      employmentList: [],
       EdExperience: [{
-        beginTime: '',
-        endTime: '',
-        schoolName: '',
-        major: '', //专业
-        education: '', //学历
-        educationType: 1, //教育形式
-        educationStatus: 1, //教育现状
-        honorList: [''] }],
-
-      workExperience: [{
-        beginTime: '',
-        endTime: '',
-        corporateName: '', //公司名称
-        position: '', //职位
-        salary: '', //薪资
-        witness: '', //证明人
-        witnessPhone: '' //证明人电话
+        "start_time": '',
+        "end_time": '',
+        "school_name": '',
+        "profession": '', //专业
+        "education": '', //学历
+        "educational_form": 0, //教育形式
+        "education_status": 0, //教育现状
+        "awards": [] //标签
       }],
-
+      workExperience: [{
+        "start_time": '',
+        "end_time": '',
+        "company_name": '', //公司名称
+        "position": '', //职位
+        "salary": '', //薪资
+        "witness": '', //证明人
+        "phone": '' //证明人电话
+      }],
       family: [{
         name: '',
-        relation: '',
+        relationship: '',
         address: '',
         phone: '' }],
 
-      isChecked: false };
+      isChecked: false,
+      authenticity: '' };
 
   },
   computed: {
@@ -463,7 +478,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       return this.getDate('end');
     } },
 
-  methods: {
+  onLoad: function onLoad(opt) {
+    this.post_id = opt.post_id;
+    this.post_name = opt.post_name;
+    this.getPositionList();
+  },
+  methods: (_methods = {
+    getPositionList: function getPositionList() {var _this = this;
+      this.$api.statistics({}).then(function (res) {
+        console.log(res);
+        _this.employmentList = res.result;
+      });
+    },
+    getId: function getId(id1, id2) {
+      this.province_id = id1;
+      this.city_id = id2;
+    },
     selectSex: function selectSex(val) {
       this.sex = val;
     },
@@ -474,114 +504,180 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.hukou = val;
     },
     selectET: function selectET(val, i) {
-      this.EdExperience[i].educationType = val;
+      this.EdExperience[i].educational_form = val;
     },
     selectES: function selectES(val, i) {
-      this.EdExperience[i].educationStatus = val;
+      this.EdExperience[i].education_status = val;
     },
-    getAddress: function getAddress(data) {var _this = this;
+    addAwards: function addAwards(i) {
+      this.EdExperience[i].awards.push(this.awards);
+      this.awards = '';
+    },
+    getAddress: function getAddress(data) {var _this2 = this;
       this.address = '';
       data.forEach(function (item) {
-        _this.address += item.name;
+        _this2.address += item.name;
       });
-      console.log('picker发送选择改变，携带值为', this.address);
     },
-    getNativePlace: function getNativePlace(data) {var _this2 = this;
+    getNativePlace: function getNativePlace(data) {var _this3 = this;
       this.nativePlace = '';
       data.forEach(function (item) {
-        _this2.nativePlace += item.name;
+        _this3.nativePlace += item.name;
       });
       console.log('picker发送选择改变，携带值为', this.nativePlace);
-    },
-    bindPosition: function bindPosition(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      var pIndex = e.target.value;
-      this.employment = this.employmentList[pIndex];
-    },
-    bindDateChange: function bindDateChange(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      this.date = e.target.value;
-    },
-    //教育经历
-    bindEducation: function bindEducation(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      var eIndex = e.target.value;
-      var i = e.currentTarget.dataset.index;
-      this.EdExperience[i].education = this.educationList[eIndex];
-    },
-    bindBeginTime: function bindBeginTime(e) {
-      console.log('picker发送选择改变，携带值为', e);
-      var i = e.currentTarget.dataset.index;
-      this.EdExperience[i].beginTime = e.target.value;
-    },
-    bindEndTime: function bindEndTime(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      var i = e.currentTarget.dataset.index;
-      this.EdExperience[i].endTime = e.target.value;
-    },
-    //工作经历
-    bindBeginTime1: function bindBeginTime1(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      var i = e.currentTarget.dataset.index;
-      this.workExperience[i].beginTime = e.target.value;
-    },
-    bindEndTime1: function bindEndTime1(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
-      var i = e.currentTarget.dataset.index;
-      this.workExperience[i].endTime = e.target.value;
-    },
-    getDate: function getDate(type) {
-      var date = new Date();
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var day = date.getDate();
+    } }, _defineProperty(_methods, "addAwards", function addAwards(
+  i) {
+    this.EdExperience[i].awards.push(this.awards);
+    this.awards = '';
+  }), _defineProperty(_methods, "bindPosition",
+  function bindPosition(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    var pIndex = e.target.value;
+    this.post_name = this.employmentList[pIndex].post_name;
+    this.post_id = this.employmentList[pIndex].post_id;
+  }), _defineProperty(_methods, "bindDateChange",
+  function bindDateChange(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    this.date = e.target.value;
+  }), _defineProperty(_methods, "bindEducation",
 
-      if (type === 'start') {
-        year = year - 60;
-      } else if (type === 'end') {
-        year = year + 2;
-      }
-      month = month > 9 ? month : '0' + month;;
-      day = day > 9 ? day : '0' + day;
-      return "".concat(year, "-").concat(month, "-").concat(day);
-    },
-    //添加教育经历
-    addEdExperience: function addEdExperience() {
-      this.EdExperience.push({
-        beginTime: '',
-        endTime: '',
-        schoolName: '',
-        major: '', //专业
-        education: '', //学历
-        educationType: 1, //教育形式
-        educationStatus: 1, //教育现状
-        honorList: [] });
+  function bindEducation(e) {
+    console.log('picker发送选择改变，携带值为', Number(e.target.value));
+    var eIndex = e.target.value;
+    var i = e.currentTarget.dataset.index;
+    this.EdExperience[i].education = Number(eIndex) + 1;
+  }), _defineProperty(_methods, "bindBeginTime",
+  function bindBeginTime(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    var i = e.currentTarget.dataset.index;
+    this.EdExperience[i].start_time = e.target.value;
+  }), _defineProperty(_methods, "bindEndTime",
+  function bindEndTime(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    var i = e.currentTarget.dataset.index;
+    this.EdExperience[i].end_time = e.target.value;
+  }), _defineProperty(_methods, "bindBeginTime1",
 
-    },
-    //添加工作经历
-    addWorkExperience: function addWorkExperience() {
-      this.workExperience.push({
-        beginTime: '',
-        endTime: '',
-        corporateName: '', //公司名称
-        position: '', //职位
-        salary: '', //薪资
-        witness: '', //证明人
-        witnessPhone: '' //证明人电话
-      });
-    },
-    //添加家庭成员
-    addFamily: function addFamily() {
-      this.family.push({
-        name: '',
-        relation: '',
-        address: '',
-        phone: '' });
+  function bindBeginTime1(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    var i = e.currentTarget.dataset.index;
+    this.workExperience[i].start_time = e.target.value;
+  }), _defineProperty(_methods, "bindEndTime1",
+  function bindEndTime1(e) {
+    console.log('picker发送选择改变，携带值为', e.target.value);
+    var i = e.currentTarget.dataset.index;
+    this.workExperience[i].end_time = e.target.value;
+  }), _defineProperty(_methods, "getDate", function getDate(
+  type) {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
 
-    },
-    selectRadio: function selectRadio() {
-      this.isChecked = !this.isChecked;
-    } } };exports.default = _default;
+    if (type === 'start') {
+      year = year - 60;
+    } else if (type === 'end') {
+      year = year + 2;
+    }
+    month = month > 9 ? month : '0' + month;;
+    day = day > 9 ? day : '0' + day;
+    return "".concat(year, "-").concat(month, "-").concat(day);
+  }), _defineProperty(_methods, "addEdExperience", function addEdExperience()
+
+  {
+    this.EdExperience.push({
+      "start_time": '',
+      "end_time": '',
+      "school_name": '',
+      "profession": '', //专业
+      "education": 0, //学历
+      "educational_form": 0, //教育形式
+      "education_status": 0, //教育现状
+      "awards": [] //标签
+    });
+  }), _defineProperty(_methods, "addWorkExperience", function addWorkExperience()
+
+  {
+    this.workExperience.push({
+      "start_time": '',
+      "end_time": '',
+      "company_name": '', //公司名称
+      "position": '', //职位
+      "salary": '', //薪资
+      "witness": '', //证明人
+      "phone": '' //证明人电话
+    });
+  }), _defineProperty(_methods, "addFamily", function addFamily()
+
+  {
+    this.family.push({
+      name: '',
+      relationship: '',
+      address: '',
+      phone: '' });
+
+  }), _defineProperty(_methods, "selectRadio", function selectRadio()
+  {
+    this.isChecked = !this.isChecked;
+    if (this.isChecked) {
+      this.authenticity = 1;
+    } else {
+      this.authenticity = 0;
+    }
+  }), _defineProperty(_methods, "submitFormOne", function submitFormOne()
+  {
+    var params = {
+      "post_id": this.post_id,
+      "realname": this.name,
+      "sex": this.sex,
+      "birthday": this.date,
+      "marital_status": this.marriage,
+      "nationality": this.nation,
+      "province_id": this.province_id,
+      "city_id": this.city_id,
+      "hukou": this.hukou,
+      "id_card": this.IDnumber,
+      "political_status": this.politically,
+      "current_address": this.address,
+      "emergency_contact": this.contacts,
+      "emergency_phone": this.contactsPhone,
+      "education_background": this.EdExperience,
+      "work_experience": this.workExperience,
+      "family_members_social_relations": this.family,
+      "authenticity": this.authenticity };
+
+    if (params.authenticity == 0) {
+      uni.showToast({
+        title: '请勾选承诺书',
+        icon: 'none' });
+
+      return;
+    }
+    var a = {
+      birthday: "2021-05-13",
+      city_id: 110100,
+      current_address: "北京市北京市东城区",
+      education_background: [{ "start_time": "2021-05-13", "end_time": "2021-05-14", "school_name": "111", "profession": "222", "education": "中专/中技", "educational_form": 0, "education_status": 0, "awards": ["222"] }],
+      emergency_contact: "无",
+      emergency_phone: "15992990321",
+      hukou: 0,
+      id_card: "440223199612031616",
+      marital_status: 0,
+      nationality: "汉",
+      political_status: "无",
+      post_id: 1,
+      province_id: 110000,
+      realname: "赖华勇",
+      sex: 0,
+      work_experience: [{ "start_time": "2021-05-13", "end_time": "2021-05-16", "company_name": "2323", "position": "32323", "salary": "121", "witness": "112", "phone": "111" }] };
+
+    this.$api.rzFormOne(params).then(function (res) {
+      uni.navigateTo({
+        url: '../rz_form_2/rz_form_2' });
+
+    });
+  }), _methods) };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

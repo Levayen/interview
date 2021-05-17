@@ -328,4 +328,78 @@
   -webkit-transform: scale(0.8);
           transform: scale(0.8);
 }
+.honor.data-v-50ca66a2 {
+  padding-top: 35rpx !important;
+  padding-bottom: 35rpx !important;
+  width: 100%;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.honor .add_honor.data-v-50ca66a2 {
+  width: 100%;
+  height: 83rpx;
+  border-radius: 7rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  background-color: #F6F6F6;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-left: 32rpx;
+}
+.honor .add_honor input.data-v-50ca66a2 {
+  width: 78%;
+  text-align: left;
+  font-size: 28rpx;
+}
+.honor .add_honor > view.data-v-50ca66a2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 97rpx;
+  height: 100%;
+  background-color: #5C6FB4;
+}
+.honor .add_honor > view > image.data-v-50ca66a2 {
+  width: 50%;
+  height: 55%;
+}
+.honor .honor_item.data-v-50ca66a2 {
+  width: 100%;
+  border-top: none !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-top: 28rpx;
+  margin-right: -21rpx;
+  margin-bottom: -21rpx;
+}
+.honor .honor_item > view.data-v-50ca66a2 {
+  padding: 27rpx 30rpx;
+  border-radius: 7rpx;
+  border: 1rpx solid #DDDDDD;
+  margin-bottom: 21rpx;
+  margin-right: 21rpx;
+  background-color: #F9F9F9;
+}
 
