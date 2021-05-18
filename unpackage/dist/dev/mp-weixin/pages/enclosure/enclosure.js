@@ -164,12 +164,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      imgList: [
-      {
+      imgList: [{
         title: '学生证复印件',
         list: [] },
 
@@ -187,9 +188,10 @@ var _default =
 
       {
         title: '工资卡复印件',
-        list: [] }] };
+        list: [] }],
 
 
+      img: [] };
 
   },
   methods: {
@@ -197,14 +199,27 @@ var _default =
       this.imgList[th].list.splice(index, 1);
     },
     uploadImg: function uploadImg(th) {
-
       var that = this;
       uni.chooseImage({
+        count: 1,
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         success: function success(res) {var _that$imgList$th$list;
-          uni.hideLoading();
-          console.log(res.tempFilePaths);
           (_that$imgList$th$list = that.imgList[th].list).push.apply(_that$imgList$th$list, _toConsumableArray(res.tempFilePaths));
+          var filePath = res.tempFilePaths[0];
+          uni.uploadFile({
+            url: 'https://pre-sop-api.xiniu.com/api/Upload/Upload',
+            header: {
+              "Authorization": 'Bearer ' + uni.getStorageSync('token') },
+
+            filePath: filePath,
+            name: 'file',
+            success: function success(res) {
+              console.log(res);
+            },
+            fail: function fail(err) {
+              console.log(err);
+            } });
+
         } });
 
     } } };exports.default = _default;

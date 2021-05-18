@@ -190,6 +190,7 @@ var _default =
   },
   methods: {
     onLoad: function onLoad(options) {
+      console.log(options);
       uni.setNavigationBarTitle({
         title: "".concat(options.position, " - \u9762\u8BD5") });
 

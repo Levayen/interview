@@ -126,6 +126,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.EdExperience, function(item, index) {
+    var $orig = _vm.__get_orig(item)
+
+    var g0 = item.start_time.split(" ")
+    var g1 = item.end_time.split(" ")
+    return {
+      $orig: $orig,
+      g0: g0,
+      g1: g1
+    }
+  })
+
+  var l1 = _vm.__map(_vm.workExperience, function(item1, index1) {
+    var $orig = _vm.__get_orig(item1)
+
+    var g2 = item1.start_time.split(" ")
+    var g3 = item1.end_time.split(" ")
+    return {
+      $orig: $orig,
+      g2: g2,
+      g3: g3
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0,
+        l1: l1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -467,8 +500,10 @@ __webpack_require__.r(__webpack_exports__);
         phone: '' }],
 
       isChecked: false,
-      authenticity: '' };
-
+      authenticity: '',
+      entrant_id: '', //请求表单详情的参数
+      nativePlace: '' //籍贯
+    };
   },
   computed: {
     startDate: function startDate() {
@@ -479,15 +514,75 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
   onLoad: function onLoad(opt) {
+    this.entrant_id = opt.id;
     this.post_id = opt.post_id;
     this.post_name = opt.post_name;
     this.getPositionList();
+    if (this.entrant_id > 0) {
+      this.getFormDetails();
+    }
   },
   methods: (_methods = {
-    getPositionList: function getPositionList() {var _this = this;
+    getFormDetails: function getFormDetails() {var _this = this;
+      this.$api.entrantOneInfo({ entrant_one: this.entrant_id }).then(function (res) {
+        console.log(res);
+        var data = res.result;
+        _this.name = data.realname;
+        _this.sex = data.sex;
+        _this.date = data.birthday.split(' ')[0];
+        _this.marriage = data.marital_status;
+        _this.nation = data.nationality;
+        _this.province_id = data.province_id;
+        _this.city_id = data.city_id;
+        _this.hukou = data.hukou;
+        _this.IDnumber = data.id_card;
+        _this.politically = data.political_status;
+        _this.address = data.current_address;
+        _this.contacts = data.emergency_contact;
+        _this.contactsPhone = data.emergency_phone;
+        _this.EdExperience = data.education_background;
+        _this.workExperience = data.work_experience;
+        _this.family = data.family_members_social_relations;
+        _this.authenticity = data.authenticity;
+        if (_this.authenticity == 1) {
+          _this.isChecked = true;
+        } else {
+          _this.isChecked = false;
+        }
+        _this.getProvincesById(data.province_id, data.city_id);
+      });
+    },
+    getProvincesById: function getProvincesById(pid, cid) {var _this2 = this;
+      console.log(pid, cid);
+      var p_name = '';
+      var c_name = '';
+      var p = '';
+      this.$api.getProvinces({}).then(function (res) {
+        p = res.result;
+        for (var i in p) {
+          if (p[i].id == pid) {
+            p_name = p[i].name;
+          }
+        }
+        console.log(p_name);
+      });
+      var c = '';
+      this.$api.getCitys({ provinceId: pid }).then(function (res) {
+        c = res.result;
+        for (var i in c) {
+          if (c[i].id == cid) {
+            c_name = c[i].name;
+          }
+        }
+        console.log(c_name);
+        _this2.nativePlace = p_name + '-' + c_name;
+      });
+
+    },
+    getPositionList: function getPositionList() {var _this3 = this;
       this.$api.statistics({}).then(function (res) {
         console.log(res);
-        _this.employmentList = res.result;
+        _this3.employmentList = res.result;
       });
     },
     getId: function getId(id1, id2) {
@@ -513,18 +608,17 @@ __webpack_require__.r(__webpack_exports__);
       this.EdExperience[i].awards.push(this.awards);
       this.awards = '';
     },
-    getAddress: function getAddress(data) {var _this2 = this;
+    getAddress: function getAddress(data) {var _this4 = this;
       this.address = '';
       data.forEach(function (item) {
-        _this2.address += item.name;
+        _this4.address += item.name;
       });
     },
-    getNativePlace: function getNativePlace(data) {var _this3 = this;
+    getNativePlace: function getNativePlace(data) {var _this5 = this;
       this.nativePlace = '';
       data.forEach(function (item) {
-        _this3.nativePlace += item.name;
+        _this5.nativePlace += item.name;
       });
-      console.log('picker发送选择改变，携带值为', this.nativePlace);
     } }, _defineProperty(_methods, "addAwards", function addAwards(
   i) {
     this.EdExperience[i].awards.push(this.awards);

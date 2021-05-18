@@ -1,16 +1,19 @@
 <template>
 	<view class="content">
 		<view class="wrapper">
-			<view class="item_1" @click="goForm1">
-				<view class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
+			<view :class="entrant_one > 0 ? 'item_2':'item_1'" @click="goForm1(entrant_one)">
+				<view v-if="entrant_one > 0" class="icon_1"><image src="../../static/img/table_2.png" mode=""></image></view>
+				<view v-else class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
 				<view>入职登记表-1</view>
 			</view>
-			<view class="item_2" @click="goForm2">
-				<view class="icon_1"><image src="../../static/img/table_2.png" mode=""></view>
+			<view :class="entrant_two > 0 ? 'item_2':'item_1'" @click="goForm2(entrant_two)">
+				<view v-if="entrant_two > 0" class="icon_1"><image src="../../static/img/table_2.png" mode=""></image></view>
+				<view v-else class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
 				<view>入职登记表-2</view>
 			</view>
-			<view class="item_2" @click="enclosure">
-				<view class="icon_2"><image src="../../static/img/enclosure.png" mode=""></view>
+			<view :class="certificate_id > 0 ? 'item_2':'item_1'" @click="enclosure(certificate_id)">
+				<view v-if="certificate_id > 0" class="icon_2"><image src="../../static/img/enclosure.png" mode=""></image></view>
+				<view v-else class="icon_2"><image src="../../static/img/enclosure_2.png" mode=""></image></view>
 				<view>附件</view>
 			</view>
 		</view>
@@ -56,36 +59,47 @@
 	export default {
 		data() {
 			return {
-				
+				entrant_one: 0, //登记表1
+				entrant_two: 0, //登记表2
+				certificate_id: 0, //附件 
 			}
 		},
+		onLoad(options) {
+			this.entryFormInfo()
+			uni.setNavigationBarTitle({
+				title: `${ options.position } - 入职`
+			});
+		},
 		methods: {
-			goForm1(){
+			goForm1(id){
 				uni.navigateTo({
-					url:'../rz_form_1/rz_form_1'
+					url:`../rz_form_1/rz_form_1?id=${id}`
 				})
 			},
-			goForm2(){
+			goForm2(id){
 				uni.navigateTo({
-					url:'../rz_form_2/rz_form_2'
+					url:`../rz_form_2/rz_form_2?id=${id}`
 				})
 			},
-			enclosure(){
+			enclosure(id){
 				uni.navigateTo({
-					url:'../enclosure/enclosure'
+					url:`../enclosure/enclosure?id=${id}`
 				})
 			},
 			goPages(url){
 				uni.switchTab({
 					url: `..${url}`
 				})
-			}
+			},
+			entryFormInfo(){
+				this.$api.entryFormInfo().then( res => {
+					console.log(res)
+					this.entrant_one = res.result.entrant_one
+					this.entrant_two = res.result.entrant_two
+					this.certificate_id = res.result.certificate_id
+				})
+			},
 		},
-		onLoad(options) {
-			uni.setNavigationBarTitle({
-				title: `${ options.position } - 入职`
-			});
-		}
 	}
 </script>
 

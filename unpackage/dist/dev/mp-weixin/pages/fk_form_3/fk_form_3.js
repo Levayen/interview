@@ -434,8 +434,9 @@ __webpack_require__.r(__webpack_exports__);
       children4: [],
       department_id: '', //入职部门id
       department_name: '', //入职部门name
-      average: 0 //平均分
-    };
+      average: 0, //平均分
+      ride_time: '' };
+
   },
   computed: {
     startDate: function startDate() {
@@ -485,7 +486,7 @@ __webpack_require__.r(__webpack_exports__);
         probation_salary: this.probation_salary,
         turn_positive_salary: this.turn_positive_salary,
         probation_month: this.probation_month,
-        contract_month: this.contract_month };
+        ride_time: this.ride_time };
 
       this.$api.feedbackThree(params).then(function (res) {
         console.log(res);

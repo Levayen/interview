@@ -274,7 +274,8 @@ var _default =
       question_3: '',
       key_talent: 0,
       status: '',
-      reason: '' };
+      reason: '',
+      ride_time: '' };
 
   },
   onLoad: function onLoad(opt) {
@@ -305,7 +306,8 @@ var _default =
         question_2: this.question_2,
         question_3: this.question_3,
         status: this.status,
-        reason: this.reason };
+        reason: this.reason,
+        ride_time: this.ride_time };
 
       this.$api.feedbackTwo(params).then(function (res) {
         console.log(res);

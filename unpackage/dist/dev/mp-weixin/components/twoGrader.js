@@ -142,12 +142,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 var _default =
 {
+  props: {
+    cityId: {
+      type: String,
+      default: '' },
+
+    provinceId: {
+      type: String,
+      default: '' },
+
+    nativePlace: {
+      type: String,
+      default: '' } },
+
+
   data: function data() {
     return {
       name: '',
       classifyArr: [[], []], // picker - 数据源
       classifyIndex: [0, 0], // picker - 索引
-
       childArr: [] // 二级分类数据源
     };
   },
@@ -156,6 +169,7 @@ var _default =
     this.getProvinceList();
     // this.getAllClassify()
   },
+
   methods: {
     //省
     getProvinceList: function getProvinceList() {var _this = this;
@@ -165,8 +179,8 @@ var _default =
         _this.$set(_this.classifyArr, 0, provinces);
         // 第一次打开时，默认给一级分类添加它的二级分类
         _this.getCityList(provinces[0].id);
+        // console.log(provinces)
       });
-
     },
     //市
     getCityList: function getCityList(id) {var _this2 = this;
@@ -182,10 +196,8 @@ var _default =
         // 将数据源中的二级分类 push 进 childArr，作为二级分类的数据源
         this.childArr.push(this.dataSource[i].child);
       };
-
       // 一级分类的数据源
       this.classifyArr[0] = this.dataSource;
-
       // 第一次打开时，默认给一级分类添加它的二级分类
       this.classifyArr[1] = this.childArr[0];
     },
@@ -194,7 +206,6 @@ var _default =
     classifyChange: function classifyChange(e) {
       var value = e.target.value;
       this.classifyIndex = value;
-
       if (this.classifyArr[0].length != 0) {
         this.name = this.classifyArr[0][this.classifyIndex[0]].name;
       };

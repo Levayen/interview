@@ -274,6 +274,8 @@ var _default =
 {
   data: function data() {
     return {
+      account_1: '',
+      account_2: '',
       phone: '',
       sex: 0,
       marriage: 1, //婚姻状况
@@ -307,10 +309,59 @@ var _default =
       { id: 12, name: '工装', params: 'tooling', value: 0 }],
       //所有物品
       goodsList: [], //选中的物品
-      goodsParams: {} };
-
+      goodsParams: {},
+      entrant_id: '' //请求表单详情的参数
+    };
+  },
+  onLoad: function onLoad(opt) {
+    this.entrant_id = opt.id;
+    if (this.entrant_id > 0) {
+      this.getFormDetails();
+    }
   },
   methods: {
+    getFormDetails: function getFormDetails() {var _this = this;
+      this.$api.entrantTwoInfo({ entrant_two: this.entrant_id }).then(function (res) {
+        var data = res.result;
+        _this.account_1 = data.social_security_number;
+        _this.account_2 = data.provident_fund_account;
+        _this.name = data.realname;
+        _this.phone = data.phone;
+        _this.sex = data.sex;
+        _this.nation = data.nationality;
+        _this.IDnumber = data.id_card;
+        _this.education = data.highest_degree;
+        _this.title = data.job_title;
+        _this.census = data.household_registration;
+        _this.marital_status = data.marital_status;
+        if (data.marital_status == '02未婚') {
+          _this.marriage = 1;
+        } else {
+          _this.marriage = 2;
+        }
+        _this.spouse = data.spouse_name;
+        _this.spouseID = data.spouse_id_number;
+        _this.authenticity = data.authenticity;
+        if (_this.authenticity == 1) {
+          _this.isChecked = true;
+        } else {
+          _this.isChecked = false;
+        }
+        for (var i in _this.allGoods) {
+          for (var key in data) {
+            if (_this.allGoods[i].params == key) {
+              if (data[key] == 1) {
+                _this.allGoods[i].value = 1;
+              }
+            }
+          }
+          if (_this.allGoods[i].value == 1) {
+            _this.goodsList.push(Number(i));
+          }
+        }
+
+      });
+    },
     selectMarriage: function selectMarriage(val) {
       this.marriage = val;
       if (val == 1) {
@@ -363,11 +414,11 @@ var _default =
       }
 
     },
-    submit: function submit() {var _this = this;
+    submit: function submit() {var _this2 = this;
       this.allGoods.forEach(function (item) {
         var key = item.params;
         var value = item.value;
-        _this.goodsParams[key] = value;
+        _this2.goodsParams[key] = value;
       });
       var params = _objectSpread(_objectSpread({},
       this.goodsParams), {}, {

@@ -10,13 +10,13 @@
                              @columnchange="columnchange"
                              :value="classifyIndex"
                              :range="classifyArr">
-						 <view class="select_btn" v-if="name === ''">
+						 <view class="select_btn" v-if="name === '' && nativePlace === ''">
 						 	<view>省</view>
 						 	<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 						 	<view style="margin-left: 112rpx;">市</view>
 						 	<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 						 </view>
-						  <view class="uni-input">{{name}}</view>
+						  <view class="uni-input">{{name || nativePlace}}</view>
                      </picker>
                  </view>
             </view>
@@ -26,12 +26,25 @@
 
 <script>
     export default {
+		props: {
+			cityId: {
+				type: String,
+				default: ''
+			},
+			provinceId: {
+				type: String,
+				default: ''
+			},
+			nativePlace:{
+				type: String,
+				default: ''
+			}
+		},
         data() {
             return {
                 name: '',
                 classifyArr:[[], []], // picker - 数据源
                 classifyIndex: [0, 0], // picker - 索引
-
                 childArr:[], // 二级分类数据源
             }
         },
@@ -40,6 +53,7 @@
 			this.getProvinceList()
             // this.getAllClassify()
         },
+		
         methods: {
 			//省
 			getProvinceList(){
@@ -49,8 +63,8 @@
 					this.$set(this.classifyArr, 0, provinces)
 					// 第一次打开时，默认给一级分类添加它的二级分类
 					this.getCityList(provinces[0].id)
+					// console.log(provinces)
 				})
-				
 			},
 			//市
 			getCityList(id){
@@ -66,10 +80,8 @@
                     // 将数据源中的二级分类 push 进 childArr，作为二级分类的数据源
                     this.childArr.push(this.dataSource[i].child)
                 };
-
                 // 一级分类的数据源
                 this.classifyArr[0] = this.dataSource;
-
                 // 第一次打开时，默认给一级分类添加它的二级分类
                 this.classifyArr[1] = this.childArr[0]
             },
@@ -78,7 +90,6 @@
             classifyChange(e) {
                 let value = e.target.value;
                 this.classifyIndex = value;
-
                 if (this.classifyArr[0].length != 0) {
                     this.name = this.classifyArr[0][this.classifyIndex[0]].name
                 };

@@ -60,7 +60,7 @@
 								<view class="distance">
 									<view>现住址到公司车程：</view>
 									<view>
-										<view class="grader_input"><input type="number" value="" v-model="distance" max="100" placeholder="请输入"/></view>
+										<view class="grader_input"><input type="number" value="" v-model="ride_time" max="100" placeholder="请输入"/></view>
 									</view>
 									<view>分钟</view>
 								</view>
@@ -195,10 +195,10 @@
 						<view> 试用期时长(月) </view>
 						<input type="text" value="" v-model="probation_month" placeholder="请填写"/>
 					</view>
-					<view>
+					<!-- <view>
 						<view> 合同签订时长(月) </view>
 						<input type="text" value="" v-model="contract_month" placeholder="请填写"/>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -303,6 +303,7 @@
 				department_id:'',  //入职部门id
 				department_name:'',  //入职部门name
 				average: 0, //平均分
+				ride_time: ''
 			};
 		},
 		computed: {
@@ -353,7 +354,7 @@
 					probation_salary : this.probation_salary,
 					turn_positive_salary : this.turn_positive_salary,
 					probation_month : this.probation_month,
-					contract_month : this.contract_month ,
+					ride_time: this.ride_time,
 				}
 				this.$api.feedbackThree(params).then( res => {
 					console.log(res)

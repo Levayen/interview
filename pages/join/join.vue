@@ -16,10 +16,10 @@
 			}
 		},
 		onLoad(){
-			this.getPosition()
+			this.joinIndex()
 		},
 		methods: {
-			getPosition(){
+			joinIndex(){
 				this.$api.joinIndex({}).then( res => {
 					console.log(res)
 					if(res.result){

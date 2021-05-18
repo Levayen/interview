@@ -11,8 +11,10 @@ export default (url, method, params, isForm) => {
 	const token = uni.getStorageSync('token')
 	let type = ''
 	//判断是否以表单形式提交
-	if(isForm){
+	if(isForm == 1){
 		type = 'application/x-www-form-urlencoded'
+	}else if(isForm == 2){
+		type = 'multipart/form-data'
 	}
 	return new Promise((resolve, reject) => {
 	 	uni.request({

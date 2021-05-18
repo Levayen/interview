@@ -37,7 +37,7 @@
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 籍贯：</view>
-					<Grader @print="getId"></Grader>
+					<Grader :nativePlace="nativePlace" @print="getId"></Grader>
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 户口：</view>
@@ -56,7 +56,7 @@
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 现住址：</view>
-					<city @change="getAddress"></city>
+					<city :address="address" @change="getAddress"></city>
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 紧急联系人：</view>
@@ -81,7 +81,7 @@
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item.start_time}}</view>
+							     <view class="uni-input">{{item.start_time.split(' ')[0]}}</view>
 							</picker>
 							<span>至</span>
 							<picker mode="date" :value="item.end_time" :start="startDate" :end="endDate" :data-index="index" @change="bindEndTime">
@@ -89,7 +89,7 @@
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item.end_time}}</view>
+							     <view class="uni-input">{{item.end_time.split(' ')[0]}}</view>
 							</picker>
 						</view>
 					</view>
@@ -163,7 +163,7 @@
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item1.start_time}}</view>
+							     <view class="uni-input">{{item1.start_time.split(' ')[0]}}</view>
 							</picker>
 							<span>至</span>
 							<picker mode="date" :value="item1.end_time" :start="startDate" :end="endDate" :data-index="index1" @change="bindEndTime1">
@@ -171,7 +171,7 @@
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
-							     <view class="uni-input">{{item1.end_time}}</view>
+							     <view class="uni-input">{{item1.end_time.split(' ')[0]}}</view>
 							</picker>
 						</view>
 					</view>
@@ -307,6 +307,8 @@
 				}],
 				isChecked: false,
 				authenticity:'',
+				entrant_id:'', //请求表单详情的参数
+				nativePlace: '', //籍贯
 			};
 		},
 		 computed: {
@@ -318,11 +320,71 @@
 		        }
 		    },
 			onLoad(opt) {
+				this.entrant_id = opt.id
 				this.post_id = opt.post_id;
 				this.post_name = opt.post_name;
 				this.getPositionList()
+				if(this.entrant_id > 0){
+					this.getFormDetails()
+				}
 			},
 		methods:{
+			getFormDetails(){
+				this.$api.entrantOneInfo({entrant_one: this.entrant_id}).then( res => {
+					console.log(res)
+					let data = res.result
+					this.name = data.realname
+					this.sex = data.sex
+					this.date = data.birthday.split(' ')[0]
+					this.marriage = data.marital_status
+					this.nation = data.nationality
+					this.province_id = data.province_id
+					this.city_id = data.city_id
+					this.hukou = data.hukou
+					this.IDnumber = data.id_card
+					this.politically = data.political_status
+					this.address = data.current_address
+					this.contacts = data.emergency_contact
+					this.contactsPhone = data.emergency_phone
+					this.EdExperience = data.education_background
+					this.workExperience = data.work_experience
+					this.family = data.family_members_social_relations
+					this.authenticity = data.authenticity
+					if(this.authenticity == 1){
+						this.isChecked = true
+					}else{
+						this.isChecked = false
+					}
+					this.getProvincesById(data.province_id, data.city_id)
+				})
+			},
+			getProvincesById(pid, cid){
+				console.log(pid, cid)
+				let p_name = ''
+				let c_name = ''
+				let p = ''
+				this.$api.getProvinces({}).then( res => {
+					p = res.result
+					for(let i in p){
+						if(p[i].id == pid){
+							p_name = p[i].name
+						}
+					}
+					console.log(p_name)
+				})
+				let c = ''
+				this.$api.getCitys({provinceId: pid}).then( res => {
+					c = res.result
+					for(let i in c){
+						if(c[i].id == cid){
+							c_name = c[i].name
+						}
+					}
+					console.log(c_name)
+					this.nativePlace = p_name +'-'+ c_name
+				})
+				
+			},
 			getPositionList(){
 				this.$api.statistics({}).then( res => {
 					console.log(res)
@@ -363,7 +425,6 @@
 				data.forEach(item =>{
 					this.nativePlace += item.name
 				})
-				console.log('picker发送选择改变，携带值为', this.nativePlace)
 			},
 			addAwards(i) {
 				this.EdExperience[i].awards.push(this.awards)

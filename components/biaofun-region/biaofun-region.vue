@@ -11,12 +11,12 @@
 <template>
 	<view class="region">
 		<picker v-if="grade === '3'" mode="multiSelector" :range="range" range-key="name" @change="change" @columnchange="columnchange" :value="value" :disabled="disabled">
-			<view class="content" :class="{ placeholder: !regionStr }">
-				<view class="select_btn" v-if="!regionStr">
+			<view class="content" :class="{ placeholder: !regionStr && !address }">
+				<view class="select_btn" v-if="!regionStr && !address">
 					<view>请选择</view>
 					<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 				</view>
-				<text class="ellipsis-1">{{ regionStr }}</text>
+				<text class="ellipsis-1">{{ regionStr || address }}</text>
 			</view>
 		</picker>
 		<picker v-if="grade === '2'" mode="multiSelector" :range="range" range-key="name" @change="change" @columnchange="columnchange" :value="value" :disabled="disabled">
@@ -62,9 +62,12 @@ export default {
 		grade: {
 			type: String,
 			default: "3"
+		},
+		address:{ // 选中的省市区字符串
+			type: String,
+			default: ""
 		}
 	},
-
 	/**
 	 * 数据
 	 */

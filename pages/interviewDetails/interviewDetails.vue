@@ -58,6 +58,7 @@
 		},
 		methods: {
 			onLoad(options) {
+				console.log(options)
 				uni.setNavigationBarTitle({
 					title: `${ options.position } - 面试`
 				});

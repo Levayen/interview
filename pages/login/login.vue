@@ -5,15 +5,15 @@
 		</view>
 		<view class="login_box">
 			<view class="login_nav">
-				<view :class="{ 'active': isInterviewers === 1 }" class="login_nav_1" @click="changeIdentity(1)">
+				<view :class="{ 'active': isInterviewers == 1 }" class="login_nav_1" @click="changeIdentity(1)">
 					面试者
 				</view>
-				<view :class="{ 'active': isInterviewers === 2 }" class="login_nav_2" @click="changeIdentity(2)">
+				<view :class="{ 'active': isInterviewers == 2 }" class="login_nav_2" @click="changeIdentity(2)">
 					面试官
 				</view>
 			</view>
 			<view class="login_form">
-				<view class="login_form_1" v-if="isInterviewers === 1">
+				<view class="login_form_1" v-if="isInterviewers == 1">
 					<view>
 						<view>手机号码：</view>
 						<view>
@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<view class="login_btn">
-			<view @click="isInterviewers === 1 ? userLogin() : intervieweerLogin()">
+			<view @click="isInterviewers == 1 ? userLogin() : intervieweerLogin()">
 				登&nbsp;录
 			</view>
 		</view>
@@ -76,9 +76,27 @@
 				password: '',
 			};
 		},
-		onLoad() {
+		onLoad(options) {
+			// uni.showModal({
+			// 	content: JSON.stringify(options)
+			// })  
+			// let qrUrl = decodeURIComponent(options.path);//获取二维码中带的地址及参数       
+			// this.isInterviewers = this.getQueryString(qrUrl, "isInterviewers");//解析二维码中地址中的参数   name为二维码中地址带的参数名  如index/index?name=XXX
+			// console.log(this.isInterviewers);
+			if(options.isInterviewers){
+				this.isInterviewers = options.isInterviewers
+			}
 		},
 		methods:{
+			//解析链接方法
+			getQueryString:function (url, name) {  
+			var reg = new RegExp('(^|&|/?)' + name + '=([^&|/?]*)(&|/?|$)', 'i');  
+			var r = url.substr(1).match(reg);  
+			if (r != null) {      
+				return r[2];  
+			}  
+				return null;
+			},
 			inputChange(e){
 				if(this.phone.length === 11){
 					this.checkPhone()

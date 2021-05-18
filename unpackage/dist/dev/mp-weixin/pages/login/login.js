@@ -108,7 +108,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
-      _vm.isInterviewers === 1 ? _vm.userLogin() : _vm.intervieweerLogin()
+      _vm.isInterviewers == 1 ? _vm.userLogin() : _vm.intervieweerLogin()
     }
   }
 }
@@ -270,12 +270,30 @@ var _global = __webpack_require__(/*! ../../utils/global.js */ 19); //
 var _default = { data: function data() {return { isInterviewers: 1, phone: '', email: '', //邮箱
       code: '', //验证码
       isExist: true, //手机号是否存在
-      second: 60, showText: true, xiniu_id: '', password: '' };}, onLoad: function onLoad() {}, methods: { inputChange: function inputChange(e) {if (this.phone.length === 11) {this.checkPhone();}}, //获取验证码
+      second: 60, showText: true, xiniu_id: '', password: '' };}, onLoad: function onLoad(options) {// uni.showModal({
+    // 	content: JSON.stringify(options)
+    // })  
+    // let qrUrl = decodeURIComponent(options.path);//获取二维码中带的地址及参数       
+    // this.isInterviewers = this.getQueryString(qrUrl, "isInterviewers");//解析二维码中地址中的参数   name为二维码中地址带的参数名  如index/index?name=XXX
+    // console.log(this.isInterviewers);
+    if (options.isInterviewers) {this.isInterviewers = options.isInterviewers;}}, methods: { //解析链接方法
+    getQueryString: function getQueryString(url, name) {var reg = new RegExp('(^|&|/?)' + name + '=([^&|/?]*)(&|/?|$)', 'i');var r = url.substr(1).match(reg);if (r != null) {return r[2];}return null;}, inputChange: function inputChange(e) {if (this.phone.length === 11) {this.checkPhone();}}, //获取验证码
     getAuthCode: function getAuthCode() {var _this = this;var params = { phone: this.phone };if (!(0, _global.regularPhone)(params.phone)) {return;}this.$api.getAuthCode(params).then(function (res) {_this.countDown();});}, //倒计时
     countDown: function countDown() {var _this2 = this;this.showText = false;var interval = setInterval(function () {var times = --_this2.second;_this2.second = times < 10 ? '0' + times : times; //小于10秒补 0
       }, 1000);setTimeout(function () {clearInterval(interval);_this2.second = 60;_this2.showText = true;}, 60000);}, //检测手机号
     checkPhone: function checkPhone() {var _this3 = this;var params = { phone: this.phone };this.$api.checkPhone(params).then(function (res) {_this3.isExist = res.result.isExist;});}, //面试者登录
-    userLogin: function userLogin() {var params = {};if (this.isExist) {params = { phone: this.phone, code: this.code };} else {params = { phone: this.phone, email: this.email, code: this.code };
+    userLogin: function userLogin() {var params = {};
+      if (this.isExist) {
+        params = {
+          phone: this.phone,
+          code: this.code };
+
+      } else {
+        params = {
+          phone: this.phone,
+          email: this.email,
+          code: this.code };
+
       }
       if (!(0, _global.regularPhone)(params.phone)) {
         return;

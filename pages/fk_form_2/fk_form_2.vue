@@ -60,7 +60,7 @@
 								<view class="distance">
 									<view>现住址到公司车程：</view>
 									<view>
-										<view class="grader_input"><input type="number" value="" v-model="distance" max="100" placeholder="请输入"/></view>
+										<view class="grader_input"><input type="number" value="" v-model="ride_time" max="100" placeholder="请输入"/></view>
 									</view>
 									<view>分钟</view>
 								</view>
@@ -142,7 +142,8 @@
 				question_3: '',
 				key_talent: 0,
 				status: '',
-				reason: ''
+				reason: '',
+				ride_time: ''
 			};
 		},
 		onLoad(opt) {
@@ -173,7 +174,8 @@
 					question_2: this.question_2,
 					question_3: this.question_3,
 					status: this.status,
-					reason: this.reason
+					reason: this.reason,
+					ride_time: this.ride_time
 				}
 				this.$api.feedbackTwo(params).then( res => {
 					console.log(res)

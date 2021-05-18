@@ -43,7 +43,7 @@
 						<input type="text" value="" v-model="IDnumber" placeholder="请填写"/>
 					</view>
 					<view>
-						<view><span style="margin-right: 10rpx;" class="red">*</span> 性别：</view>
+						<view> 性别：</view>
 						<view class="check_box">
 							<view :class="{ 'active': sex === 0 }" @click="selectSex(0)">男</view>
 							<view :class="{ 'active': sex === 1 }" @click="selectSex(1)">女</view>
@@ -107,7 +107,7 @@
 		</view>
 		<view class="radio_wrap">
 			<label class="radio">
-				<radio value="" :checked="isChecked" @click="selectRadio" color="#5C6FB4"/><text>《入职信息真实性承诺书》</text>
+				<radio class="violet" value="" :checked="isChecked" @click="selectRadio" color="#5C6FB4"/><text>《入职信息真实性承诺书》</text>
 			</label>
 		</view>
 		<view class="bottom_btn">
@@ -122,6 +122,8 @@
 	export default {
 		data() {
 			return {
+				account_1: '',
+				account_2: '',
 				phone: '',
 				sex: 0,
 				marriage: 1, //婚姻状况
@@ -155,10 +157,59 @@
 					{id: 12, name: '工装', params: 'tooling', value: 0},
 				], //所有物品
 				goodsList: [], //选中的物品
-				goodsParams: {}
+				goodsParams: {},
+				entrant_id:'', //请求表单详情的参数
 			};
 		},
+		onLoad(opt) {
+			this.entrant_id = opt.id
+			if(this.entrant_id > 0){
+				this.getFormDetails()
+			}
+		},
 		methods:{
+			getFormDetails(){
+				this.$api.entrantTwoInfo({entrant_two: this.entrant_id}).then( res => {
+					let data = res.result
+					this.account_1 = data.social_security_number
+					this.account_2 = data.provident_fund_account
+					this.name = data.realname
+					this.phone = data.phone
+					this.sex = data.sex
+					this.nation = data.nationality
+					this.IDnumber = data.id_card
+					this.education = data.highest_degree
+					this.title = data.job_title
+					this.census = data.household_registration
+					this.marital_status = data.marital_status
+					if(data.marital_status == '02未婚'){
+						this.marriage = 1
+					}else{
+						this.marriage = 2
+					}
+					this.spouse = data.spouse_name
+					this.spouseID = data.spouse_id_number
+					this.authenticity = data.authenticity
+					if(this.authenticity == 1){
+						this.isChecked = true
+					}else{
+						this.isChecked = false
+					}
+					for(let i in this.allGoods){
+						for(let key in data){
+							if(this.allGoods[i].params == key){
+								if(data[key] == 1){
+									this.allGoods[i].value = 1
+								} 
+							}
+						}
+						if(this.allGoods[i].value == 1){
+							this.goodsList.push(Number(i))
+						}
+					}
+					
+				})
+			},
 			selectMarriage(val){
 				this.marriage = val
 				if(val == 1){

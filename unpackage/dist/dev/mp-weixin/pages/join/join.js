@@ -148,10 +148,10 @@ var _default =
 
   },
   onLoad: function onLoad() {
-    this.getPosition();
+    this.joinIndex();
   },
   methods: {
-    getPosition: function getPosition() {var _this = this;
+    joinIndex: function joinIndex() {var _this = this;
       this.$api.joinIndex({}).then(function (res) {
         console.log(res);
         if (res.result) {

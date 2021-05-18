@@ -12,11 +12,11 @@ export default {
 
 	// 面试者登录
 	userLogin(params) {
-		return request("/api/Login/Login", "POST", params, true)
+		return request("/api/Login/Login", "POST", params, 1)
 	},
 	// 面试官登录
 	intervieweerLogin(params) {
-		return request("/api/Login/IntervieweerLogin", "POST", params, true)
+		return request("/api/Login/IntervieweerLogin", "POST", params, 1)
 	},
 
 	//首页接口
@@ -45,7 +45,7 @@ export default {
 	},
 	//应聘登记表2
 	submitRecruitmentFormTwo(params){
-		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, true)
+		return request("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, 1)
 	},
 	//面试者基本信息
 	getUserInfo(params){
@@ -74,19 +74,19 @@ export default {
 	},
 	//退回
 	goBack(params){
-		return request("/api/Interview/RebackInterview", "POST", params, true)
+		return request("/api/Interview/RebackInterview", "POST", params, 1)
 	},
 	//面试反馈表-1
 	feedbackOne(params){
-		return request("/api/Interview/SubmitRecruitmentFeedbackOne", "POST", params, true)
+		return request("/api/Interview/SubmitRecruitmentFeedbackOne", "POST", params, 1)
 	},
 	//面试反馈表-2
 	feedbackTwo(params){
-		return request("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, true)
+		return request("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, 1)
 	},
 	//面试反馈表-3
 	feedbackThree(params){
-		return request("​/api/Interview/SubmitRecruitmentFeedbackThree", "POST", params, true)
+		return request("​/api/Interview/SubmitRecruitmentFeedbackThree", "POST", params, 1)
 	},
 	//岗位类别
 	postTypes(params){
@@ -114,22 +114,26 @@ export default {
 	},
 	//提交入职登记表2
 	rzFormTwo(params){
-		return request("/api/Onboarding/SubmitRecruitmentEntrantTwo", "POST", params, true)
+		return request("/api/Onboarding/SubmitRecruitmentEntrantTwo", "POST", params, 1)
 	},
 	//入职登记表详情1
-	ntrantOneInfo(params){
+	entrantOneInfo(params){
 		return request("/api/Onboarding/EntrantOneInfo", "GET", params)
 	},
 	//入职登记表详情2
 	entrantTwoInfo(params){
-		return request("​/api​/Onboarding​/EntrantTwoInfo", "GET", params)
+		return request("​/api/Onboarding/EntrantTwoInfo", "GET", params)
 	},
 	// 面试者-入职-提交入职登记附件表详情
 	subFileDetail(params){
-		return request("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, true)
+		return request("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, 1)
 	},
 	// 面试者-入职-入职登记附件表详情 
 	rzFileDetail(params){
 		return request("​/api/Onboarding/IntervieweeCertificateInfo", "GET", params)
+	},
+	//文件上传
+	upLoad(params){
+		return request("/api/Upload/Upload", "POST", params, 1)
 	}
 }

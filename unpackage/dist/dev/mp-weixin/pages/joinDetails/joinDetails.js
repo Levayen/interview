@@ -184,40 +184,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      entrant_one: 0, //登记表1
+      entrant_two: 0, //登记表2
+      certificate_id: 0 //附件 
+    };
+  },
+  onLoad: function onLoad(options) {
+    this.entryFormInfo();
+    uni.setNavigationBarTitle({
+      title: "".concat(options.position, " - \u5165\u804C") });
 
   },
   methods: {
-    goForm1: function goForm1() {
+    goForm1: function goForm1(id) {
       uni.navigateTo({
-        url: '../rz_form_1/rz_form_1' });
+        url: "../rz_form_1/rz_form_1?id=".concat(id) });
 
     },
-    goForm2: function goForm2() {
+    goForm2: function goForm2(id) {
       uni.navigateTo({
-        url: '../rz_form_2/rz_form_2' });
+        url: "../rz_form_2/rz_form_2?id=".concat(id) });
 
     },
-    enclosure: function enclosure() {
+    enclosure: function enclosure(id) {
       uni.navigateTo({
-        url: '../enclosure/enclosure' });
+        url: "../enclosure/enclosure?id=".concat(id) });
 
     },
     goPages: function goPages(url) {
       uni.switchTab({
         url: "..".concat(url) });
 
-    } },
-
-  onLoad: function onLoad(options) {
-    uni.setNavigationBarTitle({
-      title: "".concat(options.position, " - \u5165\u804C") });
-
-  } };exports.default = _default;
+    },
+    entryFormInfo: function entryFormInfo() {var _this = this;
+      this.$api.entryFormInfo().then(function (res) {
+        console.log(res);
+        _this.entrant_one = res.result.entrant_one;
+        _this.entrant_two = res.result.entrant_two;
+        _this.certificate_id = res.result.certificate_id;
+      });
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

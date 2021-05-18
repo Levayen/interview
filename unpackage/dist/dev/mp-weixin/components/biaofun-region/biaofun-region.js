@@ -177,13 +177,16 @@ var regionData = __webpack_require__(/*! @/static/biaofun-region/region.json */ 
 
     grade: {
       type: String,
-      default: "3" } },
+      default: "3" },
 
+    address: { // 选中的省市区字符串
+      type: String,
+      default: "" } },
 
 
   /**
-                         * 数据
-                         */
+                        * 数据
+                        */
   data: function data() {
     return {
       range: [[], [], []], // 省/市/区

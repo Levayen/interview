@@ -2021,11 +2021,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   // 面试者登录
   userLogin: function userLogin(params) {
-    return (0, _request.default)("/api/Login/Login", "POST", params, true);
+    return (0, _request.default)("/api/Login/Login", "POST", params, 1);
   },
   // 面试官登录
   intervieweerLogin: function intervieweerLogin(params) {
-    return (0, _request.default)("/api/Login/IntervieweerLogin", "POST", params, true);
+    return (0, _request.default)("/api/Login/IntervieweerLogin", "POST", params, 1);
   },
 
   //首页接口
@@ -2054,7 +2054,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   //应聘登记表2
   submitRecruitmentFormTwo: function submitRecruitmentFormTwo(params) {
-    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, true);
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFormTwo", "POST", params, 1);
   },
   //面试者基本信息
   getUserInfo: function getUserInfo(params) {
@@ -2083,19 +2083,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   //退回
   goBack: function goBack(params) {
-    return (0, _request.default)("/api/Interview/RebackInterview", "POST", params, true);
+    return (0, _request.default)("/api/Interview/RebackInterview", "POST", params, 1);
   },
   //面试反馈表-1
   feedbackOne: function feedbackOne(params) {
-    return (0, _request.default)("/api/Interview/SubmitRecruitmentFeedbackOne", "POST", params, true);
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFeedbackOne", "POST", params, 1);
   },
   //面试反馈表-2
   feedbackTwo: function feedbackTwo(params) {
-    return (0, _request.default)("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, true);
+    return (0, _request.default)("/api/Interview/SubmitRecruitmentFeedbackTwo", "POST", params, 1);
   },
   //面试反馈表-3
   feedbackThree: function feedbackThree(params) {
-    return (0, _request.default)("​/api/Interview/SubmitRecruitmentFeedbackThree", "POST", params, true);
+    return (0, _request.default)("​/api/Interview/SubmitRecruitmentFeedbackThree", "POST", params, 1);
   },
   //岗位类别
   postTypes: function postTypes(params) {
@@ -2123,23 +2123,27 @@ params) {
 }), _defineProperty(_checkPhone$getAuthCo, "rzFormTwo", function rzFormTwo(
 
 params) {
-  return (0, _request.default)("/api/Onboarding/SubmitRecruitmentEntrantTwo", "POST", params, true);
-}), _defineProperty(_checkPhone$getAuthCo, "ntrantOneInfo", function ntrantOneInfo(
+  return (0, _request.default)("/api/Onboarding/SubmitRecruitmentEntrantTwo", "POST", params, 1);
+}), _defineProperty(_checkPhone$getAuthCo, "entrantOneInfo", function entrantOneInfo(
 
 params) {
   return (0, _request.default)("/api/Onboarding/EntrantOneInfo", "GET", params);
 }), _defineProperty(_checkPhone$getAuthCo, "entrantTwoInfo", function entrantTwoInfo(
 
 params) {
-  return (0, _request.default)("​/api​/Onboarding​/EntrantTwoInfo", "GET", params);
+  return (0, _request.default)("​/api/Onboarding/EntrantTwoInfo", "GET", params);
 }), _defineProperty(_checkPhone$getAuthCo, "subFileDetail", function subFileDetail(
 
 params) {
-  return (0, _request.default)("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, true);
+  return (0, _request.default)("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, 1);
 }), _defineProperty(_checkPhone$getAuthCo, "rzFileDetail", function rzFileDetail(
 
 params) {
   return (0, _request.default)("​/api/Onboarding/IntervieweeCertificateInfo", "GET", params);
+}), _defineProperty(_checkPhone$getAuthCo, "upLoad", function upLoad(
+
+params) {
+  return (0, _request.default)("/api/Upload/Upload", "POST", params, 1);
 }), _checkPhone$getAuthCo);exports.default = _default;
 
 /***/ }),
@@ -2165,8 +2169,10 @@ function _default(url, method, params, isForm) {
   var token = uni.getStorageSync('token');
   var type = '';
   //判断是否以表单形式提交
-  if (isForm) {
+  if (isForm == 1) {
     type = 'application/x-www-form-urlencoded';
+  } else if (isForm == 2) {
+    type = 'multipart/form-data';
   }
   return new Promise(function (resolve, reject) {
     uni.request({
