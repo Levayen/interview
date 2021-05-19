@@ -14,10 +14,8 @@
     "pages/rz_form_2/rz_form_2",
     "pages/enclosure/enclosure",
     "pages/interviewerIndex/interviewerIndex",
-    "pages/firstInterview/firstInterview",
     "pages/fk_form_1/fk_form_1",
     "pages/fk_form_2/fk_form_2",
-    "pages/secondInterview/secondInterview",
     "pages/HRinterview/HRinterview",
     "pages/fk_form_3/fk_form_3",
     "pages/qrCode/qrCode",
@@ -69,6 +67,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

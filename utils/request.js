@@ -4,7 +4,9 @@
 // var server = "https://pre-sop-api.xiniu.com";  
 // var req = {"appid":"123","version":"123"};  
 // 全局请求封装
-const baseUrl = "https://pre-sop-api.xiniu.com"
+import config from './config.js'
+
+const baseUrl = config.baseUrl
 
 export default (url, method, params, isForm) => {
 	//获取token
@@ -30,8 +32,8 @@ export default (url, method, params, isForm) => {
 			success(res) {
 				if(res.data.code === 200){
 					resolve(res.data);
-				}else if(res.data.code === 401){
-					uni.navigateTo({
+				}else if(res.data.code === 401 || res.data.code === 403 ){
+					uni.reLaunch({
 						url: '../login/login'
 					})
 					uni.showToast({

@@ -1,7 +1,9 @@
 .content.data-v-bfcf8174 {
   padding: 28rpx 25rpx;
+  padding-top: 0;
 }
 .join_item.data-v-bfcf8174 {
+  margin-top: 28rpx;
   width: 333rpx;
   height: 111rpx;
   border-radius: 7rpx;

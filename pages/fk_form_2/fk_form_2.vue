@@ -143,7 +143,7 @@
 				key_talent: 0,
 				status: '',
 				reason: '',
-				ride_time: ''
+				ride_time: 0
 			};
 		},
 		onLoad(opt) {
@@ -167,6 +167,9 @@
 				}
 			},
 			submit(){
+				var pages = getCurrentPages();
+				var prevPage = pages[pages.length - 3]; //上两个页面
+				
 				let params = {
 					record_id: this.record_id,
 					key_talent: this.key_talent,
@@ -177,8 +180,12 @@
 					reason: this.reason,
 					ride_time: this.ride_time
 				}
+				uni.showLoading({
+					title:"提交中"
+				})
 				this.$api.feedbackTwo(params).then( res => {
-					console.log(res)
+					uni.hideLoading()
+					prevPage.$vm.otherFun();//重点$vm
 					uni.navigateBack({
 						delta: 2
 					})

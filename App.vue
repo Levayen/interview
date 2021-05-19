@@ -27,4 +27,12 @@
 	.medium{
 		font-weight: 500;
 	}
+	.no_data{
+		width: 100%;
+		height: 150rpx;
+		line-height: 150rpx;
+		font-size: 24rpx;
+		color: #999999;
+		text-align: center;
+	}
 </style>

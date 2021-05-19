@@ -125,15 +125,6 @@
             
         }
         ,{
-            "path" : "pages/firstInterview/firstInterview",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "一面",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
             "path" : "pages/fk_form_1/fk_form_1",
             "style" :                                                                                    
             {
@@ -151,15 +142,7 @@
             }
             
         }
-        ,{
-            "path" : "pages/secondInterview/secondInterview",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "二面",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+
         ,{
             "path" : "pages/HRinterview/HRinterview",
             "style" :                                                                                    

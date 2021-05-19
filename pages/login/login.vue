@@ -165,7 +165,7 @@
 					return
 				}
 				uni.showLoading({
-					title: "加载中"
+					title: "登录中"
 				})
 				this.$api.userLogin(params).then( res => {
 					uni.hideLoading()
@@ -202,7 +202,7 @@
 					return
 				}
 				uni.showLoading({
-					title: "加载中"
+					title: "登录中"
 				})
 				this.$api.intervieweerLogin(params).then( res => {
 					console.log(res) 

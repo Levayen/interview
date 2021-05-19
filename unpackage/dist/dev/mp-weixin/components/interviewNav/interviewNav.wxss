@@ -1,4 +1,8 @@
 .nav.data-v-6f148cc4 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
   width: 100%;
   height: 97rpx;
   box-sizing: border-box;
@@ -44,6 +48,9 @@
   height: 3rpx;
   background-color: #FFFFFF;
   margin-top: 17rpx;
+}
+.nothing.data-v-6f148cc4 {
+  height: 97rpx;
 }
 .search.data-v-6f148cc4 {
   width: 100%;

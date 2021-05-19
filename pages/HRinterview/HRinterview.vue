@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<InterviewNav :statistics="statistics" @changeTab="changeStatus"></InterviewNav>
+		<InterviewNav :statistics="statistics" @changeTab="changeStatus" @getKeyWord="search"></InterviewNav>
 		<view class="main">
 			<view v-for="(item, index) in dataList" :key="index" v-if="paramsList.status === 0">
 				<view class="item">
@@ -19,11 +19,11 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view>
+							<view v-if="item.one > 0">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view>
+							<view v-if="item.two > 0">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
@@ -77,7 +77,7 @@
 							<view class="icon_1"><image src="../../static/img/back_1.png" mode=""></image></view>
 							<view>退回</view> 
 						</view>
-						<view @click="fkForm(item.recordId, item.intervieweeId)">
+						<view @click="fkForm(item.recordId, item.intervieweeId, index)">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
@@ -101,12 +101,12 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view>
-								<view v-if="item.one === 1" class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+							<view v-if="item.one > 0">
+								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view>
-								<view v-if="item.two === 1" class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+							<view v-if="item.two > 0">
+								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
 						</view>
@@ -169,11 +169,11 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view>
+							<view v-if="item.one > 0">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view>
+							<view v-if="item.two > 0">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
@@ -247,9 +247,12 @@
 					pageSize : 10,
 					pageNumber : 1,
 				},
-				pageTitle:''
+				pageTitle:'',
+				total: 10,
+				sIndex: ''
 			};
 		},
+		
 		onLoad(opt) {
 			//0：HR面、1：一面、2：二面、3：三面、4：四面
 			this.paramsList.interview_round = opt.round
@@ -272,7 +275,30 @@
 		onShow() {
 			this.getInterviewList()
 		},
+		onReachBottom(){
+			this.paramsList.pageNumber++
+			this.getInterviewList()
+		},
 		methods:{
+			otherFun(){
+				this.dataList.splice(this.sIndex, 1)
+			},
+			search(val){
+				this.paramsList.pageSize = this.total
+				this.paramsList.pageNumber = 1
+				this.paramsList.keyword = val
+				this.$api.interviewList(this.paramsList).then( res => {
+					let arr = res.result.data
+					if(arr.length === 0){
+						uni.showToast({
+							title:"没有搜索到相关内容",
+							icon:"none"
+						})
+					}
+					this.dataList = arr
+					this.statistics = res.result.statistics
+				})
+			},
 			//退回
 			goBack(id, index){
 				this.$api.goBack({recordId: id}).then( res => {
@@ -282,17 +308,23 @@
 			},
 			getInterviewList(){
 				this.$api.interviewList(this.paramsList).then( res => {
-					console.log(res)
-					this.dataList = res.result.data
+					let arr = res.result.data
+					for(let i in arr){
+						this.dataList.push(arr[i])
+					}
+					this.total = res.result.count
 					this.statistics = res.result.statistics
-
 				})
 			},
 			changeStatus(val){
+				this.dataList = []
+				this.paramsList.keyword = ''
+				this.paramsList.pageNumber = 1
 				this.paramsList.status = val
 				this.getInterviewList()
 			},
-			fkForm(id, userId, item){
+			fkForm(id, userId, index){
+				this.sIndex = index
 				uni.navigateTo({
 					url: `../fk_form_1/fk_form_1?recordId=${id}&intervieweeId=${userId}`
 				})

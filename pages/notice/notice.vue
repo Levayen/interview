@@ -1,52 +1,56 @@
 <template>
 	<view class="content">
+		<!-- <view class="no_data" v-if="noticeList.length === 0">
+			暂无通知
+		</view> -->
 		<view class="notice_item" v-for="(item, index) in noticeList" :key="index">
 			<view class="nitice_item_1">
 				<view class="position">
-					产品经理
+					{{ item.post_name }}
 				</view>
 				<view class="ordinal">
-					一面
+					{{ item.current_interview }}
 				</view>
 			</view>
 			<view class="notice_item_2">
-				<view>
+				<view v-if="item.one > 0">
 					<view><image src="/static/img/table_1.png" mode=""></image></view>
 					<view>应聘登记表-1</view>
 				</view>
-				<view>
+				<view v-if="item.two > 0">
 					<view><image src="/static/img/table_1.png" mode=""></image></view>
 					<view>应聘登记表-2</view>
 				</view>
 			</view>
 			<view class="notice_item_3">
-				填表时间：2021年1月23日 12:59
+				填表时间：{{ item.write_time }}
 			</view>
 			<view class="border_1"></view>
 			<view class="notice_item_4">
 				<view>
 					<view class="item_name">面试时间：</view>
-					<view class="item_content">2021年3月2日（周四）上午11点</view>
+					<view class="item_content">{{ item.interview_time }}</view>
 				</view>
 				<view>
 					<view class="item_name">面试地点：</view>
-					<view class="item_content">深圳市宝安区宝安大道华丰国际机器人产业园 B栋4层</view>
+					<view class="item_content">{{ item.address }}</view>
 				</view>
 			</view>
 			<view class="border_1"></view>
 			<view class="notice_item_4">
 				<view>
 					<view class="item_name">交通路线：</view>
-					<view class="item_content_red">深圳</view>
+					<view class="item_content_red">{{ item.city_name }}</view>
 				</view>
 				<view>
 					<view class="item_name">乘坐地铁：</view>
-					<view class="item_content">地铁1号线</view>
+					<view class="item_content">{{item.subway_station_line}}{{ item.subway_station_name }}</view>
 				</view>
 				<view>
 					<view class="item_name">乘坐公交：</view>
-					<view class="item_content">
-						站台名称：华丰工业园站 <br/> 公交车次： 432，232，233，331
+					<view class="item_content_1">
+						<view>站台名称：{{ item.bus_station_name }} </view>	
+						<view>公交车次：{{ item.bus_station_line }}</view>
 					</view>
 				</view>
 			</view>
@@ -67,16 +71,22 @@
 			}
 		},
 		onLoad() {
-			
+			this.getNotice()
 		},
 		onShow() {
+			
+		},
+		onReachBottom(){
+			this.params.pageNumber++
 			this.getNotice()
 		},
 		methods: {
 			getNotice(){
 				this.$api.getNotice(this.params).then( res => {
-					console.log(res)
-					this.noticeList = res.result.data
+					let arr = res.result.data
+					for(let i in arr){
+						this.noticeList.push(arr[i])
+					}
 					this.noticeCount = res.result.count
 				})
 			}
@@ -166,6 +176,15 @@
 		}
 		.item_content{
 			color: #777777;
+		}
+		.item_content_1{
+			color: #777777;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: column;
+			>view{
+				word-break: break-word;
+			}
 		}
 		.item_content_red{
 			color: #E91616;

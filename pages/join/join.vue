@@ -1,5 +1,8 @@
 <template>
 	<view class="content">
+		<!-- <view class="no_data" v-if="post_name === ''">
+			暂无数据
+		</view> -->
 		<view v-if="post_name" class="join_item" @click="goDetails" :data-position="post_name">
 			<view class="icon_1"><image src="/static/img/join_icon.png" mode=""></image></view>
 			<view>{{post_name}}</view>
@@ -16,6 +19,9 @@
 			}
 		},
 		onLoad(){
+			
+		},
+		onShow() {
 			this.joinIndex()
 		},
 		methods: {
@@ -42,8 +48,10 @@
 <style lang="less" scoped>
 	.content{
 		padding: 28rpx 25rpx;
+		padding-top: 0;
 	}
 	.join_item{
+		margin-top: 28rpx;
 		width: 333rpx;
 		height: 111rpx;
 		border-radius: 7rpx;

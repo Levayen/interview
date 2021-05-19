@@ -356,8 +356,13 @@
 					probation_month : this.probation_month,
 					ride_time: this.ride_time,
 				}
+				uni.showLoading({
+					title:"提交中"
+				})
 				this.$api.feedbackThree(params).then( res => {
-					console.log(res)
+					uni.showLoading({
+						title:"提交中"
+					})
 					uni.navigateBack()
 				})
 			},

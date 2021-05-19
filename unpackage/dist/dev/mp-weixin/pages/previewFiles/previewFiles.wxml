@@ -1,1 +1,1 @@
-<view><web-view webview-styles="{{webviewStyles}}" src="{{fileUrl}}"></web-view></view>
+<view class="data-v-37be0866"><web-view src="{{allUrl}}" class="data-v-37be0866"></web-view></view>

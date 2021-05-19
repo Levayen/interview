@@ -2,14 +2,14 @@
 	<view class="content">
 		<view class="top_notice">
 			<view>
-				会员ID：15992990321
+				会员ID：{{phone}}
 			</view>
 			<view class="login_out" @click="logOut">
 				安全退出
 			</view>
 		</view>
 		<view class="version">
-			版本号：v1.0.1
+			版本号：v{{version || '1.0.0'}}
 		</view>
 	</view>
 </template>
@@ -18,14 +18,24 @@
 	export default {
 		data() {
 			return {
-				
+				phone:'',
+				version: '1.0.0'
 			}
+		},
+		onLoad() {
+			this.phone = uni.getStorageSync('phone')
+			uni.getSystemInfo({
+			　　success: function (res) {      
+			　　}
+			});
+			const accountInfo = uni.getAccountInfoSync();  
+			this.version = accountInfo.miniProgram.version; // 小程序 版本号  
 		},
 		methods: {
 			logOut(){
 				this.$api.logOut({}).then( res => {
 					uni.clearStorage()
-					uni.navigateTo({
+					uni.reLaunch({
 						url: '../login/login'
 					})
 				})

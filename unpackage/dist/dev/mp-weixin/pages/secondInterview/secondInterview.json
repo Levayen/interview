@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "二面",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "interview-nav": "/components/interviewNav/interviewNav"
-  }
-}

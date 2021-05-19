@@ -95,6 +95,21 @@
 .notice_item_4 .item_content.data-v-0b680ac6 {
   color: #777777;
 }
+.notice_item_4 .item_content_1.data-v-0b680ac6 {
+  color: #777777;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.notice_item_4 .item_content_1 > view.data-v-0b680ac6 {
+  word-break: break-word;
+}
 .notice_item_4 .item_content_red.data-v-0b680ac6 {
   color: #E91616;
 }

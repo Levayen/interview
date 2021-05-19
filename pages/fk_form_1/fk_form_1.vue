@@ -290,8 +290,11 @@
 					...this.p_question,
 					...this.c_question
 				}
+				uni.showLoading({
+					title:"提交中"
+				})
 				this.$api.feedbackOne(params).then( res => {
-					console.log(res)
+					uni.hideLoading()
 					uni.navigateTo({
 						url:`../fk_form_2/fk_form_2?total=${this.total}&record_id=${this.record_id}`
 					})

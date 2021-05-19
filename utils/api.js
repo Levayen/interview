@@ -126,7 +126,7 @@ export default {
 	},
 	// 面试者-入职-提交入职登记附件表详情
 	subFileDetail(params){
-		return request("​/api​/Onboarding​/SubmitIntervieweeCertificate", "POST", params, 1)
+		return request("/api/Onboarding/SubmitIntervieweeCertificate", "POST", params)
 	},
 	// 面试者-入职-入职登记附件表详情 
 	rzFileDetail(params){

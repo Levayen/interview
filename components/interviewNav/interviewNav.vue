@@ -5,10 +5,11 @@
 			<view @click="changeStatus(1)" :class="{ 'active': status === 1 }">通过({{ statistics.passed }})</view>
 			<view @click="changeStatus(2)" :class="{ 'active': status === 2 }">未通过({{ statistics.notPass }})</view>
 		</view>
+		<view class="nothing"></view>
 		<view class="search">
 			<view class="search_box">
-				<view class="search_input"><input type="text" value="" placeholder="请输入面试者姓名"/></view>
-				<view class="search_btn">搜索</view>
+				<view class="search_input"><input type="text" value="" v-model="keyword" placeholder="请输入面试者姓名"/></view>
+				<view class="search_btn" @click="search">搜索</view>
 			</view>
 		</view>
 	</view>
@@ -18,7 +19,8 @@
 	export default {
 		data() {
 			return {
-				status: 0
+				status: 0,
+				keyword: ''
 			};
 		},
 		props:{
@@ -35,6 +37,9 @@
 			changeStatus(val){
 				this.status = val
 				this.$emit('changeTab', val)
+			},
+			search(){
+				this.$emit('getKeyWord', this.keyword)
 			}
 		}
 	}
@@ -42,6 +47,10 @@
 
 <style lang="less" scoped>
 	.nav{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 11;
 		width: 100%;
 		height: 97rpx;
 		box-sizing: border-box;
@@ -74,6 +83,9 @@
 			}
 		}
 		
+	}
+	.nothing{
+		height: 97rpx;
 	}
 	.search{
 		width: 100%;

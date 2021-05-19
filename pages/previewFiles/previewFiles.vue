@@ -1,27 +1,27 @@
 <template>
-	<view>
-		<web-view :webview-styles="webviewStyles" :src="fileUrl"></web-view>
-	</view>
+    <view>
+        <web-view :src="allUrl"></web-view>
+    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				fileUrl:'',
-				webviewStyles: {
-				    progress: {
-				        color: '#FF3333'
-				    }
-				}
-			};
-		},
-		onLoad(opt) {
-			this.fileUrl = opt.url
-		}
-	}
+    import config from '../../utils/config.js'
+    export default {
+        data() {
+            return {
+                // viewerUrl: '/hybrid/html/web/viewer.html',
+                // viewerUrl: globalConfig.baseUrl + '/pdf/web/viewer.html',
+                allUrl: ''
+            }
+        },
+        onLoad(options) {
+            let fileUrl = encodeURIComponent(
+                config.baseUrl + '/api/attachment?name=' + options.name + '&url=' + options.url)
+				this.allUrl = this.viewerUrl + '?file=' + fileUrl
+        }
+    }
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+	
 </style>

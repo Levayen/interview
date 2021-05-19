@@ -501,9 +501,12 @@
 						"phone": "111"
 					}]
 				}
-
+				uni.showLoading({
+					title:'提交中'
+				})
 				this.$api.submitRecruitmentFormOne(params).then(res => {
-					uni.navigateTo({
+					uni.hideLoading()
+					uni.redirectTo({
 						url: `../yp_form_2/yp_form_2?post_id=${this.post_id}&post_name=${this.post_name}`
 					})
 				})

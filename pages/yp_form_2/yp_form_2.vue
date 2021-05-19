@@ -265,7 +265,11 @@
 					  "question_10": Number(this.question_10),
 					  "question_10_text": this.question_10_text
 				}
+				uni.showLoading({
+					title:"提交中"
+				})
 				this.$api.submitRecruitmentFormTwo(params).then( res => {
+					uni.hideLoading()
 					console.log(res)
 					this.isFinish = true;
 				})
