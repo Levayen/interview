@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
-		<!-- <view class="no_data" v-if="noticeList.length === 0">
-			暂无通知
-		</view> -->
+		<view class="no_data" v-if="noticeList.length === 0">
+			暂无通知消息
+		</view>
 		<view class="notice_item" v-for="(item, index) in noticeList" :key="index">
 			<view class="nitice_item_1">
 				<view class="position">

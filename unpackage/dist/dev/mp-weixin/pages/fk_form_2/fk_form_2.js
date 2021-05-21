@@ -275,14 +275,39 @@ var _default =
       key_talent: 0,
       status: '',
       reason: '',
-      ride_time: 0 };
+      ride_time: '',
+      form_id: 0 };
 
   },
   onLoad: function onLoad(opt) {
     this.record_id = opt.record_id;
     this.total = opt.total;
+    this.form_id = opt.form_id;
+    if (this.form_id > 0) {
+      this.getFormDetails();
+    }
   },
   methods: {
+    getFormDetails: function getFormDetails() {var _this = this;
+      this.$api.getFormDetail4({ towId: this.form_id }).then(function (res) {
+        console.log("表详情", res);
+        var data = res.result;
+        _this.record_id = data.record_id;
+        _this.key_talent = data.key_talent;
+        _this.question_1 = data.question_1;
+        _this.question_2 = data.question_2;
+        _this.question_3 = data.question_3;
+        _this.status = data.status;
+        _this.reason = data.reason;
+        _this.ride_time = data.ride_time;
+        if (_this.key_talent == 1) {
+          _this.isChecked = true;
+        } else {
+          _this.isChecked = false;
+        }
+
+      });
+    },
     selectRadio: function selectRadio() {
       this.isChecked = !this.isChecked;
       this.key_talent ? 1 : 0;
@@ -310,7 +335,7 @@ var _default =
         question_3: this.question_3,
         status: this.status,
         reason: this.reason,
-        ride_time: this.ride_time };
+        ride_time: this.ride_time == '' ? 0 : this.ride_time };
 
       uni.showLoading({
         title: "提交中" });

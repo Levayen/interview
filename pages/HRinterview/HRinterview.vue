@@ -19,11 +19,11 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view v-if="item.one > 0">
+							<view v-if="item.one > 0" @click="checkForm1(item.one)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view v-if="item.two > 0">
+							<view v-if="item.two > 0" @click="checkForm2(item.two)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
@@ -33,8 +33,43 @@
 						</view>
 					</view>
 					<view class="item_middle" v-for="(citem, cindex) in item.records" :key="cindex">
+						<view>
+							<view class="arrange_2">
+								<view class="btn">{{ citem.current_interview_text }}</view>
+								<view class="arrange_time">
+									<view>面试安排时间：</view>
+									<view>{{ citem.interview_time }}</view>
+								</view>
+							</view>
+							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
+								<view class="result_1">
+									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
+									<view>面试得分：{{ sitem.score }}</view>
+								</view>
+								<view class="form">
+									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
+										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+										<view>面试反馈表-1</view>
+									</view>
+									<view v-if="sitem.two > 0" @click="checkForm4(sitem.two, item.recordId)">
+										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+										<view>面试反馈表-2</view>
+									</view>
+									<view  v-if="sitem.three > 0" @click="checkForm5(sitem.three, item.recordId)">
+										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
+										<view>面试反馈表-3</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="result_2">
+							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
+							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
+						</view>
+					</view>
+<!-- 					<view class="item_middle" v-for="(citem, cindex) in item.records" :key="cindex">
 						<view v-if="cindex != (item.records.length - 1)">
-						<!-- <view> -->
 							<view class="middle_1">
 								<view class="first_btn">{{ citem.current_interview_text }}</view>
 								<view class="form_2">
@@ -58,16 +93,15 @@
 							</view>
 						</view>
 						<view v-else class="arrange">
-						<!-- <view class="arrange"> -->
 							<view class="btn">{{ citem.current_interview_text }}</view>
 							<view class="arrange_time">
 								<view>面试安排时间：</view>
 								<view>{{ citem.interview_time }}</view>
 							</view>
 						</view>
-					</view>
+					</view> -->
 					<view class="item_bottom" v-if="paramsList.interview_round == 0 ">
-						<view @click="fkForm3(item.recordId, item)">
+						<view @click="fkForm3(item.recordId, item, index)">
 							<view class="icon_1"><image src="../../static/img/edit.png" mode=""></image></view>
 							<view>填写面试反馈表</view>
 						</view>
@@ -101,11 +135,11 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view v-if="item.one > 0">
+							<view v-if="item.one > 0" @click="checkForm1(item.one)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view v-if="item.two > 0">
+							<view v-if="item.two > 0" @click="checkForm2(item.two)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
@@ -129,15 +163,15 @@
 									<view>面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
-									<view v-if="sitem.one != 0">
+									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-1</view>
 									</view>
-									<view v-if="sitem.two != 0">
+									<view v-if="sitem.two > 0" @click="checkForm4(sitem.two, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-2</view>
 									</view>
-									<view  v-if="sitem.three != 0">
+									<view  v-if="sitem.three > 0" @click="checkForm5(sitem.three, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-3</view>
 									</view>
@@ -169,11 +203,11 @@
 							用人部门：{{ item.department_name }}
 						</view>
 						<view class="form">
-							<view v-if="item.one > 0">
+							<view v-if="item.one > 0" @click="checkForm1(item.one)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-1</view>
 							</view>
-							<view v-if="item.two > 0">
+							<view v-if="item.two > 0" @click="checkForm2(item.two)">
 								<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 								<view>应聘登记表-2</view>
 							</view>
@@ -197,15 +231,15 @@
 									<view>面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
-									<view v-if="sitem.one != 0">
+									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-1</view>
 									</view>
-									<view v-if="sitem.two != 0">
+									<view v-if="sitem.two > 0" @click="checkForm4(sitem.two, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-2</view>
 									</view>
-									<view  v-if="sitem.three != 0">
+									<view  v-if="sitem.three > 0" @click="checkForm5(sitem.three, item.recordId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-3</view>
 									</view>
@@ -329,13 +363,15 @@
 					url: `../fk_form_1/fk_form_1?recordId=${id}&intervieweeId=${userId}`
 				})
 			},
-			fkForm2(id){
+			fkForm2(id, index){
+				this.sIndex = index
 				uni.navigateTo({
 					url: `../fk_form_2/fk_form_2?recordId=${id}`
 				})
 			},
-			fkForm3(id, item){
-				console.log(id)
+			fkForm3(id, item, index){
+				this.sIndex = index
+				//计算平均分
 				let scoreTotal = 0
 				let interviewer = 0
 				let average = 0
@@ -345,13 +381,40 @@
 						scoreTotal += d.score
 					})
 				})
-				average = Math.round(scoreTotal/interviewer)
-				console.log(average)
+				average = Math.round(scoreTotal/(interviewer-1))
 				uni.navigateTo({
 					url: `../fk_form_3/fk_form_3?recordId=${id}&average=${average}`
 				})
 			},
+			checkForm1(id){
+				uni.navigateTo({
+					url:`../yp_form_1/yp_form_1?form_id=${id}`
+				})
+			},
+			checkForm2(id){
+				uni.navigateTo({
+					url:`../yp_form_2/yp_form_2?form_id=${id}`
+				})
+			},
+			checkForm3(id, uId){
+				uni.navigateTo({
+					url:`../fk_form_1/fk_form_1?form_id=${id}&intervieweeId=${uId}`
+				})
+			},
+			checkForm4(id, uId){
+				uni.navigateTo({
+					url:`../fk_form_2/fk_form_2?form_id=${id}`
+				})
+			},
+			checkForm5(id, uId){
+				uni.navigateTo({
+					url:`../fk_form_3/fk_form_3?form_id=${id}`
+				})
+			},
 			openDocument(url){
+				uni.showLoading({
+					title:"加载中"
+				})
 				uni.downloadFile({
 				  url: url,
 				  success: function (res) {
@@ -359,7 +422,7 @@
 				    uni.openDocument({
 				      filePath: filePath,
 				      success: function (res) {
-				        console.log('打开文档成功');
+				        uni.hideLoading()
 				      }
 				    });
 				  }

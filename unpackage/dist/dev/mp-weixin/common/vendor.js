@@ -2144,6 +2144,26 @@ params) {
 
 params) {
   return (0, _request.default)("/api/Upload/Upload", "POST", params, 1);
+}), _defineProperty(_checkPhone$getAuthCo, "getFormDetail1", function getFormDetail1(
+
+params) {
+  return (0, _request.default)("/api/Interview/RecruitmentFormOneInfo", "GET", params);
+}), _defineProperty(_checkPhone$getAuthCo, "getFormDetail2", function getFormDetail2(
+
+params) {
+  return (0, _request.default)("/api/Interview/RecruitmentFormTwoInfo", "GET", params);
+}), _defineProperty(_checkPhone$getAuthCo, "getFormDetail3", function getFormDetail3(
+
+params) {
+  return (0, _request.default)("/api/Interview/RecruitmentFeedbackOneInfo", "GET", params);
+}), _defineProperty(_checkPhone$getAuthCo, "getFormDetail4", function getFormDetail4(
+
+params) {
+  return (0, _request.default)("/api/Interview/RecruitmentFeedbackTwoInfo", "GET", params);
+}), _defineProperty(_checkPhone$getAuthCo, "getFormDetail5", function getFormDetail5(
+
+params) {
+  return (0, _request.default)("/api/Interview/RecruitmentFeedbackThreeInfo", "GET", params);
 }), _checkPhone$getAuthCo);exports.default = _default;
 
 /***/ }),
@@ -2207,9 +2227,10 @@ function _default(url, method, params, isForm) {
       },
       fail: function fail(err) {
         uni.showToast({
-          title: "请求失败",
+          title: '请求失败',
           icon: "none" });
 
+        console.log(err);
         reject(err);
       },
       complete: function complete() {
@@ -2231,7 +2252,9 @@ function _default(url, method, params, isForm) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var baseUrl = 'https://pre-sop-api.xiniu.com';var _default =
+var baseUrl = 'https://pre-sop-api.xiniu.com';
+// const baseUrl = 'https://sop-api.xiniu.com'
+var _default =
 {
   baseUrl: baseUrl };exports.default = _default;
 

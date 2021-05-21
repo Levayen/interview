@@ -49,9 +49,10 @@ export default (url, method, params, isForm) => {
 			},
 			fail(err) {
 				uni.showToast({
-					title: "请求失败",
+					title: '请求失败',
 					icon: "none",
 				})
+				console.log(err)
 				reject(err);
 			},
 			complete() {

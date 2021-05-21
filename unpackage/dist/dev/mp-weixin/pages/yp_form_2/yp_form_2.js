@@ -313,6 +313,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
@@ -340,7 +341,8 @@ var _default =
       question_8: '',
       question_9_salary: '',
       question_10: '',
-      question_10_text: '' };
+      question_10_text: '',
+      form_id: 0 };
 
   },
   computed: {
@@ -352,34 +354,75 @@ var _default =
     } },
 
   onLoad: function onLoad(opt) {var _this = this;
+    this.form_id = opt.form_id;
     this.post_id = opt.post_id;
     this.post_name = opt.post_name;
-    this.timer = setInterval(function () {
-      _this.time += 1;
-    }, 1000);
+    //判断是查看详情还是填表
+    if (this.form_id > 0) {
+      this.getFormDetails();
+    } else {
+      this.timer = setInterval(function () {
+        _this.time += 1;
+      }, 1000);
+    }
   },
   methods: {
+    getFormDetails: function getFormDetails() {var _this2 = this;
+      this.$api.getFormDetail2({ twoId: this.form_id }).then(function (res) {
+        var data = res.result;
+        _this2.question_1 = data.question_1;
+        _this2.question_1_reason = data.question_1_reason;
+        _this2.question_2 = data.question_2;
+        _this2.question_3 = data.question_3;
+        _this2.question_4 = data.question_4;
+        _this2.question_5 = data.question_5;
+        _this2.question_6 = data.question_6;
+        _this2.question_7 = data.question_7;
+        _this2.question_8 = data.question_8;
+        _this2.question_9_salary = data.question_9_salary;
+        _this2.question_10 = data.question_10;
+        _this2.question_10_text = data.question_10_text;
+        _this2.name = data.question_7_name;
+        _this2.position = data.question_7_position;
+        _this2.date = data.question_9_time.split(' ')[0];
+      });
+    },
     bindDateChange: function bindDateChange(e) {
       console.log('picker发送选择改变，携带值为', e.target.value);
       this.date = e.target.value;
     },
     selectAnswer1: function selectAnswer1(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.question_1 = val;
     },
     selectAnswer6: function selectAnswer6(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.question_6 = val;
     },
     selectAnswer7: function selectAnswer7(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.question_7 = val;
     },
     selectAnswer8: function selectAnswer8(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.question_8 = val;
     },
     selectAnswer10: function selectAnswer10(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.question_10_text = '';
       this.question_10 = val;
     },
-    submitRecruitmentFormTwo: function submitRecruitmentFormTwo() {var _this2 = this;
+    submitRecruitmentFormTwo: function submitRecruitmentFormTwo() {var _this3 = this;
       var params = {
         "question_1": Number(this.question_1),
         "question_1_reason": this.question_1_reason,
@@ -403,7 +446,7 @@ var _default =
       this.$api.submitRecruitmentFormTwo(params).then(function (res) {
         uni.hideLoading();
         console.log(res);
-        _this2.isFinish = true;
+        _this3.isFinish = true;
       });
     },
     getDate: function getDate(type) {
@@ -412,9 +455,9 @@ var _default =
       var month = date.getMonth() + 1;
       var day = date.getDate();
 
-      if (type === 'start') {
+      if (type == 'start') {
         // year = year - 60;
-      } else if (type === 'end') {
+      } else if (type == 'end') {
         year = year + 2;
       }
       month = month > 9 ? month : '0' + month;;
@@ -422,7 +465,20 @@ var _default =
       return "".concat(year, "-").concat(month, "-").concat(day);
     },
     changeIndex: function changeIndex(n) {
-      if (this.nextNum === 0) {
+
+      if (n == 1 && this.qIndex > 1) {
+        this.qIndex--;
+        this.preNum--;
+        this.nextNum++;
+      } else if (n == 2 && this.qIndex < 10) {
+        this.qIndex++;
+        this.preNum++;
+        this.nextNum--;
+      }
+      if (this.nextNum == 0) {
+        if (this.form_id > 0) {
+          return;
+        }
         this.submitRecruitmentFormTwo();
         clearInterval(this.timer);
         var m = Math.floor(this.time / 60);
@@ -430,15 +486,6 @@ var _default =
         m = m > 9 ? m : '0' + m;
         s = s > 9 ? s : '0' + s;
         this.timeText = "".concat(m, "\u5206").concat(s, "\u79D2");
-      }
-      if (n === 1 && this.qIndex > 1) {
-        this.qIndex--;
-        this.preNum--;
-        this.nextNum++;
-      } else if (n === 2 && this.qIndex < 10) {
-        this.qIndex++;
-        this.preNum++;
-        this.nextNum--;
       }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

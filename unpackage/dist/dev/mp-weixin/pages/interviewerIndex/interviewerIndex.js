@@ -171,6 +171,9 @@ var _default =
   onLoad: function onLoad() {
     this.getCount();
   },
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.getCount();
+  },
   methods: {
     goFirstInterview: function goFirstInterview(round) {
       uni.navigateTo({
@@ -184,7 +187,7 @@ var _default =
     },
     getCount: function getCount() {var _this = this;
       this.$api.waitInterview({}).then(function (res) {
-        console.log(res);
+        uni.stopPullDownRefresh();
         _this.count = res.result;
       });
     } } };exports.default = _default;

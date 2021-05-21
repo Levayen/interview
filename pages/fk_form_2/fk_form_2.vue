@@ -4,7 +4,7 @@
 			职位匹配度问答
 		</view>
 		<view class="form_content">
-			<view class="grader_top">
+			<view class="grader_top" v-if="form_id == 0">
 				<view>
 					面试量化得分：
 				</view>
@@ -60,7 +60,7 @@
 								<view class="distance">
 									<view>现住址到公司车程：</view>
 									<view>
-										<view class="grader_input"><input type="number" value="" v-model="ride_time" max="100" placeholder="请输入"/></view>
+										<view class="grader_input"><input :disabled="form_id > 0" type="number" value="" v-model="ride_time" max="100" placeholder="请输入"/></view>
 									</view>
 									<view>分钟</view>
 								</view>
@@ -110,19 +110,19 @@
 								<viwe class="icon_3"><image src="/static/img/selected.png" mode=""></image></viwe>
 							</view>
 							<view class="textarea">
-								<textarea value="" v-model="reason" placeholder="可简要填写不通过原因" />
+								<textarea :disabled="form_id > 0" value="" v-model="reason" placeholder="可简要填写不通过原因" />
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="radio_wrap">
+		<view class="radio_wrap" v-if="form_id == 0">
 			<label class="radio">
-				<radio class="violet" value="" :checked="isChecked" @click="selectRadio" /><text> 加入重点跟踪人才库 </text>
+				<radio :disabled="form_id > 0" class="violet" value="" :checked="isChecked" @click="selectRadio" /><text> 加入重点跟踪人才库 </text>
 			</label>
 		</view>
-		<view class="bottom_btn">
+		<view class="bottom_btn" v-if="form_id == 0">
 			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
@@ -143,14 +143,39 @@
 				key_talent: 0,
 				status: '',
 				reason: '',
-				ride_time: 0
+				ride_time: '',
+				form_id: 0,
 			};
 		},
 		onLoad(opt) {
 			this.record_id = opt.record_id
 			this.total = opt.total
+			this.form_id = opt.form_id
+			if(this.form_id > 0){
+				this.getFormDetails()
+			}
 		},
 		methods:{
+			getFormDetails(){
+				this.$api.getFormDetail4({towId : this.form_id}).then(res => {
+					console.log("表详情", res)
+					let data = res.result
+					this.record_id = data.record_id
+					this.key_talent = data.key_talent
+					this.question_1 = data.question_1
+					this.question_2 = data.question_2
+					this.question_3 = data.question_3
+					this.status = data.status
+					this.reason = data.reason
+					this.ride_time = data.ride_time
+					if(this.key_talent == 1){
+						this.isChecked = true
+					}else{
+						this.isChecked = false
+					}
+					
+				})
+			},
 			selectRadio(){
 				this.isChecked = !this.isChecked
 				this.key_talent ? 1 : 0
@@ -178,7 +203,7 @@
 					question_3: this.question_3,
 					status: this.status,
 					reason: this.reason,
-					ride_time: this.ride_time
+					ride_time: this.ride_time == '' ? 0 : this.ride_time
 				}
 				uni.showLoading({
 					title:"提交中"

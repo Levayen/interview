@@ -135,5 +135,25 @@ export default {
 	//文件上传
 	upLoad(params){
 		return request("/api/Upload/Upload", "POST", params, 1)
-	}
+	},
+	//应聘登记表1 详情 
+	getFormDetail1(params){
+		return request("/api/Interview/RecruitmentFormOneInfo", "GET", params)
+	},
+	//应聘登记表2 详情
+	getFormDetail2(params){
+		return request("/api/Interview/RecruitmentFormTwoInfo", "GET", params)
+	},
+	//面试反馈表1 详情
+	getFormDetail3(params){
+		return request("/api/Interview/RecruitmentFeedbackOneInfo", "GET", params)
+	},
+	//面试反馈表2 详情
+	getFormDetail4(params){
+		return request("/api/Interview/RecruitmentFeedbackTwoInfo", "GET", params)
+	},
+	//面试反馈表3 详情
+	getFormDetail5(params){
+		return request("/api/Interview/RecruitmentFeedbackThreeInfo", "GET", params)
+	},
 }

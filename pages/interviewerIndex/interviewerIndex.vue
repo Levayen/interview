@@ -39,6 +39,9 @@
 		onLoad() {
 			this.getCount()
 		},
+		onPullDownRefresh(){
+			this.getCount()
+		},
 		methods:{
 			goFirstInterview(round){
 				uni.navigateTo({
@@ -52,7 +55,7 @@
 			},
 			getCount(){
 				this.$api.waitInterview({}).then( res => {
-					console.log(res)
+					uni.stopPullDownRefresh();
 					this.count = res.result
 				})
 			}

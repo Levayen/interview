@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="top_title" v-if="!isFinish">
+		<view class="top_title" v-if="!isFinish && form_id == 0">
 			<view class="top_left">
 				<view class="icon_1"><image src="/static/img/table_2.png" mode=""></image></view>
 				<view>应聘登记表-2</view>
@@ -21,11 +21,11 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer1(1)" :class="{active: question_1  === 1}">在职</view>
-						<view @click="selectAnswer1('0')" :class="{active: question_1  == '0'}">离职</view>
+						<view @click="selectAnswer1(1)" :class="{active: question_1  == 1}">在职</view>
+						<view @click="selectAnswer1(0)" :class="{active: question_1  == 0}">离职</view>
 					</view>
 					<view class="answer_text">
-						<textarea value="" maxlength="50" v-model="question_1_reason" placeholder="请简要填写离职原因" />
+						<textarea :disabled="form_id > 0" value="" maxlength="50" v-model="question_1_reason" placeholder="请简要填写离职原因" />
 					</view>
 				</view>
 			</view>
@@ -35,7 +35,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" v-model="question_2" placeholder="请填写回答" />
+						<textarea :disabled="form_id > 0" value="" maxlength="50" v-model="question_2" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -45,7 +45,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" v-model="question_3" placeholder="请填写回答" />
+						<textarea :disabled="form_id > 0" value="" maxlength="50" v-model="question_3" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -55,7 +55,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" v-model="question_4" placeholder="请填写回答" />
+						<textarea :disabled="form_id > 0" value="" maxlength="50" v-model="question_4" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -65,7 +65,7 @@
 				</view>
 				<view class="answer">
 					<view class="answer_text">
-						<textarea value="" maxlength="50" v-model="question_5" placeholder="请填写回答" />
+						<textarea :disabled="form_id > 0" value="" maxlength="50" v-model="question_5" placeholder="请填写回答" />
 					</view>
 				</view>
 			</view>
@@ -75,8 +75,8 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer6(1)" :class="{active: question_6  === 1}">是</view>
-						<view @click="selectAnswer6('0')" :class="{active: question_6  == '0'}">否</view>
+						<view @click="selectAnswer6(1)" :class="{active: question_6  == 1}">是</view>
+						<view @click="selectAnswer6(0)" :class="{active: question_6  == 0}">否</view>
 					</view>
 				</view>
 			</view>
@@ -86,17 +86,17 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer7('0')" :class="{active: question_7  == '0'}">无</view>
+						<view @click="selectAnswer7(0)" :class="{active: question_7  == 0}">无</view>
 						<view @click="selectAnswer7(1)" :class="{active: question_7  == 1}">有</view>
 					</view>
 					<view class="answer_input">
 						<view>
 							<view><span style="margin-right: 10rpx;" class="red">*</span> 姓名 </view>
-							<input type="text" value="" v-model="name" placeholder="请填写姓名"/>
+							<input :disabled="form_id > 0" type="text" value="" v-model="name" placeholder="请填写姓名"/>
 						</view>
 						<view>
 							<view><span style="margin-right: 10rpx;" class="red">*</span> 职务 </view>
-							<input type="text" value="" v-model="position" placeholder="请填写职务"/>
+							<input :disabled="form_id > 0" type="text" value="" v-model="position" placeholder="请填写职务"/>
 						</view>
 					</view>
 				</view>
@@ -107,10 +107,10 @@
 				</view>
 				<view class="answer">
 					<view class="radio">
-						<view @click="selectAnswer8('0')" :class="{active: question_8 === '0'}">自有房产</view>
-						<view @click="selectAnswer8(1)" :class="{active: question_8 === 1}">借住亲友住房</view>
-						<view @click="selectAnswer8(2)" :class="{active: question_8 === 2}">自行租住</view>
-						<view @click="selectAnswer8(3)" :class="{active: question_8 === 3}">需要公司安排</view>
+						<view @click="selectAnswer8(0)" :class="{active: question_8 == 0}">自有房产</view>
+						<view @click="selectAnswer8(1)" :class="{active: question_8 == 1}">借住亲友住房</view>
+						<view @click="selectAnswer8(2)" :class="{active: question_8 == 2}">自行租住</view>
+						<view @click="selectAnswer8(3)" :class="{active: question_8 == 3}">需要公司安排</view>
 					</view>
 				</view>
 			</view>
@@ -122,8 +122,8 @@
 					<view class="answer_select">
 						<view>
 							<view>您可以（希望）上班时间 </view>
-							<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
-								<view class="select_btn_2" v-if="date === ''">
+							<picker :disabled="form_id > 0" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+								<view class="select_btn_2" v-if="date == ''">
 									<view>请选择</view>
 									<view class="icon_2"><image src="/static/img/to_right_g.png" mode=""></view>
 								</view>
@@ -132,7 +132,7 @@
 						</view>
 						<view>
 							<view>您期望薪资：</view>
-							<input type="number" value="" v-model="question_9_salary" placeholder="请填写"/>
+							<input :disabled="form_id > 0" type="number" value="" v-model="question_9_salary" placeholder="请填写"/>
 						</view>
 					</view>
 				</view>
@@ -143,32 +143,33 @@
 				</view>
 				<view class="answer">
 					<view class="answer_input_2">
-						<view @click="selectAnswer10('0')" :class="{active: question_10 === '0'}">
+						<view @click="selectAnswer10(0)" :class="{active: question_10 == 0}">
 							<view> 招聘网站 </view>
-							<input v-if="question_10 === '0'" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
-							<input v-else type="text" value=""  placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-if="question_10 == 0" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer10(1)" :class="{active: question_10 === 1}">
+						<view @click="selectAnswer10(1)" :class="{active: question_10 == 1}">
 							<view> 招聘会 </view>
-							<input v-if="question_10 === 1" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
-							<input v-else type="text" value=""  placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-if="question_10 == 1" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer10(2)" :class="{active: question_10 === 2}">
+						<view @click="selectAnswer10(2)" :class="{active: question_10 == 2}">
 							<view> 朋友推荐 </view>
-							<input v-if="question_10 === 2" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
-							<input v-else type="text" value=""  placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-if="question_10 == 2" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-else type="text" value=""  placeholder="请填写"/>
 						</view>
-						<view @click="selectAnswer10(3)" :class="{active: question_10 === 3}">
+						<view @click="selectAnswer10(3)" :class="{active: question_10 == 3}">
 							<view> 其他 </view>
-							<input v-if="question_10 === 3" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
-							<input v-else type="text" value=""  placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-if="question_10 == 3" type="text" value="" v-model="question_10_text" placeholder="请填写"/>
+							<input :disabled="form_id > 0" v-else type="text" value=""  placeholder="请填写"/>
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class="bottom_btn">
 				<view class="previous" @click="changeIndex(1)">上一题（{{ preNum }}）</view>
-				<view class="next" @click="changeIndex(2)">提交进入下一题（{{ nextNum }}）</view>
+				<view v-if="form_id == 0" class="next" @click="changeIndex(2)">提交进入下一题（{{ nextNum }}）</view>
+				<view v-else class="next" @click="changeIndex(2)">下一题（{{ nextNum }}）</view>
 			</view>
 		</view>
 		<view class="finish" v-if="isFinish">
@@ -209,6 +210,7 @@
 				question_9_salary: '',
 				question_10: '',
 				question_10_text: '',
+				form_id: 0,
 			};
 		},
 		computed: {
@@ -220,30 +222,71 @@
 		       }
 		},
 		onLoad(opt) {
+			this.form_id = opt.form_id;
 			this.post_id = opt.post_id;
 			this.post_name = opt.post_name;
-			this.timer = setInterval(() => {
-				this.time += 1
-			}, 1000)
+			//判断是查看详情还是填表
+			if(this.form_id > 0){
+				this.getFormDetails()
+			}else{
+				this.timer = setInterval(() => {
+					this.time += 1
+				}, 1000)
+			}
 		},
 		methods:{
+			getFormDetails(){
+				this.$api.getFormDetail2({twoId: this.form_id}).then(res=>{
+					let data = res.result
+					this.question_1 = data.question_1
+					this.question_1_reason = data.question_1_reason
+					this.question_2 = data.question_2
+					this.question_3 = data.question_3
+					this.question_4 = data.question_4
+					this.question_5 = data.question_5
+					this.question_6 = data.question_6
+					this.question_7 = data.question_7
+					this.question_8 = data.question_8
+					this.question_9_salary = data.question_9_salary
+					this.question_10 = data.question_10
+					this.question_10_text = data.question_10_text
+					this.name = data.question_7_name 
+					this.position = data.question_7_position
+					this.date = data.question_9_time.split(' ')[0]
+				})
+			},
 			bindDateChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 			    this.date = e.target.value
 			},
 			selectAnswer1(val){
+				if(this.form_id > 0){
+					return
+				}
 				this.question_1 = val
 			},
 			selectAnswer6(val){
+				if(this.form_id > 0){
+					return
+				}
 				this.question_6 = val
 			},
 			selectAnswer7(val){
+				if(this.form_id > 0){
+					return
+				}
 				this.question_7 = val
 			},
 			selectAnswer8(val){
+				if(this.form_id > 0){
+					return
+				}
 				this.question_8 = val
 			},
 			selectAnswer10(val){
+				if(this.form_id > 0){
+					return
+				}
 				this.question_10_text = ''
 				this.question_10 = val
 			},
@@ -280,9 +323,9 @@
 			    let month = date.getMonth() + 1;
 			    let day = date.getDate();
 			
-			    if (type === 'start') {
+			    if (type == 'start') {
 			        // year = year - 60;
-			    } else if (type === 'end') {
+			    } else if (type == 'end') {
 			        year = year + 2;
 			    }
 			    month = month > 9 ? month : '0' + month;;
@@ -290,7 +333,20 @@
 			    return `${year}-${month}-${day}`;
 			},
 			changeIndex(n){
-				if( this.nextNum === 0 ){
+
+				if( n == 1 && this.qIndex > 1){
+					this.qIndex --
+					this.preNum --
+					this.nextNum ++
+				}else if(n == 2 && this.qIndex < 10){
+					this.qIndex ++
+					this.preNum ++
+					this.nextNum --
+				}
+				if( this.nextNum == 0 ){
+					if(this.form_id > 0){
+						return
+					}
 					this.submitRecruitmentFormTwo()
 					clearInterval(this.timer);
 					let m = Math.floor( this.time / 60);
@@ -298,15 +354,6 @@
 					m = m > 9 ? m : '0' + m;
 					s = s > 9 ? s : '0' + s;
 					this.timeText = `${ m }分${ s }秒`;
-				}
-				if( n === 1 && this.qIndex > 1){
-					this.qIndex --
-					this.preNum --
-					this.nextNum ++
-				}else if(n === 2 && this.qIndex < 10){
-					this.qIndex ++
-					this.preNum ++
-					this.nextNum --
 				}
 			}
 		}

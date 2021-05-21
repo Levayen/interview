@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="top_title">
+		<view class="top_title" v-if="form_id == 0">
 			<view class="top_left">
 				<view class="icon_1">
 					<image src="/static/img/table_2.png" mode=""></image>
@@ -8,7 +8,7 @@
 				<view>应聘登记表-1</view>
 			</view>
 			<view class="top_right">
-				<picker mode="selector" :range="employmentList" range-key="post_name" @change="bindPosition">
+				<picker :disabled="form_id > 0" mode="selector" :range="employmentList" range-key="post_name" @change="bindPosition">
 					<view class="select_btn_1">
 						<view class="uni-input">{{ post_name }}</view>
 						<view class="icon_2">
@@ -22,7 +22,7 @@
 			<view class="form_item" style="border-top: none;">
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 姓名：</view>
-					<input type="text" value="" v-model="name" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" v-model="name" placeholder="请填写" />
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 性别：</view>
@@ -33,14 +33,14 @@
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 出生日期：</view>
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+					<picker :disabled="form_id > 0" mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
 						<view class="select_btn" v-if="date === ''">
 							<view>请选择</view>
 							<view class="icon_2">
 								<image src="/static/img/to_right_g.png" mode="">
 							</view>
 						</view>
-						<view class="uni-input">{{date}}</view>
+						<view class="uni-input">{{date.split(' ')[0]}}</view>
 					</picker>
 				</view>
 				<view>
@@ -53,11 +53,11 @@
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 民族：</view>
-					<input type="text" value="" v-model="nation" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" v-model="nation" placeholder="请填写" />
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 籍贯：</view>
-					<Grader @print="getId"></Grader>
+					<Grader :disabled="form_id > 0" :nativePlace="nativePlace" @print="getId"></Grader>
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 户口：</view>
@@ -68,23 +68,23 @@
 				</view>
 				<view>
 					<view><span style="margin-right: 10rpx;" class="red">*</span> 身份证号码：</view>
-					<input type="idcard" value="" v-model="IDnumber" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="idcard" value="" v-model="IDnumber" placeholder="请填写" />
 				</view>
 				<view>
 					<view> 政治面貌：</view>
-					<input type="text" value="" v-model="politically" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" v-model="politically" placeholder="请填写" />
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 现住址：</view>
-					<city @change="getAddress"></city>
+					<city :disabled="form_id > 0" :address="address" @change="getAddress"></city>
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 紧急联系人：</view>
-					<input type="text" value="" v-model="contacts" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" v-model="contacts" placeholder="请填写" />
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 联系人手机：</view>
-					<input type="text" value="" v-model="contactsPhone" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" v-model="contactsPhone" placeholder="请填写" />
 				</view>
 			</view>
 			<view class="form_1">
@@ -98,7 +98,7 @@
 					<view>
 						<view> 时间段：</view>
 						<view class="date_2">
-							<picker mode="date" :value="item.start_time" :start="startDate" :end="endDate"
+							<picker :disabled="form_id > 0" mode="date" :value="item.start_time" :start="startDate" :end="endDate"
 								:data-index="index" @change="bindBeginTime">
 								<view class="select_btn" v-if="item.start_time === ''">
 									<view>请选择</view>
@@ -106,10 +106,10 @@
 										<image src="/static/img/to_right_g.png" mode="">
 									</view>
 								</view>
-								<view class="uni-input">{{item.start_time}}</view>
+								<view class="uni-input">{{item.start_time.split(' ')[0]}}</view>
 							</picker>
 							<span>至</span>
-							<picker mode="date" :value="item.end_time" :start="startDate" :end="endDate"
+							<picker :disabled="form_id > 0" mode="date" :value="item.end_time" :start="startDate" :end="endDate"
 								:data-index="index" @change="bindEndTime">
 								<view class="select_btn" v-if="item.end_time === ''">
 									<view>请选择</view>
@@ -117,21 +117,21 @@
 										<image src="/static/img/to_right_g.png" mode="">
 									</view>
 								</view>
-								<view class="uni-input">{{item.end_time}}</view>
+								<view class="uni-input">{{item.end_time.split(' ')[0]}}</view>
 							</picker>
 						</view>
 					</view>
 					<view>
 						<view> 学校名称：</view>
-						<input type="text" value="" v-model="item.school_name" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item.school_name" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 专业：</view>
-						<input type="text" value="" v-model="item.profession" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item.profession" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 学历层次：</view>
-						<picker mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
+						<picker :disabled="form_id > 0" mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
 							<view class="select_btn" v-if="item.education == 0">
 								<view>请选择</view>
 								<view class="icon_2">
@@ -165,9 +165,9 @@
 							</view>
 						</view>
 					</view>
-					<view class="honor">
+					<view class="honor" v-if="form_id == 0">
 						<view class="add_honor">
-							<input type="text" value="" v-model="awards" placeholder="获奖荣誉" />
+							<input :disabled="form_id > 0" type="text" value="" v-model="awards" placeholder="获奖荣誉" />
 							<view @click="addAwards(index)">
 								<image src="/static/img/add.png" mode=""></image>
 							</view>
@@ -179,7 +179,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="add_education">
+				<view class="add_education" v-if="form_id == 0">
 					<view @click="addEdExperience">
 						<view>添加教育经历</view>
 						<view class="add_icon">
@@ -199,7 +199,7 @@
 					<view>
 						<view> 时间段：</view>
 						<view class="date_2">
-							<picker mode="date" :value="item1.start_time" :start="startDate" :end="endDate"
+							<picker :disabled="form_id > 0" mode="date" :value="item1.start_time" :start="startDate" :end="endDate"
 								:data-index="index1" @change="bindBeginTime1">
 								<view class="select_btn" v-if="item1.start_time === ''">
 									<view>请选择</view>
@@ -207,10 +207,10 @@
 										<image src="/static/img/to_right_g.png" mode="">
 									</view>
 								</view>
-								<view class="uni-input">{{item1.start_time}}</view>
+								<view class="uni-input">{{item1.start_time.split(' ')[0]}}</view>
 							</picker>
 							<span>至</span>
-							<picker mode="date" :value="item1.end_time" :start="startDate" :end="endDate"
+							<picker :disabled="form_id > 0" mode="date" :value="item1.end_time" :start="startDate" :end="endDate"
 								:data-index="index1" @change="bindEndTime1">
 								<view class="select_btn" v-if="item1.end_time === ''">
 									<view>请选择</view>
@@ -218,32 +218,32 @@
 										<image src="/static/img/to_right_g.png" mode="">
 									</view>
 								</view>
-								<view class="uni-input">{{item1.end_time}}</view>
+								<view class="uni-input">{{item1.end_time.split(' ')[0]}}</view>
 							</picker>
 						</view>
 					</view>
 					<view>
 						<view> 公司名称：</view>
-						<input type="text" value="" v-model="item1.company_name" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item1.company_name" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 职位：</view>
-						<input type="text" value="" v-model="item1.position" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item1.position" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 薪资：</view>
-						<input type="text" value="" v-model="item1.salary" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item1.salary" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 证明人：</view>
-						<input type="text" value="" v-model="item1.witness" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item1.witness" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 证明人电话：</view>
-						<input type="text" value="" v-model="item1.phone" placeholder="请填写" />
+						<input :disabled="form_id > 0" type="text" value="" v-model="item1.phone" placeholder="请填写" />
 					</view>
 				</view>
-				<view class="add_education">
+				<view class="add_education" v-if="form_id == 0">
 					<view @click="addWorkExperience">
 						<view>添加工作经历</view>
 						<view class="add_icon">
@@ -253,7 +253,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="bottom_btn">
+		<view class="bottom_btn" v-if="form_id == 0">
 			<view class="sub_btn" @click="submitRecruitmentFormOne">
 				提 &nbsp; 交
 			</view>
@@ -309,7 +309,8 @@
 					"witness": '', //证明人
 					"phone": '' //证明人电话
 				}],
-
+				form_id: 0,
+				nativePlace: ''
 			};
 		},
 		computed: {
@@ -321,14 +322,44 @@
 			}
 		},
 		onLoad(opt) {
+			//如果form_id大于0，则表示查看详情
+			this.form_id = opt.form_id;
 			this.post_id = opt.post_id;
 			this.post_name = opt.post_name;
-			this.getPositionList()
+			//判断是查看详情还是填表
+			if(this.form_id > 0){
+				this.getFormDetails()
+			}else{
+				this.getPositionList()
+			}
 		},
 		methods: {
+			getProvincesById(pid, cid){
+				let p_name = ''
+				let c_name = ''
+				let p = ''
+				let c = ''
+				this.$api.getProvinces({}).then( res => {
+					p = res.result
+					for(let i in p){
+						if(p[i].id == pid){
+							p_name = p[i].name
+						}
+					}
+					this.$api.getCitys({provinceId: pid}).then( res => {
+						c = res.result
+						for(let i in c){
+							if(c[i].id == cid){
+								c_name = c[i].name
+							}
+						}
+						console.log(p_name, c_name)
+						this.nativePlace = p_name +'-'+ c_name
+					})
+				})
+			},
 			getPositionList() {
 				this.$api.statistics({}).then(res => {
-					console.log(res)
 					this.employmentList = res.result
 				})
 			},
@@ -337,18 +368,33 @@
 				this.city_id = id2
 			},
 			selectSex(val) {
+				if(this.form_id > 0){
+					return
+				}
 				this.sex = val
 			},
 			selectMarriage(val) {
+				if(this.form_id > 0){
+					return
+				}
 				this.marriage = val
 			},
 			selectHukou(val) {
+				if(this.form_id > 0){
+					return
+				}
 				this.hukou = val
 			},
 			selectET(val, i) {
+				if(this.form_id > 0){
+					return
+				}
 				this.EdExperience[i].educational_form = val
 			},
 			selectES(val, i) {
+				if(this.form_id > 0){
+					return
+				}
 				this.EdExperience[i].education_status = val
 			},
 			addAwards(i) {
@@ -365,44 +411,36 @@
 				this.nativePlace = ''
 				data.forEach(item => {
 					this.nativePlace += item.name
-				})
-				console.log('picker发送选择改变，携带值为', this.nativePlace)
+				})				
 			},
-			bindPosition: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
+			bindPosition: function(e) {				
 				let pIndex = e.target.value
 				this.post_name = this.employmentList[pIndex].post_name;
 				this.post_id = this.employmentList[pIndex].post_id;
 			},
-			bindDateChange: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
+			bindDateChange: function(e) {				
 				this.date = e.target.value
 			},
 			//教育经历
 			bindEducation: function(e) {
-				console.log('picker发送选择改变，携带值为', Number(e.target.value))
 				let eIndex = e.target.value
 				let i = e.currentTarget.dataset.index
 				this.EdExperience[i].education = Number(eIndex) + 1
 			},
 			bindBeginTime: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
 				this.EdExperience[i].start_time = e.target.value
 			},
 			bindEndTime: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
 				this.EdExperience[i].end_time = e.target.value
 			},
 			//工作经历
 			bindBeginTime1: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
 				this.workExperience[i].start_time = e.target.value
 			},
 			bindEndTime1: function(e) {
-				console.log('picker发送选择改变，携带值为', e.target.value)
 				let i = e.currentTarget.dataset.index
 				this.workExperience[i].end_time = e.target.value
 			},
@@ -446,7 +484,27 @@
 					"phone": '' //证明人电话
 				})
 			},
-
+			getFormDetails(){
+				this.$api.getFormDetail1({oneId: this.form_id}).then(res => {
+					let data = res.result
+					this.EdExperience = data.education_background
+					this.workExperience = data.work_experience
+					this.contactsPhone = data.emergency_phone
+					this.contacts = data.emergency_contact
+					this.address = data.current_address
+					this.politically = data.political_status
+					this.IDnumber = data.id_card
+					this.hukou = data.hukou
+					this.city_id = data.city_id
+					this.province_id = data.province_id
+					this.nation = data.nationality
+					this.marriage = data.marital_status
+					this.date = data.birthday
+					this.sex = data.sex
+					this.name = data.realname
+					this.getProvincesById(data.province_id, data.city_id)
+				})
+			},
 			submitRecruitmentFormOne() {
 				let params = {
 					"post_id": this.post_id,

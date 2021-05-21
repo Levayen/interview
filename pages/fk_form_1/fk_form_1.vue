@@ -62,7 +62,7 @@
 				<view class="form_item_2">
 					<view>
 						<view> 笔试（机试）得分(分)：</view>
-						<input type="text" value="" v-model="practical_score" min="0" max="100" placeholder="请填写分数"/>
+						<input :disabled="form_id > 0" type="text" value="" v-model="practical_score" min="0" max="100" placeholder="请填写分数"/>
 					</view>
 				</view>
 			</view>
@@ -89,12 +89,14 @@
 			</view>
 			<view class="grader">
 				<view>面试量化得分：</view>
-				<view class="grader_input"><input type="number" value="" v-model="total" min="0" max="100" placeholder="请输入"/></view>
+				<view class="grader_input">
+					<input :disabled="form_id > 0" type="number" value="" v-model="total" min="0" max="100" placeholder="请输入"/>
+				</view>
 				<view>分</view>
 			</view>
 		</view>
 		
-		<view class="bottom_btn">
+		<view class="bottom_btn" v-if="form_id == 0">
 			<view class="sub_btn" @click="submit">
 				提 &nbsp; 交
 			</view>
@@ -235,16 +237,62 @@
 				c_question: {},
 				record_id:'',
 				user_id: '',
-				user_info: null
+				user_info: null,
+				form_id: 0,
 			};
 		},
 		onLoad(opt) {
 			this.record_id = opt.recordId
 			this.user_id = opt.intervieweeId
+			this.form_id = opt.form_id
 			this.getUserInfo()
+			if(this.form_id > 0){
+				this.getFormDetails()
+			}
 		},
 		methods:{
+			getFormDetails(){
+				this.$api.getFormDetail3({oneId: this.form_id}).then(res => {
+					let data = res.result
+					this.record_id = data.record_id
+					this.practical_score = data.practical_score
+					this.total = data.total
+					let p = {}, c = {}
+					for(let i in data){
+						if(i.indexOf('p_question_') != -1){
+							p[i] = data[i]
+						}
+						if(i.indexOf('c_question_') != -1){
+							c[i] = data[i]
+						}
+					}
+					//回显选择的选项
+					for(let i in p){
+						let arr = i.split('_')
+						let id = arr[arr.length - 1]
+						let value = p[i]
+						for(let n in this.majorScore){	
+							if(this.majorScore[n].id == id){
+								this.majorScore[n].options[value - 1].checked = 1	
+							}					
+						}
+					}
+					for(let i in c){
+						let arr = i.split('_')
+						let id = arr[arr.length - 1]
+						let value = c[i]
+						for(let n in this.qualityScore){	
+							if(this.qualityScore[n].id == id){
+								this.qualityScore[n].options[value - 1].checked = 1	
+							}					
+						}
+					}
+				})
+			},
 			selectPanswer(q, a){
+				if(this.form_id > 0){
+					return
+				}
 				let arr = this.majorScore[q].options
 				arr.forEach(item => {
 					item.checked = 0
@@ -257,6 +305,9 @@
 			},
 			
 			selectCanswer(q, a){
+				if(this.form_id > 0){
+					return
+				}
 				let arr = this.qualityScore[q].options
 				arr.forEach(item => {
 					item.checked = 0
@@ -286,7 +337,7 @@
 				let params = {
 					record_id: this.record_id,
 					practical_score: this.practical_score,
-					total: this.practical_score,
+					total: this.total,
 					...this.p_question,
 					...this.c_question
 				}

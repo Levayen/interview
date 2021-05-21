@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
-		<!-- <view class="no_data" v-if="post_name === ''">
-			暂无数据
-		</view> -->
+		<view class="no_data" v-if="post_name === ''">
+			暂无入职信息
+		</view>
 		<view v-if="post_name" class="join_item" @click="goDetails" :data-position="post_name">
 			<view class="icon_1"><image src="/static/img/join_icon.png" mode=""></image></view>
 			<view>{{post_name}}</view>

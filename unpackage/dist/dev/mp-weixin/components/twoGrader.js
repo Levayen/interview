@@ -140,6 +140,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
 var _default =
 {
   props: {
@@ -153,7 +154,11 @@ var _default =
 
     nativePlace: {
       type: String,
-      default: '' } },
+      default: '' },
+
+    disabled: {
+      type: Boolean,
+      default: false } },
 
 
   data: function data() {

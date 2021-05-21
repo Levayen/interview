@@ -386,6 +386,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   components: {
     Grader: Grader },
@@ -435,7 +436,8 @@ __webpack_require__.r(__webpack_exports__);
       department_id: '', //入职部门id
       department_name: '', //入职部门name
       average: 0, //平均分
-      ride_time: '' };
+      ride_time: '',
+      form_id: 0 };
 
   },
   computed: {
@@ -447,18 +449,93 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
   onLoad: function onLoad(opt) {
+
     this.record_id = opt.recordId;
     this.average = opt.average;
-    console.log(this.record_id);
+    this.form_id = opt.form_id;
     this.postTypes();
     this.departments();
+    if (this.form_id > 0) {
+      this.getFormDetails();
+    }
   },
   methods: (_methods = {
+    //查看详情，回显
+    getFormDetails: function getFormDetails() {var _this = this;
+      this.$api.getFormDetail5({ threeId: this.form_id }).then(function (res) {
+        console.log("表详情", res);
+        var data = res.result;
+        _this.record_id = _this.record_id;
+        _this.key_talent = data.key_talent;
+        _this.question_1 = data.question_1;
+        _this.question_2 = data.question_2;
+        _this.question_3 = data.question_3;
+        _this.status = data.status;
+        _this.reason = data.reason;
+        _this.post_id = data.o_post_id;
+        _this.post_type_id = data.o_post_type_id;
+        _this.rank_id = data.o_rank_id;
+        _this.department_id = data.o_department_id;
+        _this.entry_time = data.entry_time.split(' ')[0];
+        _this.probation_salary = data.probation_salary;
+        _this.turn_positive_salary = data.turn_positive_salary;
+        _this.probation_month = data.probation_month;
+        _this.ride_time = data.ride_time;
+        if (_this.key_talent == 1) {
+          _this.isChecked = true;
+        } else {
+          _this.isChecked = false;
+        }
+        for (var i in _this.postTypeList) {
+          if (_this.postTypeList[i].post_type_id == _this.post_type_id) {
+            _this.postType = _this.postTypeList[i].post_type_name;
+          }
+        }
+        _this.$api.positionList({ posttypeId: _this.post_type_id }).then(function (res) {
+          var positionList = res.result;
+          for (var _i in positionList) {
+            if (positionList[_i].post_id == _this.post_id) {
+              _this.position = positionList[_i].post_name;
+            }
+          }
+        });
+        _this.$api.positionRanks({ posttypeId: _this.post_type_id }).then(function (res) {
+          var rankList = res.result;
+          for (var _i2 in rankList) {
+            if (rankList[_i2].rank_id == _this.rank_id) {
+              _this.rank_name = rankList[_i2].rank_name;
+            }
+          }
+        });
+        for (var _i3 in _this.departmentsList) {
+          var departments = _this.searchTree(_this.departmentsList[_i3], _this.department_id);
+          _this.department = departments.department_name;
+        }
+      });
+    },
+    //查找树型结构
+    searchTree: function searchTree(element, id) {
+      // 根据id查找节点
+      if (element.department_id == id) {
+        return element;
+      } else if (element.children != null) {
+        var i;
+        var result = null;
+        for (i = 0; result == null && i < element.children.length; i++) {
+          result = this.searchTree(element.children[i], id);
+        }
+        return result;
+      }
+      return null;
+    },
     selectRadio: function selectRadio() {
       this.isChecked = !this.isChecked;
       this.key_talent ? 1 : 0;
     },
     bindAnswer: function bindAnswer(q, a) {
+      if (this.form_id > 0) {
+        return;
+      }
       if (q === 1) {
         this.question_1 = a;
       } else if (q === 2) {
@@ -470,6 +547,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     submit: function submit() {
+      var pages = getCurrentPages();
+      var prevPage = pages[pages.length - 2]; //上两个页面
       var params = {
         record_id: this.record_id,
         key_talent: this.key_talent,
@@ -486,7 +565,7 @@ __webpack_require__.r(__webpack_exports__);
         probation_salary: this.probation_salary,
         turn_positive_salary: this.turn_positive_salary,
         probation_month: this.probation_month,
-        ride_time: this.ride_time };
+        ride_time: this.ride_time == '' ? 0 : this.ride_time };
 
       uni.showLoading({
         title: "提交中" });
@@ -495,6 +574,7 @@ __webpack_require__.r(__webpack_exports__);
         uni.showLoading({
           title: "提交中" });
 
+        prevPage.$vm.otherFun();
         uni.navigateBack();
       });
     },
@@ -553,6 +633,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     //抽屉
     showModal: function showModal(e) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.modalName = true;
     },
     hideModal: function hideModal(e) {
@@ -563,31 +646,31 @@ __webpack_require__.r(__webpack_exports__);
   }), _defineProperty(_methods, "postTypes", function postTypes()
 
 
-  {var _this = this;
+  {var _this2 = this;
     this.$api.postTypes().then(function (res) {
       console.log(res);
-      _this.postTypeList = res.result;
+      _this2.postTypeList = res.result;
     });
   }), _defineProperty(_methods, "getPositionList", function getPositionList()
 
-  {var _this2 = this;
+  {var _this3 = this;
     this.$api.positionList({ posttypeId: this.post_type_id }).then(function (res) {
       console.log(res);
-      _this2.positionList = res.result;
+      _this3.positionList = res.result;
     });
   }), _defineProperty(_methods, "positionRanks", function positionRanks()
 
-  {var _this3 = this;
+  {var _this4 = this;
     this.$api.positionRanks({ posttypeId: this.post_type_id }).then(function (res) {
       console.log(res);
-      _this3.rankList = res.result;
+      _this4.rankList = res.result;
     });
   }), _defineProperty(_methods, "departments", function departments()
 
-  {var _this4 = this;
+  {var _this5 = this;
     this.$api.departments().then(function (res) {
       console.log(res);
-      _this4.departmentsList = res.result;
+      _this5.departmentsList = res.result;
     });
   }), _defineProperty(_methods, "bindPostType", function bindPostType(
   e) {

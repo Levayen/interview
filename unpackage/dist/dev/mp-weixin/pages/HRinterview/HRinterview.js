@@ -361,6 +361,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     InterviewNav: InterviewNav },
@@ -461,13 +495,15 @@ __webpack_require__.r(__webpack_exports__);
         url: "../fk_form_1/fk_form_1?recordId=".concat(id, "&intervieweeId=").concat(userId) });
 
     },
-    fkForm2: function fkForm2(id) {
+    fkForm2: function fkForm2(id, index) {
+      this.sIndex = index;
       uni.navigateTo({
         url: "../fk_form_2/fk_form_2?recordId=".concat(id) });
 
     },
-    fkForm3: function fkForm3(id, item) {
-      console.log(id);
+    fkForm3: function fkForm3(id, item, index) {
+      this.sIndex = index;
+      //计算平均分
       var scoreTotal = 0;
       var interviewer = 0;
       var average = 0;
@@ -477,13 +513,40 @@ __webpack_require__.r(__webpack_exports__);
           scoreTotal += d.score;
         });
       });
-      average = Math.round(scoreTotal / interviewer);
-      console.log(average);
+      average = Math.round(scoreTotal / (interviewer - 1));
       uni.navigateTo({
         url: "../fk_form_3/fk_form_3?recordId=".concat(id, "&average=").concat(average) });
 
     },
+    checkForm1: function checkForm1(id) {
+      uni.navigateTo({
+        url: "../yp_form_1/yp_form_1?form_id=".concat(id) });
+
+    },
+    checkForm2: function checkForm2(id) {
+      uni.navigateTo({
+        url: "../yp_form_2/yp_form_2?form_id=".concat(id) });
+
+    },
+    checkForm3: function checkForm3(id, uId) {
+      uni.navigateTo({
+        url: "../fk_form_1/fk_form_1?form_id=".concat(id, "&intervieweeId=").concat(uId) });
+
+    },
+    checkForm4: function checkForm4(id, uId) {
+      uni.navigateTo({
+        url: "../fk_form_2/fk_form_2?form_id=".concat(id) });
+
+    },
+    checkForm5: function checkForm5(id, uId) {
+      uni.navigateTo({
+        url: "../fk_form_3/fk_form_3?form_id=".concat(id) });
+
+    },
     openDocument: function openDocument(url) {
+      uni.showLoading({
+        title: "加载中" });
+
       uni.downloadFile({
         url: url,
         success: function success(res) {
@@ -491,7 +554,7 @@ __webpack_require__.r(__webpack_exports__);
           uni.openDocument({
             filePath: filePath,
             success: function success(res) {
-              console.log('打开文档成功');
+              uni.hideLoading();
             } });
 
         } });

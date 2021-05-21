@@ -234,6 +234,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -367,16 +369,62 @@ var _default =
       c_question: {},
       record_id: '',
       user_id: '',
-      user_info: null };
+      user_info: null,
+      form_id: 0 };
 
   },
   onLoad: function onLoad(opt) {
     this.record_id = opt.recordId;
     this.user_id = opt.intervieweeId;
+    this.form_id = opt.form_id;
     this.getUserInfo();
+    if (this.form_id > 0) {
+      this.getFormDetails();
+    }
   },
   methods: {
+    getFormDetails: function getFormDetails() {var _this = this;
+      this.$api.getFormDetail3({ oneId: this.form_id }).then(function (res) {
+        var data = res.result;
+        _this.record_id = data.record_id;
+        _this.practical_score = data.practical_score;
+        _this.total = data.total;
+        var p = {},c = {};
+        for (var i in data) {
+          if (i.indexOf('p_question_') != -1) {
+            p[i] = data[i];
+          }
+          if (i.indexOf('c_question_') != -1) {
+            c[i] = data[i];
+          }
+        }
+        //回显选择的选项
+        for (var _i in p) {
+          var arr = _i.split('_');
+          var id = arr[arr.length - 1];
+          var value = p[_i];
+          for (var n in _this.majorScore) {
+            if (_this.majorScore[n].id == id) {
+              _this.majorScore[n].options[value - 1].checked = 1;
+            }
+          }
+        }
+        for (var _i2 in c) {
+          var _arr = _i2.split('_');
+          var _id = _arr[_arr.length - 1];
+          var _value = c[_i2];
+          for (var _n in _this.qualityScore) {
+            if (_this.qualityScore[_n].id == _id) {
+              _this.qualityScore[_n].options[_value - 1].checked = 1;
+            }
+          }
+        }
+      });
+    },
     selectPanswer: function selectPanswer(q, a) {
+      if (this.form_id > 0) {
+        return;
+      }
       var arr = this.majorScore[q].options;
       arr.forEach(function (item) {
         item.checked = 0;
@@ -389,6 +437,9 @@ var _default =
     },
 
     selectCanswer: function selectCanswer(q, a) {
+      if (this.form_id > 0) {
+        return;
+      }
       var arr = this.qualityScore[q].options;
       arr.forEach(function (item) {
         item.checked = 0;
@@ -399,26 +450,26 @@ var _default =
       this.c_question[key] = value;
       console.log(this.c_question);
     },
-    getUserInfo: function getUserInfo() {var _this = this;
+    getUserInfo: function getUserInfo() {var _this2 = this;
       this.$api.getUserInfo({ intervieweeId: this.user_id }).then(function (res) {
         console.log(res);
         var obj = res.result;
         if (obj.marital_status === 0) {
-          _this.$set(obj, 'marital', '未婚');
+          _this2.$set(obj, 'marital', '未婚');
         } else if (obj.marital_status === 1) {
-          _this.$set(obj, 'marital', '已婚');
+          _this2.$set(obj, 'marital', '已婚');
         } else if (obj.marital_status === 2) {
-          _this.$set(obj, 'marital', '离异');
+          _this2.$set(obj, 'marital', '离异');
         }
         obj.birthday = obj.birthday.split(' ')[0];
-        _this.user_info = res.result;
+        _this2.user_info = res.result;
       });
     },
-    submit: function submit() {var _this2 = this;
+    submit: function submit() {var _this3 = this;
       var params = _objectSpread(_objectSpread({
         record_id: this.record_id,
         practical_score: this.practical_score,
-        total: this.practical_score },
+        total: this.total },
       this.p_question),
       this.c_question);
 
@@ -428,7 +479,7 @@ var _default =
       this.$api.feedbackOne(params).then(function (res) {
         uni.hideLoading();
         uni.navigateTo({
-          url: "../fk_form_2/fk_form_2?total=".concat(_this2.total, "&record_id=").concat(_this2.record_id) });
+          url: "../fk_form_2/fk_form_2?total=".concat(_this3.total, "&record_id=").concat(_this3.record_id) });
 
       });
     } } };exports.default = _default;

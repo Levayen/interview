@@ -4,6 +4,7 @@
             <view class="box">
                  <view class="box-item">
                      <picker class="item-picker"
+							 :disabled="disabled"
                              mode="multiSelector"
                              range-key="name"
                              @change="classifyChange"
@@ -38,6 +39,10 @@
 			nativePlace:{
 				type: String,
 				default: ''
+			},
+			disabled:{
+				type: Boolean,
+				default: false
 			}
 		},
         data() {

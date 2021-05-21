@@ -97,6 +97,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.date.split(" ")
+
+  var l0 = _vm.__map(_vm.EdExperience, function(item, index) {
+    var $orig = _vm.__get_orig(item)
+
+    var g1 = item.start_time.split(" ")
+    var g2 = item.end_time.split(" ")
+    return {
+      $orig: $orig,
+      g1: g1,
+      g2: g2
+    }
+  })
+
+  var l1 = _vm.__map(_vm.workExperience, function(item1, index1) {
+    var $orig = _vm.__get_orig(item1)
+
+    var g3 = item1.start_time.split(" ")
+    var g4 = item1.end_time.split(" ")
+    return {
+      $orig: $orig,
+      g3: g3,
+      g4: g4
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        l0: l0,
+        l1: l1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -440,8 +476,9 @@ __webpack_require__.r(__webpack_exports__);
         "salary": '', //薪资
         "witness": '', //证明人
         "phone": '' //证明人电话
-      }] };
-
+      }],
+      form_id: 0,
+      nativePlace: '' };
 
   },
   computed: {
@@ -453,15 +490,45 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
   onLoad: function onLoad(opt) {
+    //如果form_id大于0，则表示查看详情
+    this.form_id = opt.form_id;
     this.post_id = opt.post_id;
     this.post_name = opt.post_name;
-    this.getPositionList();
+    //判断是查看详情还是填表
+    if (this.form_id > 0) {
+      this.getFormDetails();
+    } else {
+      this.getPositionList();
+    }
   },
   methods: {
-    getPositionList: function getPositionList() {var _this = this;
+    getProvincesById: function getProvincesById(pid, cid) {var _this = this;
+      var p_name = '';
+      var c_name = '';
+      var p = '';
+      var c = '';
+      this.$api.getProvinces({}).then(function (res) {
+        p = res.result;
+        for (var i in p) {
+          if (p[i].id == pid) {
+            p_name = p[i].name;
+          }
+        }
+        _this.$api.getCitys({ provinceId: pid }).then(function (res) {
+          c = res.result;
+          for (var _i in c) {
+            if (c[_i].id == cid) {
+              c_name = c[_i].name;
+            }
+          }
+          console.log(p_name, c_name);
+          _this.nativePlace = p_name + '-' + c_name;
+        });
+      });
+    },
+    getPositionList: function getPositionList() {var _this2 = this;
       this.$api.statistics({}).then(function (res) {
-        console.log(res);
-        _this.employmentList = res.result;
+        _this2.employmentList = res.result;
       });
     },
     getId: function getId(id1, id2) {
@@ -469,72 +536,79 @@ __webpack_require__.r(__webpack_exports__);
       this.city_id = id2;
     },
     selectSex: function selectSex(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.sex = val;
     },
     selectMarriage: function selectMarriage(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.marriage = val;
     },
     selectHukou: function selectHukou(val) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.hukou = val;
     },
     selectET: function selectET(val, i) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.EdExperience[i].educational_form = val;
     },
     selectES: function selectES(val, i) {
+      if (this.form_id > 0) {
+        return;
+      }
       this.EdExperience[i].education_status = val;
     },
     addAwards: function addAwards(i) {
       this.EdExperience[i].awards.push(this.awards);
       this.awards = '';
     },
-    getAddress: function getAddress(data) {var _this2 = this;
+    getAddress: function getAddress(data) {var _this3 = this;
       this.address = '';
       data.forEach(function (item) {
-        _this2.address += item.name;
+        _this3.address += item.name;
       });
     },
-    getNativePlace: function getNativePlace(data) {var _this3 = this;
+    getNativePlace: function getNativePlace(data) {var _this4 = this;
       this.nativePlace = '';
       data.forEach(function (item) {
-        _this3.nativePlace += item.name;
+        _this4.nativePlace += item.name;
       });
-      console.log('picker发送选择改变，携带值为', this.nativePlace);
     },
     bindPosition: function bindPosition(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var pIndex = e.target.value;
       this.post_name = this.employmentList[pIndex].post_name;
       this.post_id = this.employmentList[pIndex].post_id;
     },
     bindDateChange: function bindDateChange(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       this.date = e.target.value;
     },
     //教育经历
     bindEducation: function bindEducation(e) {
-      console.log('picker发送选择改变，携带值为', Number(e.target.value));
       var eIndex = e.target.value;
       var i = e.currentTarget.dataset.index;
       this.EdExperience[i].education = Number(eIndex) + 1;
     },
     bindBeginTime: function bindBeginTime(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var i = e.currentTarget.dataset.index;
       this.EdExperience[i].start_time = e.target.value;
     },
     bindEndTime: function bindEndTime(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var i = e.currentTarget.dataset.index;
       this.EdExperience[i].end_time = e.target.value;
     },
     //工作经历
     bindBeginTime1: function bindBeginTime1(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var i = e.currentTarget.dataset.index;
       this.workExperience[i].start_time = e.target.value;
     },
     bindEndTime1: function bindEndTime1(e) {
-      console.log('picker发送选择改变，携带值为', e.target.value);
       var i = e.currentTarget.dataset.index;
       this.workExperience[i].end_time = e.target.value;
     },
@@ -578,8 +652,28 @@ __webpack_require__.r(__webpack_exports__);
         "phone": '' //证明人电话
       });
     },
-
-    submitRecruitmentFormOne: function submitRecruitmentFormOne() {var _this4 = this;
+    getFormDetails: function getFormDetails() {var _this5 = this;
+      this.$api.getFormDetail1({ oneId: this.form_id }).then(function (res) {
+        var data = res.result;
+        _this5.EdExperience = data.education_background;
+        _this5.workExperience = data.work_experience;
+        _this5.contactsPhone = data.emergency_phone;
+        _this5.contacts = data.emergency_contact;
+        _this5.address = data.current_address;
+        _this5.politically = data.political_status;
+        _this5.IDnumber = data.id_card;
+        _this5.hukou = data.hukou;
+        _this5.city_id = data.city_id;
+        _this5.province_id = data.province_id;
+        _this5.nation = data.nationality;
+        _this5.marriage = data.marital_status;
+        _this5.date = data.birthday;
+        _this5.sex = data.sex;
+        _this5.name = data.realname;
+        _this5.getProvincesById(data.province_id, data.city_id);
+      });
+    },
+    submitRecruitmentFormOne: function submitRecruitmentFormOne() {var _this6 = this;
       var params = {
         "post_id": this.post_id,
         "realname": this.name,
@@ -639,7 +733,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$api.submitRecruitmentFormOne(params).then(function (res) {
         uni.hideLoading();
         uni.redirectTo({
-          url: "../yp_form_2/yp_form_2?post_id=".concat(_this4.post_id, "&post_name=").concat(_this4.post_name) });
+          url: "../yp_form_2/yp_form_2?post_id=".concat(_this6.post_id, "&post_name=").concat(_this6.post_name) });
 
       });
     } } };exports.default = _default;

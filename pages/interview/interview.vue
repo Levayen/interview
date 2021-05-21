@@ -1,5 +1,8 @@
 <template>
 	<view class="content">
+		<view class="no_data" v-if="positionList.length === 0">
+			暂无在招岗位
+		</view>
 		<ul>
 			<li v-for="(item, index) in positionList" :key="index"
 			@click="goDetails" 
