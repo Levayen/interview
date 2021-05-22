@@ -84,7 +84,7 @@
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 联系人手机：</view>
-					<input :disabled="form_id > 0" type="text" value="" v-model="contactsPhone" placeholder="请填写" />
+					<input :disabled="form_id > 0" type="text" value="" maxlength="11" v-model="contactsPhone" placeholder="请填写" />
 				</view>
 			</view>
 			<view class="form_1">

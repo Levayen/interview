@@ -197,10 +197,12 @@ var _default =
     };
   },
   onLoad: function onLoad(options) {
-    this.entryFormInfo();
     uni.setNavigationBarTitle({
       title: "".concat(options.position, " - \u5165\u804C") });
 
+  },
+  onShow: function onShow() {
+    this.entryFormInfo();
   },
   methods: {
     goForm1: function goForm1(id) {

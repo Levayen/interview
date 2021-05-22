@@ -44,7 +44,7 @@
 							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
 								<view class="result_1">
 									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
-									<view>面试得分：{{ sitem.score }}</view>
+									<view v-show="citem.current_interview > 0">面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
 									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
@@ -63,7 +63,7 @@
 							</view>
 						</view>
 						<view class="result_2">
-							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="citem.current_interview > 0">综合得分：<span>{{ citem.score }}</span></view>
 							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
 							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
 						</view>
@@ -160,10 +160,10 @@
 							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
 								<view class="result_1">
 									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
-									<view>面试得分：{{ sitem.score }}</view>
+									<view v-show="citem.current_interview > 0">面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
-									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
+									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.intervieweeId)">
 										<view class="icon_3"><image src="/static/img/table_1.png" mode=""></image></view>
 										<view>面试反馈表-1</view>
 									</view>
@@ -179,7 +179,7 @@
 							</view>
 						</view>
 						<view class="result_2">
-							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="citem.current_interview > 0">综合得分：<span>{{ citem.score }}</span></view>
 							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
 							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
 						</view>
@@ -228,7 +228,7 @@
 							<view class="interviewer" v-for="(sitem, sindex) in citem.details" :key="sindex">
 								<view class="result_1">
 									<view>面试官{{sindex + 1}}：{{sitem.name}}</view>
-									<view>面试得分：{{ sitem.score }}</view>
+									<view v-show="citem.current_interview > 0">面试得分：{{ sitem.score }}</view>
 								</view>
 								<view class="form">
 									<view v-if="sitem.one > 0" @click="checkForm3(sitem.one, item.recordId)">
@@ -247,7 +247,7 @@
 							</view>
 						</view>
 						<view class="result_2">
-							<view>综合得分：<span>{{ citem.score }}</span></view>
+							<view v-show="citem.current_interview > 0">综合得分：<span>{{ citem.score }}</span></view>
 							<view v-show="citem.status === 1">面试结果：<span>通过</span></view>
 							<view v-show="citem.status === 2">面试结果：<span>未通过</span><span></span></view>
 						</view>

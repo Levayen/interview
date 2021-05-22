@@ -65,10 +65,12 @@
 			}
 		},
 		onLoad(options) {
-			this.entryFormInfo()
 			uni.setNavigationBarTitle({
 				title: `${ options.position } - 入职`
 			});
+		},
+		onShow() {
+			this.entryFormInfo()
 		},
 		methods: {
 			goForm1(id){

@@ -433,7 +433,6 @@ var _default =
       var key = "p_question_".concat(this.majorScore[q].id);
       var value = arr[a].id;
       this.p_question[key] = value;
-      console.log(this.p_question);
     },
 
     selectCanswer: function selectCanswer(q, a) {
@@ -448,11 +447,9 @@ var _default =
       var key = "c_question_".concat(this.qualityScore[q].id);
       var value = arr[a].id;
       this.c_question[key] = value;
-      console.log(this.c_question);
     },
     getUserInfo: function getUserInfo() {var _this2 = this;
       this.$api.getUserInfo({ intervieweeId: this.user_id }).then(function (res) {
-        console.log(res);
         var obj = res.result;
         if (obj.marital_status === 0) {
           _this2.$set(obj, 'marital', '未婚');

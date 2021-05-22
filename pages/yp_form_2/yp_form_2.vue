@@ -198,18 +198,18 @@
 				timer: null,
 				post_id: '',
 				post_name: '',
-				question_1: '',
-				question_1_reason:'',
-				question_2: '',
-				question_3: '',
-				question_4: '',
-				question_5: '',
-				question_6: '',
-				question_7: '',
-				question_8: '',
-				question_9_salary: '',
-				question_10: '',
-				question_10_text: '',
+				question_1: null,
+				question_1_reason:null,
+				question_2: null,
+				question_3: null,
+				question_4: null,
+				question_5: null,
+				question_6: null,
+				question_7: null,
+				question_8: null,
+				question_9_salary: null,
+				question_10: null,
+				question_10_text: null,
 				form_id: 0,
 			};
 		},
@@ -222,9 +222,12 @@
 		       }
 		},
 		onLoad(opt) {
-			this.form_id = opt.form_id;
+			
 			this.post_id = opt.post_id;
 			this.post_name = opt.post_name;
+			if(opt.form_id){
+				this.form_id = opt.form_id
+			}
 			//判断是查看详情还是填表
 			if(this.form_id > 0){
 				this.getFormDetails()
@@ -333,7 +336,17 @@
 			    return `${year}-${month}-${day}`;
 			},
 			changeIndex(n){
-
+				console.log(this.nextNum)
+				if( n == 2 && this.nextNum == 0 && this.form_id == 0){
+					console.log("SSs")
+					this.submitRecruitmentFormTwo()
+					clearInterval(this.timer);
+					let m = Math.floor( this.time / 60);
+					let s = this.time % 60;
+					m = m > 9 ? m : '0' + m;
+					s = s > 9 ? s : '0' + s;
+					this.timeText = `${ m }分${ s }秒`;
+				}
 				if( n == 1 && this.qIndex > 1){
 					this.qIndex --
 					this.preNum --
@@ -342,18 +355,7 @@
 					this.qIndex ++
 					this.preNum ++
 					this.nextNum --
-				}
-				if( this.nextNum == 0 ){
-					if(this.form_id > 0){
-						return
-					}
-					this.submitRecruitmentFormTwo()
-					clearInterval(this.timer);
-					let m = Math.floor( this.time / 60);
-					let s = this.time % 60;
-					m = m > 9 ? m : '0' + m;
-					s = s > 9 ? s : '0' + s;
-					this.timeText = `${ m }分${ s }秒`;
+					
 				}
 			}
 		}

@@ -301,7 +301,6 @@
 				let key = `p_question_${this.majorScore[q].id}`
 				let value = arr[a].id
 				this.p_question[key] = value
-				console.log(this.p_question)
 			},
 			
 			selectCanswer(q, a){
@@ -316,11 +315,9 @@
 				let key = `c_question_${this.qualityScore[q].id}`
 				let value = arr[a].id
 				this.c_question[key] = value
-				console.log(this.c_question)
 			},
 			getUserInfo(){
 				this.$api.getUserInfo({intervieweeId: this.user_id}).then(res => {
-					console.log(res)
 					let obj = res.result
 					if(obj.marital_status === 0){
 						this.$set(obj, 'marital', '未婚') 

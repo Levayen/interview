@@ -55,7 +55,7 @@
 					</view>
 					<view>
 						<view> 手机号：</view>
-						<input type="text" value="" v-model="phone" placeholder="请填写"/>
+						<input type="text" value="" maxlength="11" v-model="phone" placeholder="请填写"/>
 					</view>
 					<view>
 						<view> 最高学位：</view>
@@ -159,6 +159,7 @@
 				goodsList: [], //选中的物品
 				goodsParams: {},
 				entrant_id:'', //请求表单详情的参数
+				marital_status: '02未婚'	
 			};
 		},
 		onLoad(opt) {
@@ -285,34 +286,6 @@
 					spouse_id_number: this.spouseID,
 					authenticity : this.authenticity ,
 				}
-				let a = {
-					pc: 0,
-					laptop: 1,
-					mobile: 0,
-					pad: 0,
-					u_key: 0,
-					gadge: 0,
-					calculator: 0,
-					folder: 0,
-					employee_handbook: 0,
-					cadre_handbook: 0,
-					pos: 0,
-					tooling: 0,
-					social_security_number: 698745123,
-					provident_fund_account: 123698547,
-					realname: '赖华勇',
-					phone: 15999299032,
-					sex: 0,
-					nationality: "汉",
-					id_card: 440223199612031616,
-					highest_degree: '111',
-					job_title: '111',
-					household_registration: '111',
-					marital_status:'02未婚' ,
-					spouse_name: '',
-					spouse_id_number: '',
-					authenticity: 1,
-				}
 				if(params.authenticity == 0){
 					uni.showToast({
 						title:'请勾选承诺书',
@@ -320,10 +293,13 @@
 					})
 					return
 				}
-				this.$api.rzFormTwo(a).then( res => {
-					console.log(res)
+				uni.showLoading({
+					title:"提交中",
+				})
+				this.$api.rzFormTwo(params).then( res => {
+					uni.hideLoading()
 					uni.navigateBack({
-						delta: 2
+						delta: 1
 					})
 				})
 			}

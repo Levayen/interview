@@ -563,26 +563,12 @@
 
       return;
     }
-    var a = {
-      birthday: "2021-05-13",
-      city_id: 110100,
-      current_address: "北京市北京市东城区",
-      education_background: [{ "start_time": "2021-05-13", "end_time": "2021-05-14", "school_name": "111", "profession": "222", "education": "中专/中技", "educational_form": 0, "education_status": 0, "awards": ["222"] }],
-      emergency_contact: "无",
-      emergency_phone: "15992990321",
-      hukou: 0,
-      id_card: "440223199612031616",
-      marital_status: 0,
-      nationality: "汉",
-      political_status: "无",
-      post_id: 1,
-      province_id: 110000,
-      realname: "赖华勇",
-      sex: 0,
-      work_experience: [{ "start_time": "2021-05-13", "end_time": "2021-05-16", "company_name": "2323", "position": "32323", "salary": "121", "witness": "112", "phone": "111" }] };
+    uni.showLoading({
+      title: "提交中" });
 
     this.$api.rzFormOne(params).then(function (res) {
-      uni.navigateTo({
+      uni.hideLoading();
+      uni.redirectTo({
         url: '../rz_form_2/rz_form_2' });
 
     });
