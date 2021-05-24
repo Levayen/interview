@@ -20,6 +20,8 @@
 	page{
 		background-color: #F9F9F9;
 		color: #333333;
+		padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 	}
 	.red{
 		color: #FF0000;
@@ -35,4 +37,5 @@
 		color: #999999;
 		text-align: center;
 	}
+	
 </style>

@@ -16,7 +16,7 @@
 				<view class="question">
 					<view class="question_item">
 						<view class="title">
-							* 1、加入我司意愿？
+							<span style="margin-right: 10rpx;" class="red">*</span> 1、加入我司意愿？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(1, 1)"
@@ -38,7 +38,7 @@
 					</view>
 					<view class="question_item">
 						<view class="title">
-							* 2、是否愿意为公司搬家？
+							<span style="margin-right: 10rpx;" class="red">*</span> 2、是否愿意为公司搬家？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(2, 1)"
@@ -69,7 +69,7 @@
 					</view>
 					<view class="question_item">
 						<view class="title">
-							* 3、对突击加班的看法？
+							<span style="margin-right: 10rpx;" class="red">*</span> 3、对突击加班的看法？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(3, 1)"
@@ -194,7 +194,21 @@
 			submit(){
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 3]; //上两个页面
-				
+				let a = [this.question_1, this.question_2, this.question_3]
+				if(a.includes('')){
+					uni.showToast({
+						title: "带星号的为必填项",
+						icon: "none"
+					})
+					return
+				}
+				if(this.status === ''){
+					uni.showToast({
+						title: "请选择面试结果",
+						icon: "none"
+					})
+					return
+				}
 				let params = {
 					record_id: this.record_id,
 					key_talent: this.key_talent,

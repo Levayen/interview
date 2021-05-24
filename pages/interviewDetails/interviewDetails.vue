@@ -5,8 +5,8 @@
 				<view class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
 				<view>应聘登记表-1</view>
 			</view>
-			<view class="item_2" @click="goForm2">
-				<view class="icon_1"><image src="../../static/img/table_2.png" mode=""></image></view>
+			<view class="item_1" @click="goForm2">
+				<view class="icon_1"><image src="../../static/img/table_1.png" mode=""></image></view>
 				<view>应聘登记表-2</view>
 			</view>
 		</view>
@@ -119,9 +119,13 @@
 	}
 	#tabbar{
 		width: 100%;
+		height: 88rpx;
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		border-top: 1rpx solid #E3E3E3;
+		padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		box-sizing: content-box;
 	}
 </style>

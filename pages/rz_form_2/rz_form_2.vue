@@ -20,12 +20,12 @@
 				</view>
 				<view class="form_item">
 					<view>
-						<view> 深圳本地社保电脑号 </view>
-						<input type="text" value="" v-model="account_1" placeholder="以6开头的9位数"/>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 深圳本地社保电脑号 </view>
+						<input type="number" value="" v-model="account_1" placeholder="以6开头的9位数"/>
 					</view>
 					<view>
-						<view> 深圳本地公积金账号 </view>
-						<input type="text" value="" v-model="account_2" placeholder="请填写"/>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 深圳本地公积金账号 </view>
+						<input type="number" value="" v-model="account_2" placeholder="请填写"/>
 					</view>
 				</view>
 			</view>
@@ -35,30 +35,30 @@
 				</view>
 				<view class="form_item">
 					<view>
-						<view> 姓名：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 姓名：</view>
 						<input type="text" value="" v-model="name" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 身份证号：</view>
-						<input type="text" value="" v-model="IDnumber" placeholder="请填写"/>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 身份证号：</view>
+						<input type="idcard" value="" v-model="IDnumber" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 性别：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 性别：</view>
 						<view class="check_box">
 							<view :class="{ 'active': sex === 0 }" @click="selectSex(0)">男</view>
 							<view :class="{ 'active': sex === 1 }" @click="selectSex(1)">女</view>
 						</view>
 					</view>
 					<view>
-						<view> 民族：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 民族：</view>
 						<input type="text" value="" v-model="nation" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 手机号：</view>
-						<input type="text" value="" maxlength="11" v-model="phone" placeholder="请填写"/>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 手机号：</view>
+						<input type="number" value="" maxlength="11" v-model="phone" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 最高学位：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 最高学位：</view>
 						<picker mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
 							<view class="select_btn" v-if="education === ''">
 								<view>请选择</view>
@@ -68,7 +68,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 职称：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 职称：</view>
 						<picker mode="selector" :range="titleList" :data-index="index" @change="bindTitle">
 							<view class="select_btn" v-if="title === ''">
 								<view>请选择</view>
@@ -78,7 +78,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 户籍情况：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span>户籍情况：</view>
 						<picker mode="selector" :range="censusList" :data-index="index" @change="bindCensus">
 							<view class="select_btn" v-if="census === ''">
 								<view>请选择</view>
@@ -88,7 +88,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 婚姻情况：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 婚姻情况：</view>
 						<view class="check_box">
 							<view :class="{ 'active': marriage === 1 }" @click="selectMarriage(1)">未婚</view>
 							<view :class="{ 'active': marriage === 2 }" @click="selectMarriage(2)">已婚</view>
@@ -100,7 +100,7 @@
 					</view>
 					<view>
 						<view> 配偶身份证号码：</view>
-						<input type="text" value="" v-model="spouseID" placeholder="请填写"/>
+						<input type="idcard" value="" v-model="spouseID" placeholder="请填写"/>
 					</view>
 				</view>
 			</view>
@@ -285,6 +285,56 @@
 					spouse_name: this.spouse,
 					spouse_id_number: this.spouseID,
 					authenticity : this.authenticity ,
+				}
+
+				if(params.realname == ''){
+					uni.showToast({
+						title:'姓名不能为空',
+						icon:'none'
+					})
+					return
+				}
+				if(params.phone == ''){
+					uni.showToast({
+						title:'手机号码不能为空',
+						icon:'none'
+					})
+					return
+				}
+				if(params.nationality  == ''){
+					uni.showToast({
+						title:'民族不能为空',
+						icon:'none'
+					})
+					return
+				}
+				if(params.id_card   == ''){
+					uni.showToast({
+						title:'身份证号码不能为空',
+						icon:'none'
+					})
+					return
+				}
+				if(params.highest_degree == ''){
+					uni.showToast({
+						title:'请选择学位',
+						icon:'none'
+					})
+					return
+				}
+				if(params.job_title == ''){
+					uni.showToast({
+						title:'请选择职称',
+						icon:'none'
+					})
+					return
+				}
+				if(params.household_registration  == ''){
+					uni.showToast({
+						title:'请选择户籍情况',
+						icon:'none'
+					})
+					return
 				}
 				if(params.authenticity == 0){
 					uni.showToast({

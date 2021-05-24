@@ -16,7 +16,7 @@
 				<view class="question">
 					<view class="question_item">
 						<view class="title">
-							* 1、加入我司意愿？
+							<span style="margin-right: 10rpx;" class="red">*</span> 1、加入我司意愿？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(1, 1)"
@@ -38,7 +38,7 @@
 					</view>
 					<view class="question_item">
 						<view class="title">
-							* 2、是否愿意为公司搬家？
+							<span style="margin-right: 10rpx;" class="red">*</span> 2、是否愿意为公司搬家？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(2, 1)"
@@ -69,7 +69,7 @@
 					</view>
 					<view class="question_item">
 						<view class="title">
-							* 3、对突击加班的看法？
+							<span style="margin-right: 10rpx;" class="red">*</span> 3、对突击加班的看法？
 						</view>
 						<view class="answer">
 							<view @click="bindAnswer(3, 1)"
@@ -130,7 +130,7 @@
 				</view>
 				<view class="form_item">
 					<view>
-						<view> 岗位类别 </view>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 岗位类别 </view>
 						<picker mode="selector" 
 						:disabled="form_id > 0"
 						:range="postTypeList" 
@@ -145,7 +145,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 入职职位 </view>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 入职职位 </view>
 						<picker :disabled="form_id > 0" mode="selector" range-key="post_name" :range="positionList" :data-index="index" @change="bindPosition">
 							<view class="select_btn" v-if="position === ''">
 								<view>请选择</view>
@@ -155,7 +155,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 职级 </view>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 职级 </view>
 						<picker :disabled="form_id > 0" mode="selector" range-key="rank_name" :range="rankList" :data-index="index" @change="bindGrader">
 							<view class="select_btn" v-if="rank_name === ''">
 								<view>请选择</view>
@@ -165,7 +165,7 @@
 						</picker>
 					</view>
 					<view>
-						<view> 入职部门 </view>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 入职部门 </view>
 						<view>
 							<view class="select_btn" v-if="department === ''" @click="showModal">
 								<view>请选择</view>
@@ -175,7 +175,7 @@
 						</view>
 					</view>
 					<view>
-						<view> 入职时间 </view>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 入职时间 </view>
 						<picker :disabled="form_id > 0" mode="date" :value="entry_time" :start="startDate" :end="endDate" @change="bindDateChange">
 							<view class="select_btn" v-if="entry_time === ''">
 								<view>请选择</view>
@@ -185,16 +185,16 @@
 						</picker>
 					</view>
 					<view>
-						<view> 试用期薪资 </view>
-						<input :disabled="form_id > 0" type="text" value="" v-model="probation_salary" placeholder="请填写"/>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 试用期薪资 </view>
+						<input :disabled="form_id > 0" type="number" value="" v-model="probation_salary" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 转正薪资 </view>
-						<input :disabled="form_id > 0" type="text" value="" v-model="turn_positive_salary" placeholder="请填写"/>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 转正薪资 </view>
+						<input :disabled="form_id > 0" type="number" value="" v-model="turn_positive_salary" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 试用期时长(月) </view>
-						<input :disabled="form_id > 0" type="text" value="" v-model="probation_month" placeholder="请填写"/>
+						<view><span style="margin-right: 10rpx;" class="red">*</span> 试用期时长(月) </view>
+						<input :disabled="form_id > 0" type="number" value="" v-model="probation_month" placeholder="请填写"/>
 					</view>
 					<!-- <view>
 						<view> 合同签订时长(月) </view>
@@ -261,7 +261,7 @@
 		},
 		data() {
 			return {
-				record_id: '',
+				record_id: 18,
 				CustomBar: this.CustomBar,
 				modalName: false,
 				answer: 1,
@@ -317,8 +317,10 @@
 		       }
 		   },
 		   onLoad(opt) {
-			  
-			    this.record_id = opt.recordId
+				  if(opt.recordId){
+					  this.record_id = opt.recordId
+				  }
+			    
 			    this.average = opt.average
 				this.form_id = opt.form_id
 				this.postTypes()
@@ -417,6 +419,77 @@
 			submit(){
 				var pages = getCurrentPages();
 				var prevPage = pages[pages.length - 2]; //上两个页面
+				let a = [this.question_1, this.question_2, this.question_3]
+				if(a.includes('')){
+					uni.showToast({
+						title: "带星号的为必填项",
+						icon: "none"
+					})
+					return
+				}
+				if(this.status === ''){
+					uni.showToast({
+						title: "请选择面试结果",
+						icon: "none"
+					})
+					return
+				}
+				if(this.post_type_id === '' ){
+					uni.showToast({
+						title: "请选择岗位类别",
+						icon: "none"
+					})
+					return
+				}
+				if(this.department_id === '' ){
+					uni.showToast({
+						title: "请选择入职部门",
+						icon: "none"
+					})
+					return
+				}
+				if(this.rank_id === '' ){
+					uni.showToast({
+						title: "请选择职级",
+						icon: "none"
+					})
+					return
+				}
+				if(this.post_id === '' ){
+					uni.showToast({
+						title: "请选择入职职位",
+						icon: "none"
+					})
+					return
+				}
+				if(this.entry_time === '' ){
+					uni.showToast({
+						title: "请选择入职时间",
+						icon: "none"
+					})
+					return
+				}
+				if(this.probation_salary === '' ){
+					uni.showToast({
+						title: "试用期薪资不能为空",
+						icon: "none"
+					})
+					return
+				}
+				if(this.turn_positive_salary === '' ){
+					uni.showToast({
+						title: "转正薪资不能为空",
+						icon: "none"
+					})
+					return
+				}
+				if(this.probation_month === '' ){
+					uni.showToast({
+						title: "试用期时长不能为空",
+						icon: "none"
+					})
+					return
+				}
 				let params = {
 					record_id: this.record_id,
 					key_talent: this.key_talent,

@@ -41,7 +41,7 @@
 				<view class="question">
 					<view class="question_item" v-for="(item, index) in majorScore" :key="index">
 						<view class="title">
-							{{item.title}}
+							 <span style="margin-right: 10rpx;" class="red">*</span>{{item.title}}
 						</view>
 						<view class="answer">
 							<view v-for="(citem, cindex) in item.options" :key="cindex"
@@ -61,8 +61,8 @@
 				</view>
 				<view class="form_item_2">
 					<view>
-						<view> 笔试（机试）得分(分)：</view>
-						<input :disabled="form_id > 0" type="text" value="" v-model="practical_score" min="0" max="100" placeholder="请填写分数"/>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 笔试（机试）得分(分)：</view>
+						<input :disabled="form_id > 0" type="number" value="" v-model="practical_score" min="0" max="100" placeholder="请填写分数"/>
 					</view>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 				<view class="question">
 					<view class="question_item" v-for="(item, index) in qualityScore" :key="index">
 						<view class="title">
-							{{item.title}}
+							 <span style="margin-right: 10rpx;" class="red">*</span>{{item.title}}
 						</view>
 						<view class="answer">
 							<view v-for="(citem, cindex) in item.options" :key="cindex"
@@ -88,7 +88,7 @@
 				</view>
 			</view>
 			<view class="grader">
-				<view>面试量化得分：</view>
+				<view> <span style="margin-right: 10rpx;" class="red">*</span>面试量化得分：</view>
 				<view class="grader_input">
 					<input :disabled="form_id > 0" type="number" value="" v-model="total" min="0" max="100" placeholder="请输入"/>
 				</view>
@@ -331,6 +331,27 @@
 				})
 			},
 			submit(){
+				if(Object.keys(this.p_question).length < 3){
+					uni.showToast({
+						title:"带星号的为必填项",
+						icon:"none"
+					})
+					return
+				}
+				if(Object.keys(this.c_question).length < 10){
+					uni.showToast({
+						title:"带星号的为必填项",
+						icon:"none"
+					})
+					return
+				}
+				if(this.practical_score == '' || this.total == ''){
+					uni.showToast({
+						title:"带星号的为必填项",
+						icon:"none"
+					})
+					return
+				}
 				let params = {
 					record_id: this.record_id,
 					practical_score: this.practical_score,

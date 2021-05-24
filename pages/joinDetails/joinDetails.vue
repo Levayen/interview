@@ -149,9 +149,13 @@
 	}
 	#tabbar{
 		width: 100%;
+		height: 88rpx;
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		border-top: 1rpx solid #E3E3E3;
+		padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+		box-sizing: content-box;
 	}
 </style>

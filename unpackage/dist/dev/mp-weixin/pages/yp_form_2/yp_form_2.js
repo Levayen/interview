@@ -426,6 +426,15 @@ var _default =
       this.question_10 = val;
     },
     submitRecruitmentFormTwo: function submitRecruitmentFormTwo() {var _this3 = this;
+      var a = [this.question_1, this.question_2, this.question_3, this.question_4, this.question_5, this.question_6, this.question_7, this.question_8, this.question_9, this.question_10];
+      if (a.includes(null)) {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
+
+        return;
+      }
+
       var params = {
         "question_1": Number(this.question_1),
         "question_1_reason": this.question_1_reason,
@@ -442,6 +451,7 @@ var _default =
         "question_9_salary": this.question_9_salary,
         "question_10": Number(this.question_10),
         "question_10_text": this.question_10_text };
+
 
       uni.showLoading({
         title: "提交中" });

@@ -393,7 +393,7 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function data() {
     return {
-      record_id: '',
+      record_id: 18,
       CustomBar: this.CustomBar,
       modalName: false,
       answer: 1,
@@ -449,8 +449,10 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
   onLoad: function onLoad(opt) {
+    if (opt.recordId) {
+      this.record_id = opt.recordId;
+    }
 
-    this.record_id = opt.recordId;
     this.average = opt.average;
     this.form_id = opt.form_id;
     this.postTypes();
@@ -549,6 +551,77 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var pages = getCurrentPages();
       var prevPage = pages[pages.length - 2]; //上两个页面
+      var a = [this.question_1, this.question_2, this.question_3];
+      if (a.includes('')) {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
+
+        return;
+      }
+      if (this.status === '') {
+        uni.showToast({
+          title: "请选择面试结果",
+          icon: "none" });
+
+        return;
+      }
+      if (this.post_type_id === '') {
+        uni.showToast({
+          title: "请选择岗位类别",
+          icon: "none" });
+
+        return;
+      }
+      if (this.department_id === '') {
+        uni.showToast({
+          title: "请选择入职部门",
+          icon: "none" });
+
+        return;
+      }
+      if (this.rank_id === '') {
+        uni.showToast({
+          title: "请选择职级",
+          icon: "none" });
+
+        return;
+      }
+      if (this.post_id === '') {
+        uni.showToast({
+          title: "请选择入职职位",
+          icon: "none" });
+
+        return;
+      }
+      if (this.entry_time === '') {
+        uni.showToast({
+          title: "请选择入职时间",
+          icon: "none" });
+
+        return;
+      }
+      if (this.probation_salary === '') {
+        uni.showToast({
+          title: "试用期薪资不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (this.turn_positive_salary === '') {
+        uni.showToast({
+          title: "转正薪资不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (this.probation_month === '') {
+        uni.showToast({
+          title: "试用期时长不能为空",
+          icon: "none" });
+
+        return;
+      }
       var params = {
         record_id: this.record_id,
         key_talent: this.key_talent,

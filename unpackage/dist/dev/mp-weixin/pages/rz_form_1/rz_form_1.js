@@ -552,10 +552,96 @@
       "emergency_contact": this.contacts,
       "emergency_phone": this.contactsPhone,
       "education_background": this.EdExperience,
-      "work_experience": this.workExperience,
       "family_members_social_relations": this.family,
       "authenticity": this.authenticity };
 
+
+    var work = this.workExperience[0];
+    for (var i in work) {
+      if (work[i] != '') {
+        params.work_experience = this.workExperience;
+      }
+    }
+    var ed = this.EdExperience[0];
+    for (var _i in ed) {
+      if (ed[_i] === '') {
+        uni.showToast({
+          title: "教育经历不能为空",
+          icon: "none" });
+
+        return;
+      }
+    }
+    if (params.realname == '') {
+      uni.showToast({
+        title: "姓名不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.birthday == '') {
+      uni.showToast({
+        title: "出生日期不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.nationality == '') {
+      uni.showToast({
+        title: "民族不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.province_id == '' || params.city_id == '') {
+      uni.showToast({
+        title: "籍贯不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.id_card == '') {
+      uni.showToast({
+        title: "身份证号不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.political_status == '') {
+      uni.showToast({
+        title: "政治面貌不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.current_address == '') {
+      uni.showToast({
+        title: "现住址不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.emergency_contact == '') {
+      uni.showToast({
+        title: "紧急联系人不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.emergency_phone == '') {
+      uni.showToast({
+        title: "紧急联系人电话不能为空",
+        icon: "none" });
+
+      return;
+    }
+    if (params.education_background == '') {
+      uni.showToast({
+        title: "教育经历不能为空",
+        icon: "none" });
+
+      return;
+    }
     if (params.authenticity == 0) {
       uni.showToast({
         title: '请勾选承诺书',

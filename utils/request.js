@@ -48,11 +48,12 @@ export default (url, method, params, isForm) => {
 				}
 			},
 			fail(err) {
-				uni.showToast({
-					title: '请求失败',
-					icon: "none",
-				})
 				console.log(err)
+				console.log(baseUrl + url)
+				uni.showModal({
+					title: '请求失败',
+					content: JSON.stringify(err) + '>>>>>' + baseUrl + url + '>>>>>' + JSON.stringify(params)
+				})
 				reject(err);
 			},
 			complete() {

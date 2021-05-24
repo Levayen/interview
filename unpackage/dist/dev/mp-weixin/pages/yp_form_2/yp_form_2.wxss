@@ -103,9 +103,7 @@
   background-color: #F0f0f0;
 }
 .answer.data-v-ad0af274 {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  height: 700rpx;
   background-color: #FFFFFF;
   box-sizing: border-box;
   padding: 45rpx 35rpx;
@@ -155,7 +153,7 @@
   height: 100%;
 }
 .bottom_btn.data-v-ad0af274 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -171,6 +169,10 @@
           justify-content: space-between;
   box-sizing: border-box;
   padding: 0 59rpx;
+  padding-bottom: constant(safe-area-inset-bottom);
+  /*兼容 IOS<11.2*/
+  padding-bottom: env(safe-area-inset-bottom);
+  /*兼容 IOS>11.2*/
 }
 .bottom_btn > view.data-v-ad0af274 {
   width: 299rpx;

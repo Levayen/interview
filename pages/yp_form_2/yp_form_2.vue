@@ -89,7 +89,7 @@
 						<view @click="selectAnswer7(0)" :class="{active: question_7  == 0}">无</view>
 						<view @click="selectAnswer7(1)" :class="{active: question_7  == 1}">有</view>
 					</view>
-					<view class="answer_input">
+					<view class="answer_input" v-if="question_7  == 1">
 						<view>
 							<view><span style="margin-right: 10rpx;" class="red">*</span> 姓名 </view>
 							<input :disabled="form_id > 0" type="text" value="" v-model="name" placeholder="请填写姓名"/>
@@ -294,6 +294,15 @@
 				this.question_10 = val
 			},
 			submitRecruitmentFormTwo(){
+				let a = [this.question_1,this.question_2,this.question_3,this.question_4,this.question_5,this.question_6,this.question_7,this.question_8,this.question_9,this.question_10]
+				if(a.includes(null)){
+					uni.showToast({
+						title: "带星号的为必填项",
+						icon: "none"
+					})
+					return
+				}
+				
 				let params = {
 					  "question_1": Number(this.question_1),
 					  "question_1_reason": this.question_1_reason,
@@ -311,6 +320,7 @@
 					  "question_10": Number(this.question_10),
 					  "question_10_text": this.question_10_text
 				}
+				
 				uni.showLoading({
 					title:"提交中"
 				})
@@ -435,7 +445,7 @@
 		background-color: #F0f0f0;
 	}
 	.answer{
-		flex: 1;
+		height: 700rpx;
 		background-color: #FFFFFF;
 		box-sizing: border-box;
 		padding: 45rpx 35rpx;
@@ -475,7 +485,7 @@
 		}
 	}
 	.bottom_btn{
-		position: fixed;
+		position: absolute;
 		bottom: 0;
 		left: 0;
 		width: 100%;
@@ -485,6 +495,8 @@
 		justify-content: space-between;
 		box-sizing: border-box;
 		padding: 0 59rpx;
+		padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 		>view{
 			width: 299rpx;
 			height: 83rpx;

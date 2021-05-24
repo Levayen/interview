@@ -326,7 +326,21 @@ var _default =
     submit: function submit() {
       var pages = getCurrentPages();
       var prevPage = pages[pages.length - 3]; //上两个页面
+      var a = [this.question_1, this.question_2, this.question_3];
+      if (a.includes('')) {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
 
+        return;
+      }
+      if (this.status === '') {
+        uni.showToast({
+          title: "请选择面试结果",
+          icon: "none" });
+
+        return;
+      }
       var params = {
         record_id: this.record_id,
         key_talent: this.key_talent,

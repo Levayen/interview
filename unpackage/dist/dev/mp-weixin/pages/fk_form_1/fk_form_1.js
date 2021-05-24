@@ -463,6 +463,27 @@ var _default =
       });
     },
     submit: function submit() {var _this3 = this;
+      if (Object.keys(this.p_question).length < 3) {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
+
+        return;
+      }
+      if (Object.keys(this.c_question).length < 10) {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
+
+        return;
+      }
+      if (this.practical_score == '' || this.total == '') {
+        uni.showToast({
+          title: "带星号的为必填项",
+          icon: "none" });
+
+        return;
+      }
       var params = _objectSpread(_objectSpread({
         record_id: this.record_id,
         practical_score: this.practical_score,

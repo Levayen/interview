@@ -689,44 +689,94 @@ __webpack_require__.r(__webpack_exports__);
         "current_address": this.address,
         "emergency_contact": this.contacts,
         "emergency_phone": this.contactsPhone,
-        "education_background": this.EdExperience,
-        "work_experience": this.workExperience };
+        "education_background": this.EdExperience };
 
-      var a = {
-        birthday: "2021-05-13",
-        city_id: 110100,
-        current_address: "北京市北京市东城区",
-        education_background: [{
-          "start_time": "2021-05-13",
-          "end_time": "2021-05-14",
-          "school_name": "111",
-          "profession": "222",
-          "education": "中专/中技",
-          "educational_form": 0,
-          "education_status": 0,
-          "awards": ["222"] }],
+      var work = this.workExperience[0];
+      for (var i in work) {
+        if (work[i] != '') {
+          params.work_experience = this.workExperience;
+        }
+      }
+      var ed = this.EdExperience[0];
+      for (var _i2 in ed) {
+        if (ed[_i2] === '') {
+          uni.showToast({
+            title: "教育经历不能为空",
+            icon: "none" });
 
-        emergency_contact: "无",
-        emergency_phone: "15992990321",
-        hukou: 0,
-        id_card: "440223199612031616",
-        marital_status: 0,
-        nationality: "汉",
-        political_status: "无",
-        post_id: 1,
-        province_id: 110000,
-        realname: "赖华勇",
-        sex: 0,
-        work_experience: [{
-          "start_time": "2021-05-13",
-          "end_time": "2021-05-16",
-          "company_name": "2323",
-          "position": "32323",
-          "salary": "121",
-          "witness": "112",
-          "phone": "111" }] };
+          return;
+        }
+      }
+      if (params.realname == '') {
+        uni.showToast({
+          title: "姓名不能为空",
+          icon: "none" });
 
+        return;
+      }
+      if (params.birthday == '') {
+        uni.showToast({
+          title: "出生日期不能为空",
+          icon: "none" });
 
+        return;
+      }
+      if (params.nationality == '') {
+        uni.showToast({
+          title: "民族不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.province_id == '' || params.city_id == '') {
+        uni.showToast({
+          title: "籍贯不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.id_card == '') {
+        uni.showToast({
+          title: "身份证号不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.political_status == '') {
+        uni.showToast({
+          title: "政治面貌不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.current_address == '') {
+        uni.showToast({
+          title: "现住址不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.emergency_contact == '') {
+        uni.showToast({
+          title: "紧急联系人不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.emergency_phone == '') {
+        uni.showToast({
+          title: "紧急联系人电话不能为空",
+          icon: "none" });
+
+        return;
+      }
+      if (params.education_background == '') {
+        uni.showToast({
+          title: "教育经历不能为空",
+          icon: "none" });
+
+        return;
+      }
       uni.showLoading({
         title: '提交中' });
 

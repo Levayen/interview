@@ -51,7 +51,7 @@
 					<input type="idcard" value="" v-model="IDnumber" placeholder="请填写"/>
 				</view>
 				<view>
-					<view> 政治面貌：</view>
+					<view> <span style="margin-right: 10rpx;" class="red">*</span> 政治面貌：</view>
 					<input type="text" value="" v-model="politically" placeholder="请填写"/>
 				</view>
 				<view>
@@ -64,7 +64,7 @@
 				</view>
 				<view>
 					<view> <span style="margin-right: 10rpx;" class="red">*</span> 联系人手机：</view>
-					<input type="text" value="" maxlength="11" v-model="contactsPhone" placeholder="请填写"/>
+					<input type="number" value="" maxlength="11" v-model="contactsPhone" placeholder="请填写"/>
 				</view>
 			</view>
 			<view class="form_1">
@@ -74,7 +74,7 @@
 				</view>
 				<view class="form_item" v-for="(item, index) in EdExperience" :key="index">
 					<view>
-						<view> 时间段：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 时间段：</view>
 						<view class="date_2">
 							<picker mode="date" :value="item.start_time" :start="startDate" :end="endDate" :data-index="index" @change="bindBeginTime">
 								<view class="select_btn" v-if="item.start_time === ''">
@@ -94,15 +94,15 @@
 						</view>
 					</view>
 					<view>
-						<view> 学校名称：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 学校名称：</view>
 						<input type="text" value="" v-model="item.school_name" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 专业：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 专业：</view>
 						<input type="text" value="" v-model="item.profession" placeholder="请填写"/>
 					</view>
 					<view>
-						<view> 学历层次：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 学历层次：</view>
 						<picker mode="selector" :range="educationList" :data-index="index" @change="bindEducation">
 							<view class="select_btn" v-if="item.education == 0">
 								<view>请选择</view>
@@ -112,7 +112,7 @@
 						</picker>
 					</view>
 					<view>
-						<view><span style="margin-right: 10rpx;">*</span> 教育形式：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span> 教育形式：</view>
 						<view class="check_box">
 							<view :class="{ 'active': item.educational_form === 0 }" @click="selectET(0, index)">统招</view>
 							<view :class="{ 'active': item.educational_form === 1 }" @click="selectET(1, index)">在职自考</view>
@@ -120,7 +120,7 @@
 						</view>
 					</view>
 					<view class="form_itme_1">
-						<view><span style="margin-right: 10rpx;">*</span> 教育现状：</view>
+						<view> <span style="margin-right: 10rpx;" class="red">*</span>教育现状：</view>
 						<view class="check_box wrap">
 							<view :class="{ 'active': item.education_status === 0 }" @click="selectES(0, index)">毕业</view>
 							<view :class="{ 'active': item.education_status === 1 }" @click="selectES(1, index)">结业</view>
@@ -185,7 +185,7 @@
 					</view>
 					<view>
 						<view> 薪资：</view>
-						<input type="text" value="" v-model="item1.salary" placeholder="请填写"/>
+						<input type="number" value="" v-model="item1.salary" placeholder="请填写"/>
 					</view>
 					<view>
 						<view> 证明人：</view>
@@ -193,7 +193,7 @@
 					</view>
 					<view>
 						<view> 证明人电话：</view>
-						<input type="text" value="" v-model="item1.phone" placeholder="请填写"/>
+						<input type="number" value="" v-model="item1.phone" placeholder="请填写"/>
 					</view>
 				</view>
 				<view class="add_education">
@@ -221,7 +221,7 @@
 					</view>
 					<view>
 						<view> 移动电话：</view>
-						<input type="text" value="" v-model="item2.phone" placeholder="请填写" />
+						<input type="number" value="" v-model="item2.phone" placeholder="请填写" />
 					</view>
 					<view>
 						<view> 详细地址：</view>
@@ -542,9 +542,95 @@
 				  "emergency_contact": this.contacts,
 				  "emergency_phone": this.contactsPhone,
 				  "education_background": this.EdExperience,
-				  "work_experience": this.workExperience,
 				  "family_members_social_relations": this.family,
 				  "authenticity": this.authenticity
+				}
+				
+				let work = this.workExperience[0]
+				for(let i in work){
+					if(work[i] != ''){
+						params.work_experience = this.workExperience
+					}
+				} 
+				let ed = this.EdExperience[0]
+				for(let i in ed){
+					if(ed[i] === ''){
+						uni.showToast({
+							title:"教育经历不能为空",
+							icon:"none"
+						})
+						return
+					}
+				} 
+				if(params.realname == ''){
+					uni.showToast({
+						title:"姓名不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.birthday == ''){
+					uni.showToast({
+						title:"出生日期不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.nationality == ''){
+					uni.showToast({
+						title:"民族不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.province_id == '' || params.city_id == ''){
+					uni.showToast({
+						title:"籍贯不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.id_card == ''){
+					uni.showToast({
+						title:"身份证号不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.political_status == ''){
+					uni.showToast({
+						title:"政治面貌不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.current_address == ''){
+					uni.showToast({
+						title:"现住址不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.emergency_contact == ''){
+					uni.showToast({
+						title:"紧急联系人不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.emergency_phone == ''){
+					uni.showToast({
+						title:"紧急联系人电话不能为空",
+						icon:"none"
+					})
+					return
+				}
+				if(params.education_background == ''){
+					uni.showToast({
+						title:"教育经历不能为空",
+						icon:"none"
+					})
+					return
 				}
 				if(params.authenticity == 0){
 					uni.showToast({

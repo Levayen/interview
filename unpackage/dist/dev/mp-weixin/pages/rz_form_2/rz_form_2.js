@@ -438,6 +438,56 @@ var _default =
         spouse_id_number: this.spouseID,
         authenticity: this.authenticity });
 
+
+      if (params.realname == '') {
+        uni.showToast({
+          title: '姓名不能为空',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.phone == '') {
+        uni.showToast({
+          title: '手机号码不能为空',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.nationality == '') {
+        uni.showToast({
+          title: '民族不能为空',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.id_card == '') {
+        uni.showToast({
+          title: '身份证号码不能为空',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.highest_degree == '') {
+        uni.showToast({
+          title: '请选择学位',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.job_title == '') {
+        uni.showToast({
+          title: '请选择职称',
+          icon: 'none' });
+
+        return;
+      }
+      if (params.household_registration == '') {
+        uni.showToast({
+          title: '请选择户籍情况',
+          icon: 'none' });
+
+        return;
+      }
       if (params.authenticity == 0) {
         uni.showToast({
           title: '请勾选承诺书',

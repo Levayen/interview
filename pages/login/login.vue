@@ -316,6 +316,8 @@
 		width: 100%;
 		padding: 0 25px;
 		box-sizing: border-box;
+		padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+		padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
 		view{
 			width: 100%;
 			height: 83rpx;
